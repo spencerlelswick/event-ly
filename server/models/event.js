@@ -15,7 +15,9 @@ const eventSchema = new mongoose.Schema({
         default: true,
         required: true,
     },
-    category: [Number],
+    category: {
+        type: [Number]
+    },
     image: String,
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
@@ -33,4 +35,4 @@ const eventSchema = new mongoose.Schema({
     timestamps: true
 })
 
-module.export = mongoose.model("Event", eventSchema)
+module.exports = mongoose.model("Event", eventSchema)

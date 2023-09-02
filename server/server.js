@@ -2,6 +2,7 @@ require('dotenv').config()
 require('./config/db.connection.js')
 
 const express = require('express')
+
 const eventsRouter = require("./routes/events")
 
 const cors = require("cors")
