@@ -1,4 +1,4 @@
-const {Comment, Event} = require("../models")
+const {Comment, Event, User} = require("../models")
 
 module.exports = {
     create,
@@ -9,7 +9,9 @@ module.exports = {
 async function create(req,res){
     try {
         const userId = "64f397b1dc1e188f1c659f95" //placeholder
-        const data = {...req.body, createdBy: userId}
+        const user = await User.findById(userId)
+
+        const data = {...req.body, createdBy: userId, username: user.name}
         const newComment = await Comment.create(data)
       
         const eventId = req.params.id
