@@ -18,7 +18,9 @@ async function index(req, res) {
 
 async function create(req,res){
     try {
-        res.status(201).json(await Event.create(req.body));
+        const userId = "64f397b1dc1e188f1c659f95" //placeholder
+        const data = {...req.body, createdBy : userId}
+        res.status(201).json(await Event.create(data));
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -29,6 +31,7 @@ async function show(req,res){
         const foundEvent = await Event.findById(req.params.id)
         .populate("guests")
         .populate("createdBy")
+        .populate("comments")
         res.status(200).json(foundEvent)
     } catch (error) {
         res.status(400).json({ error: error.message });
