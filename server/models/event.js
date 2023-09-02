@@ -3,16 +3,17 @@ const mongoose = require("mongoose")
 const eventSchema = new mongoose.Schema({
     name: {
         type: String,
+        default:"My event",
         required: true,
-        default:"My event"
     },
     date: Date,
     geodata: String,
     location: String,
     address: String,
     status: {
-        tpe: Boolean,
-        default: true
+        type: Boolean,
+        default: true,
+        required: true,
     },
     category: [Number],
     image: String,
@@ -28,8 +29,7 @@ const eventSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
     }],
-},
-{
+},{
     timestamps: true
 })
 
