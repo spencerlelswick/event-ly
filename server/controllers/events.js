@@ -26,7 +26,10 @@ async function create(req,res){
 
 async function show(req,res){
     try {
-        res.status(200).json(await Event.findById(req.params.id));
+        const foundEvent = await Event.findById(req.params.id)
+        .populate("guests")
+        .populate("createdBy")
+        res.status(200).json(foundEvent)
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -34,7 +37,10 @@ async function show(req,res){
 
 async function update(req,res){
     try {
-        res.status(200).json(await Event.findByIdAndUpdate(req.params.id, req.body, { new: true }));
+        const foundEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .populate("guests")
+        .populate("createdBy")
+        res.status(200).json(foundEvent);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
