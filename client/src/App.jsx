@@ -1,7 +1,13 @@
-import './App.css';
+import Header from './components/Header';
+import Home from './pages/Home';
 
 function App() {
-  return <div>Event.ly</div>;
+  return (
+    <div>
+      <Header></Header>
+      <Home></Home>
+    </div>
+  );
 }
 
 export default App;
