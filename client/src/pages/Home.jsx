@@ -1,12 +1,10 @@
 import React from 'react';
 import Map from '../components/Map';
 import Events from '../components/Events';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
-
-  const handleAddEvent = () => {
-    
-  }
+  const handleAddEvent = () => {};
 
   return (
     <div className='sm:text-2xl h-full'>
@@ -16,12 +14,9 @@ const Home = () => {
       >
         <div className='flex justify-between m-2'>
           <h2 className='text-4xl'>Event List:</h2>
-          <button
-            onClick={handleAddEvent}
-            className='border-solid border-black border-2'
-          >
-            Add Event
-          </button>
+          <Link to='/event'>
+            <button className='btn btn-primary'>Add Event</button>
+          </Link>
         </div>
         <Events />
       </div>
