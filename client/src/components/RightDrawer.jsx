@@ -1,7 +1,7 @@
 import NewEventButton from "./NewEventButton"
-import Events from "./Events"
+import EventsList from "./EventsList"
 
-export default function RightDrawer(){
+export default function RightDrawer({coordinates}){
     return(
         <div
         style={{ height: '95vh' }}
@@ -11,7 +11,7 @@ export default function RightDrawer(){
                 <h2 className='text-4xl'>Event List:</h2>
                 <NewEventButton/>
             </div>
-            <Events />
+            <EventsList coordinates={coordinates}/>
       </div>
     )
 }

@@ -7,7 +7,10 @@ const eventSchema = new mongoose.Schema({
         required: true,
     },
     date: Date,
-    geodata: String,
+    coordinates: {
+        type: [Number],
+        default:[38.21363852151677, -85.58345588638122],
+    },
     location:  {
         type: String,
         default:"location name"

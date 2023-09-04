@@ -1,10 +1,18 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL
 const EVENTS_URL = BASE_URL + "/events"
 
-export async function index() {
-  const res = await fetch(EVENTS_URL, {
-    method: "GET",
-  });
+export async function index(data) {
+
+  const config = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  const res = await fetch(EVENTS_URL, config);
+ 
   if (res.ok) {
     return res.json();
   } else {

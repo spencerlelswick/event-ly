@@ -10,7 +10,7 @@ import {
 
 import { localityData } from '../mock/data';
 
-const Map = () => {
+const Map = ({setCoordinates}) => {
   const [locality, setLocality] = useState(null);
 
   const API_KEY = import.meta.env.VITE_GEOCODE_API;
@@ -22,6 +22,8 @@ const Map = () => {
       const currView = map.getCenter();
 
       const currLocality = getViewArea(currView.lat, currView.lng);
+
+      setCoordinates([currView.lat,currView.lng])
     });
 
     return null;
@@ -42,7 +44,7 @@ const Map = () => {
       const data = localityData;
 
       if (data?.resourceSets[0]?.resources[0]?.address?.locality) {
-        console.log(data);
+
         const city = data?.resourceSets[0]?.resources[0]?.address.locality;
         const state =
           data?.resourceSets[0]?.resources[0]?.address.adminDistrict;
