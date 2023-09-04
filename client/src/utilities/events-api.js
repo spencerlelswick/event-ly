@@ -8,7 +8,7 @@ export async function index(data) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({coordinates: data}),
   };
 
   const res = await fetch(EVENTS_URL, config);

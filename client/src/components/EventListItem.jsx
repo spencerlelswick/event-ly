@@ -5,7 +5,7 @@ export default function EventListItem({event}){
             <div>{event.name}</div>
             <div>{event.location}</div>
             <div>{event.address}</div>
-            <div>{event.coordinates}</div>
+            <div>{event.coordinates.latitude}</div>
             <hr />
         </div>
     )
