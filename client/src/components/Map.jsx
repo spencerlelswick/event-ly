@@ -10,7 +10,7 @@ import {
 
 import { localityData } from '../mock/data';
 
-const Map = ({setCoordinates}) => {
+const Map = ({setCoordinates, eventsList}) => {
   const [locality, setLocality] = useState(null);
 
   const API_KEY = import.meta.env.VITE_GEOCODE_API;
@@ -67,11 +67,15 @@ const Map = ({setCoordinates}) => {
     >
       <MapCtrl />
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-      <Marker position={[38.3311107, -85.3749704]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
+
+      {eventsList.map((event)=>(
+          <Marker position={[event.coordinates.latitude, event.coordinates.longitude]}>
+          <Popup>
+            {event.name} <br /> {event.address}
+          </Popup>
+        </Marker>
+      ))}
+      
     </MapContainer>
   );
 };

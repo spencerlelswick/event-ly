@@ -2,9 +2,8 @@ import { useState, useEffect } from "react"
 import { getAllEvents } from "../utilities/events-service"
 import EventListItem from "./EventListItem"
 
-export default function EventsList({ coordinates }) {
+export default function EventsList({coordinates,eventsList,setEventsList}) {
 
-    const [eventList, setEventList] = useState(null)
     const [loading, setLoading] = useState(true)
 
     async function fetchEvents() {
@@ -12,7 +11,7 @@ export default function EventsList({ coordinates }) {
         const eventsResponse = await getAllEvents(coordinates)
 
         if (eventsResponse.length || eventsResponse.length === 0) {
-            setEventList(eventsResponse)
+            setEventsList(eventsResponse)
             setLoading(false)
         } else {
             console.log(eventsResponse)
@@ -25,9 +24,9 @@ export default function EventsList({ coordinates }) {
 
     return (loading ? (
         <div>loading Events</div>
-    ) : (eventList.length ? (
+    ) : (eventsList.length ? (
         <div>
-            {eventList.map((event) => (
+            {eventsList.map((event) => (
                <EventListItem event={event} key={event._id}/>
             ))}
         </div>
