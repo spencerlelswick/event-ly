@@ -1,4 +1,5 @@
-import NewEventButton from "./NewEventButton"
+
+import NewEventModal from "./NewEventModal"
 import EventsList from "./EventsList"
 
 export default function RightDrawer({coordinates}){
@@ -9,9 +10,9 @@ export default function RightDrawer({coordinates}){
         >
             <div className='flex justify-between m-2'>
                 <h2 className='text-4xl'>Event List:</h2>
-                <NewEventButton/>
+                <NewEventModal/>
             </div>
             <EventsList coordinates={coordinates}/>
       </div>
-    )
+  );
 }
