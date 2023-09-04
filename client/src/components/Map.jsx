@@ -68,13 +68,18 @@ const Map = ({setCoordinates, eventsList}) => {
       <MapCtrl />
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
 
-      {eventsList.map((event)=>(
+      {eventsList !== null ? (
+      <>
+        {eventsList.map((event)=>(
           <Marker position={[event.coordinates.latitude, event.coordinates.longitude]}>
-          <Popup>
-            {event.name} <br /> {event.address}
-          </Popup>
-        </Marker>
-      ))}
+            <Popup>
+              {event.name} <br /> {event.address}
+            </Popup>
+          </Marker>
+        ))}
+      </>
+      ):(null)
+    }
       
     </MapContainer>
   );
