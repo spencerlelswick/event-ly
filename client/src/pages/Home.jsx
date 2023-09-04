@@ -7,7 +7,7 @@ const Home = () => {
     <div className='sm:text-2xl h-full'>
       <div
         style={{ height: '95vh' }}
-        className='z-10 invisible sm:visible absolute bg-yellow-600 right-0 w-96'
+        className='z-10 invisible sm:visible absolute bg-yellow-600 right-0 w-2/5 overflow-auto'
       >
         Event List:
         <Events />
