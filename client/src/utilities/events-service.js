@@ -1,8 +1,8 @@
 import * as eventsAPI from './events-api'
 
-export async function getAllEvents(){
+export async function getAllEvents(newData){
     try {
-        const data = await eventsAPI.index()
+        const data = await eventsAPI.index(newData)
         return data
     }catch(err){
         return err
