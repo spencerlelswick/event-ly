@@ -3,10 +3,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
 import Error from '../pages/Error';
 import EventsForm from './EventsForm';
+import Header from './Header';
 
-const Main = () => {
+const App= () => {
   return (
-    <div style={{ height: '95vh' }} className=''>
+    <div className=''>
+      <Header/>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/event' element={<EventsForm />} />
@@ -16,4 +18,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default App

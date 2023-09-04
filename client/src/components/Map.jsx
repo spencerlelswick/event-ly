@@ -57,7 +57,7 @@ const Map = () => {
   }
 
   return (
-    <MapContainer
+    <MapContainer className='flex justify-center items-center h-full'
       style={{ height: '100%', width: '100%', zIndex: 0 }}
       center={[38.21363852151677, -85.58345588638122]}
       zoom={12}
