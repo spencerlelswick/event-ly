@@ -8,7 +8,6 @@ export default function Events() {
 
     async function fetchEvents() {
         const eventsResponse = await getAllEvents()
-        console.log("getting events")
         if(eventsResponse.length){
             setEventList(eventsResponse)
             setLoading(false)
@@ -22,20 +21,19 @@ export default function Events() {
     },[])
 
     return( loading ?(
-            <div>loading Events</div>
+        <div>loading Events</div>
         ) : (
-            <div>
-                {eventList.map((e)=>(
-                    <div key={e._id}>
-                        <hr/>
-                        <div>{e.name}</div>
-                        <div>{e.location}</div>
-                        <div>{e.address}</div>
-                        <hr/>
-                    </div>
-                ))}
-            </div>
+        <div>
+            {eventList.map((e)=>(
+                <div key={e._id}>
+                    <hr/>
+                    <div>{e.name}</div>
+                    <div>{e.location}</div>
+                    <div>{e.address}</div>
+                    <hr/>
+                </div>
+            ))}
+        </div>
         )
     )
-    
 }
