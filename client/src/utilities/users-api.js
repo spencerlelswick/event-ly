@@ -1,7 +1,7 @@
 //const BASE_URL="http://localhost:4000"
 
-const BASE_URL=REACT_APP_BASE_URL
-const USERS_URL=BASE_URL+"/users"
+const BASE_URL = process.env.REACT_APP_BASE_URL
+const USERS_URL = BASE_URL+"/users"
 
 export async function index() {
   const res = await fetch(USERS_URL, {

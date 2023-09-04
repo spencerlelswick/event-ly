@@ -8,8 +8,14 @@ const eventSchema = new mongoose.Schema({
     },
     date: Date,
     geodata: String,
-    location: String,
-    address: String,
+    location:  {
+        type: String,
+        default:"location name"
+    },
+    address: {
+        type: String,
+        default:"address info"
+    },
     status: {
         type: Boolean,
         default: true,
