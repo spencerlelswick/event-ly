@@ -5,7 +5,7 @@ import Error from '../pages/Error';
 
 const Main = () => {
   return (
-    <div className='flex-grow'>
+    <div style={{ height: '95vh' }} className=''>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/*' element={<Error />} />
