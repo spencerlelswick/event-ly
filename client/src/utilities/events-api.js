@@ -1,15 +1,10 @@
-const BASE_URL="http://localhost:4000"
-
-//const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = import.meta.env.VITE_BASE_URL
 const EVENTS_URL = BASE_URL + "/events"
 
 export async function index() {
   const res = await fetch(EVENTS_URL, {
     method: "GET",
   });
-
-  console.log(res);
-
   if (res.ok) {
     return res.json();
   } else {
