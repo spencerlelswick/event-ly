@@ -1,8 +1,47 @@
 import { useEffect, useState } from 'react';
 import latLngToAddress from '../util/geocode';
+import Datepicker from 'tailwind-datepicker-react';
 
 function NewEventModal({ point }) {
   const [address, setAddress] = useState('Address not set.');
+  const [show, setShow] = useState(false);
+  const handleChange = (selectedDate) => {
+    console.log(selectedDate);
+  };
+  const handleClose = (state) => {
+    setShow(state);
+  };
+
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() - 1);
+
+  const options = {
+    title: 'Event Date',
+    autoHide: true,
+    todayBtn: false,
+    clearBtn: true,
+    maxDate: new Date('2030-01-01'),
+    minDate: new Date(minDate),
+    theme: {
+      background: '',
+      todayBtn: '',
+      clearBtn: '',
+      icons: '',
+      text: '',
+      disabledText: 'bg-gray-100',
+      input: '',
+      inputIcon: '',
+      selected: '',
+    },
+    icons: {
+      // () => ReactElement | JSX.Element
+      prev: () => <span>Previous</span>,
+      next: () => <span>Next</span>,
+    },
+    datepickerClassNames: 'top-12',
+    defaultDate: new Date(Date.now()),
+    language: 'en',
+  };
 
   async function getAddress() {
     try {
@@ -51,6 +90,17 @@ function NewEventModal({ point }) {
               placeholder='Type here'
               className='input input-bordered w-full max-w-xs input-primary'
             />
+
+            <label className='label'>
+              <span className='label-text'>Date:</span>
+            </label>
+            <Datepicker
+              options={options}
+              onChange={handleChange}
+              show={show}
+              setShow={handleClose}
+            />
+
             <label className='label'>
               <span className='label-text'>Describe the event:</span>
             </label>

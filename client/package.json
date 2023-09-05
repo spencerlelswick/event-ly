@@ -11,14 +11,14 @@
   },
   "dependencies": {
     "dotenv": "^16.3.1",
-    "flowbite-datepicker": "^1.2.2",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.15.0",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "tailwind-datepicker-react": "^1.4.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
