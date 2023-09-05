@@ -11,11 +11,7 @@ export async function create(eId, data) {
     },
     body: JSON.stringify(data),
   };
-
   const res = await fetch(URL, config);
-
-  console.log("update response", res);
-
   if (res.ok) {
     return res.json();
   } else {
@@ -29,9 +25,6 @@ export async function destroy(eId,cId) {
     method: "DELETE",
   };
   const res = await fetch(URL, config);
-
-  console.log(res);
-
   if (res.ok) {
     return res.json();
   } else {

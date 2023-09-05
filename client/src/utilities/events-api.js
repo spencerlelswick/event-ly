@@ -65,11 +65,7 @@ export async function update(id, data) {
     },
     body: JSON.stringify(data),
   };
-  
   const res = await fetch(URL, config);
-
-  console.log("update response", res);
-
   if (res.ok) {
     return res.json();
   } else {
