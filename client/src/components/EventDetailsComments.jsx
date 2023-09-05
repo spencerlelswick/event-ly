@@ -12,6 +12,7 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
 
     async function newCommentHandler(e){
         e.preventDefault()
+        if (comment.trim() === ""){return}
         const data = {body: comment}
         await createComment(eventId, data)
         setComment("")
@@ -50,12 +51,17 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
                 </label>
                 <input
                 type='text'
+                placeholder="Type a comment"
                 value={comment}
                 onChange={handleCommentChange}
                 className='input input-bordered w-full max-w-xs input-primary'
                 />
                 <div>
-                    <button className="btn btn-primary w-full max-w-xs" type="Submit">Comment</button>
+                    <button className="btn btn-primary w-full max-w-xs" type="Submit"
+                    disabled={comment.trim() === ""}
+                    >
+                        Comment
+                    </button>
                 </div>
             </form>
         </div>
