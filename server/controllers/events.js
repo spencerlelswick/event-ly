@@ -9,7 +9,6 @@ module.exports = {
 }
 
 async function index(req, res) {
-
     const lat = req.body.coordinates[0]
     const lng = req.body.coordinates[1]
     const delta = 0.15
@@ -24,10 +23,18 @@ async function index(req, res) {
     }
 }
 
-async function create(req,res){
+async function create(req, res) {
+    console.log(req.body)
+
+    const lat = req.body.coordinates[0]
+    const lng = req.body.coordinates[1]
     try {
         const userId = "64f397b1dc1e188f1c659f95" //placeholder
-        const data = {...req.body, createdBy : userId}
+        const data = {
+            ...req.body,
+            createdBy: userId,
+            coordinates: {latitude: lat, longitude: lng}
+        }
         res.status(201).json(await Event.create(data));
     } catch (error) {
         res.status(400).json({ error: error.message });

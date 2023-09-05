@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react';
 import latLngToAddress from '../util/geocode';
 import Datepicker from 'tailwind-datepicker-react';
+import { createEvent } from '../utilities/events-service';
+const initState = {
+  name: '',
+  category: '1',
+  date: '',
+  image: 'https://picsum.photos/200/320',
+  title: '',
+  description: '',
+};
 
 function NewEventModal({ point }) {
+  const [newEvent, setNewEvent] = useState(initState);
   const [address, setAddress] = useState('Address not set.');
   const [show, setShow] = useState(false);
-  const handleChange = (selectedDate) => {
-    console.log(selectedDate);
-  };
+
   const handleClose = (state) => {
     setShow(state);
   };
@@ -23,18 +31,18 @@ function NewEventModal({ point }) {
     maxDate: new Date('2030-01-01'),
     minDate: new Date(minDate),
     theme: {
+      border: '',
       background: '',
       todayBtn: '',
       clearBtn: '',
       icons: '',
       text: '',
       disabledText: 'bg-gray-100',
-      input: '',
+      input: 'border-primary border-[1px] border-solid',
       inputIcon: '',
       selected: '',
     },
     icons: {
-      // () => ReactElement | JSX.Element
       prev: () => <span>Previous</span>,
       next: () => <span>Next</span>,
     },
@@ -42,6 +50,34 @@ function NewEventModal({ point }) {
     defaultDate: new Date(Date.now()),
     language: 'en',
   };
+
+  function handleChange(e) {
+    const updatedData = {
+      ...newEvent,
+      coordinates: point,
+      [e.target.name]: e.target.value,
+    };
+    console.log(updatedData);
+    setNewEvent(updatedData);
+  }
+
+  function handleCancel(e) {
+    setNewEvent(initState);
+
+    console.log(e);
+  }
+
+  function handleDateChange(e) {
+    console.log(e);
+    const updatedData = { ...newEvent, date: e };
+    setNewEvent(updatedData);
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log(newEvent);
+    await createEvent(newEvent);
+    setNewEvent(initState);
+  }
 
   async function getAddress() {
     try {
@@ -65,59 +101,79 @@ function NewEventModal({ point }) {
       >
         Add Event
       </button>
-      <dialog id='event_modal' className='modal'>
+      <dialog id='event_modal' className='modal '>
         <form
+          onSubmit={handleSubmit}
           method='dialog'
           className='modal-box flex flex-col justify-center align-middle items-center'
         >
           <div className='form-control w-full max-w-xs'>
             <p className='text-sm'>Confirm address:</p>
             <p className='text-2xl'>{`${address.name}`}</p>
-            <label className='label'>
+            <label className='label' htmlFor='name'>
               <span className='label-text'>Name your event:</span>
             </label>
             <input
               type='text'
-              placeholder='Type here'
-              className='input input-bordered w-full max-w-xs input-primary'
-            />
-
-            <label className='label'>
-              <span className='label-text'>Type:</span>
-            </label>
-            <input
-              type='text'
-              placeholder='Type here'
-              className='input input-bordered w-full max-w-xs input-primary'
-            />
-
-            <label className='label'>
-              <span className='label-text'>Date:</span>
-            </label>
-            <Datepicker
-              options={options}
+              name='name'
+              value={newEvent.name}
               onChange={handleChange}
-              show={show}
-              setShow={handleClose}
-            />
-
-            <label className='label'>
-              <span className='label-text'>Describe the event:</span>
-            </label>
-            <input
-              type='text'
-              placeholder='Type here'
               className='input input-bordered w-full max-w-xs input-primary'
             />
 
-            <button className='btn btn-primary mt-5'>Submit</button>
-            <button className='btn btn-outline btn-secondary mt-1'>
-              Cancel
-            </button>
+            <div className='form-control w-full max-w-xs'>
+              <label className='label'>
+                <span className='label-text'>Pick a category:</span>
+              </label>
+              <select
+                name='category'
+                onChange={handleChange}
+                defaultValue={'1'}
+                className='select select-bordered select-bordered select-primary'
+              >
+                <option value={'1'}>Art</option>
+                <option value={'2'}>Business</option>
+                <option value={'3'}>Exercise</option>
+                <option value={'4'}>Games</option>
+                <option value={'5'}>Language</option>
+                <option value={'6'}>Political</option>
+                <option value={'7'}>Music</option>
+                <option value={'8'}>Science</option>
+                <option value={'9'}>Sports</option>
+                <option value={'10'}>Tech</option>
+              </select>
+            </div>
+
+            <div className='form-control w-full max-w-xs'>
+              <label className='label' htmlFor='date'>
+                <span className='label-text'>Date:</span>
+              </label>
+              <Datepicker
+                name='date'
+                value={newEvent.date}
+                options={options}
+                onChange={handleDateChange}
+                show={show}
+                setShow={handleClose}
+              />
+            </div>
+            <div className='form-control'>
+              <label className='label'>
+                <span className='label-text'>Event description:</span>
+              </label>
+              <textarea
+                name='description'
+                value={newEvent.description}
+                onChange={handleChange}
+                className='textarea textarea-bordered h-24 border-primary'
+                placeholder='Description'
+              ></textarea>
+            </div>
+            <input type='submit' className='btn btn-primary mt-5' />
           </div>
         </form>
         <form method='dialog' className='modal-backdrop'>
-          <button>close</button>
+          <button onClick={handleCancel}>close</button>
         </form>
       </dialog>
     </>

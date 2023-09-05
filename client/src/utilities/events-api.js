@@ -21,6 +21,7 @@ export async function index(data) {
 }
 
 export async function create(data) {
+  console.log(EVENTS_URL)
   const config = {
     method: "POST",
     headers: {
@@ -29,7 +30,7 @@ export async function create(data) {
     body: JSON.stringify(data),
   };
 
-  const res = await fetch(EVENTS_URL, config);
+  const res = await fetch(`${ EVENTS_URL }/new`, config);
 
   console.log(res);
 
