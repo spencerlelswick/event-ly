@@ -9,8 +9,16 @@ module.exports = {
 }
 
 async function index(req, res) {
+
+    const lat = req.body.coordinates[0]
+    const lng = req.body.coordinates[1]
+    const delta = 0.15
+
     try {
-      res.status(200).json(await Event.find());
+      res.status(200).json(await Event.find({
+        "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
+        "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
+    }));
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -18,7 +26,9 @@ async function index(req, res) {
 
 async function create(req,res){
     try {
-        res.status(201).json(await Event.create(req.body));
+        const userId = "64f397b1dc1e188f1c659f95" //placeholder
+        const data = {...req.body, createdBy : userId}
+        res.status(201).json(await Event.create(data));
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -26,7 +36,11 @@ async function create(req,res){
 
 async function show(req,res){
     try {
-        res.status(200).json(await Event.findById(req.params.id));
+        const foundEvent = await Event.findById(req.params.id)
+        .populate("guests")
+        .populate("createdBy")
+        .populate("comments")
+        res.status(200).json(foundEvent)
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -34,7 +48,10 @@ async function show(req,res){
 
 async function update(req,res){
     try {
-        res.status(200).json(await Event.findByIdAndUpdate(req.params.id, req.body, { new: true }));
+        const foundEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .populate("guests")
+        .populate("createdBy")
+        res.status(200).json(foundEvent);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

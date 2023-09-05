@@ -1,3 +1,5 @@
 module.exports = {
-    Event: require('./Event')
+    Event: require("./Event"),
+    User: require("./User"),
+    Comment: require("./Comment")
 }
