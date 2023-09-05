@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import MapPin from './MapPin';
-import {
-  MapContainer,
-  TileLayer,
-  useMap,
-  useMapEvents,
-} from 'react-leaflet';
-
+import { Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import { localityData } from '../mock/data';
 
-const Map = ({setCoordinates, eventsList}) => {
+const Map = ({ setCoordinates, eventsList }) => {
   const [locality, setLocality] = useState(null);
-
+  const [point, setPoint] = useState(null);
   const API_KEY = import.meta.env.VITE_GEOCODE_API;
 
   function MapCtrl() {
@@ -22,10 +17,29 @@ const Map = ({setCoordinates, eventsList}) => {
 
       const currLocality = getViewArea(currView.lat, currView.lng);
 
-      setCoordinates([currView.lat,currView.lng])
+      setCoordinates([currView.lat, currView.lng]);
     });
 
     return null;
+  }
+
+  function UserPin() {
+    const map = useMap();
+
+    map.on('click', function (e) {
+      const point = e;
+      const lat = point.latlng.lat;
+      const lng = point.latlng.lng;
+      setPoint([lat, lng]);
+    });
+
+    return (
+      <Marker position={point || [0, 0]}>
+        <Popup>
+          test <br /> test2
+        </Popup>
+      </Marker>
+    );
   }
 
   async function getViewArea(lat, lon) {
@@ -43,11 +57,9 @@ const Map = ({setCoordinates, eventsList}) => {
       const data = localityData;
 
       if (data?.resourceSets[0]?.resources[0]?.address?.locality) {
-
         const city = data?.resourceSets[0]?.resources[0]?.address.locality;
         const state =
           data?.resourceSets[0]?.resources[0]?.address.adminDistrict;
-        console.log(`current locality = ${city}, ${state}`);
         setLocality(`${city}, ${state}`);
       } else {
         console.log('Could not update locality');
@@ -58,24 +70,24 @@ const Map = ({setCoordinates, eventsList}) => {
   }
 
   return (
-    <MapContainer className='flex justify-center items-center h-full'
+    <MapContainer
+      className='flex justify-center items-center h-full'
       style={{ height: '100%', width: '100%', zIndex: 0 }}
       center={[38.21363852151677, -85.58345588638122]}
       zoom={12}
       scrollWheelZoom={true}
     >
       <MapCtrl />
+      <UserPin />
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
 
       {eventsList !== null ? (
         <>
-          {eventsList.map((event)=>(
-            <MapPin event={event} key={event._id}/>
+          {eventsList.map((event) => (
+            <MapPin event={event} key={event._id} />
           ))}
         </>
-        ):(null)
-      }
-
+      ) : null}
     </MapContainer>
   );
 };
