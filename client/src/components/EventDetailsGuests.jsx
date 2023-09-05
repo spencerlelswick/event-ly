@@ -25,13 +25,14 @@ export default function EventDetailsGuests({event, retrieveData}) {
         <div>
             Guests
             {event.guests.length  ? (
-                <>
+                <div>
                 {event.guests.map((g)=>(
-                    <div key={g._id}>
+                    <div key={g._id} className="flex flex-row align-middle items-center">
+                        <img src={g.avatar} alt={g.name} className="rounded-full w-12"/>
                         {g.name}
                     </div>
                 ))}
-               </>
+               </div>
             ) : (
                 <div>No one yet. Be the first!</div>
             )}

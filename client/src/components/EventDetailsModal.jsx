@@ -50,7 +50,13 @@ export default function EventDetailsModal({modalId,eventId}) {
                         <div>{eventDetails.date}</div>
 
                         <hr/>
-                        <div>Host: {eventDetails.createdBy.name}</div>
+                        <div>
+                            Host
+                            <div className="flex flex-row align-middle items-center">
+                                <img src={eventDetails.createdBy.avatar} alt={eventDetails.createdBy.name} className="rounded-full w-12"/>
+                                {eventDetails.createdBy.name}
+                            </div>
+                        </div>
 
                         <hr/>
                         <EventDetailsGuests event={eventDetails} retrieveData={retrieveData}/>
