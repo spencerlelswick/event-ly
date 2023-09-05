@@ -14,7 +14,7 @@ async function create(req,res){
         const data = {...req.body, createdBy: userId, username: user.name}
         const newComment = await Comment.create(data)
       
-        const eventId = req.params.id
+        const eventId = req.params.eId
         const udpateEvent = await Event.findById(eventId)
         udpateEvent.comments.push(newComment._id)
         udpateEvent.save()
@@ -27,7 +27,7 @@ async function create(req,res){
 
 async function update(req,res){
     try {
-        const commentId = req.params.idx
+        const commentId = req.params.cId
         data = {...req.body, edited: true}
         res.status(200).json(await Comment.findByIdAndUpdate(commentId, data, { new: true }));
     } catch (error) {
@@ -37,7 +37,7 @@ async function update(req,res){
 
 async function destroy(req,res){
     try {
-        const commentId = req.params.idx
+        const commentId = req.params.cId
         res.status(200).json(await Comment.findByIdAndDelete(commentId));
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -1,5 +1,5 @@
-import { useState,useEffect } from "react"
-import { createComment } from "../utilities/comments-service"
+import { useState } from "react"
+import { createComment, deleteComment } from "../utilities/comments-service"
 
 export default function EventDetailsComments({comments,  eventId, retrieveData}) {
 
@@ -18,7 +18,11 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
         retrieveData()
     }
 
-
+    async function deleteCommentHandler(e, eId, cId){
+        e.preventDefault()
+        await deleteComment(eId,cId)
+        retrieveData()
+    }
 
     return(
         <div>
@@ -27,7 +31,9 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
                 <>
                 {comments.map((c)=>(
                     <div key={c._id}>
-                        <button onClick={()=>deleteCommentHandler(c._id)}>X</button>
+                        <button onClick={(e)=>deleteCommentHandler(e, eventId, c._id)} className="btn-xs btn-secondary ">
+                        X
+                        </button>
                         {c.username}: {c.body}
                     </div>
                 ))}
