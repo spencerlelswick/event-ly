@@ -1,10 +1,27 @@
-import AddressSearch from './AddressSearch';
+import { useEffect, useState } from 'react';
+import latLngToAddress from '../util/geocode';
 
-export default function NewEventModal({ point }) {
+function NewEventModal({ point }) {
+  const [address, setAddress] = useState('Address not set.');
+
+  async function getAddress() {
+    try {
+      const geocodeLatLon = await latLngToAddress(point[0], point[1]);
+      setAddress(geocodeLatLon);
+      // setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getAddress();
+  }, [point]);
+
   return (
     <>
       <button
-        onClick={() => window.event_modal.showModal()}
+        onClick={() => document.getElementById('event_modal').showModal()}
         className='btn btn-active btn-primary'
       >
         Add Event
@@ -15,8 +32,8 @@ export default function NewEventModal({ point }) {
           className='modal-box flex flex-col justify-center align-middle items-center'
         >
           <div className='form-control w-full max-w-xs'>
-            <p>{`lat: ${point[0]}`}</p>
-            <p>{`lat: ${point[1]}`}</p>
+            <p className='text-sm'>Confirm address:</p>
+            <p className='text-2xl'>{`${address.name}`}</p>
             <label className='label'>
               <span className='label-text'>Name your event:</span>
             </label>
@@ -56,3 +73,5 @@ export default function NewEventModal({ point }) {
     </>
   );
 }
+
+export default NewEventModal;

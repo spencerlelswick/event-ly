@@ -24,6 +24,7 @@ const Map = ({ setCoordinates, eventsList, point, setPoint }) => {
 
   function UserPin() {
     const map = useMap();
+
     map.on('click', function (e) {
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
