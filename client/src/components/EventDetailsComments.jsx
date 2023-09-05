@@ -35,6 +35,9 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
                         X
                         </button>
                         {c.username}: {c.body}
+                        <span className="text-sm ml-5">
+                         {c.createdAt.substring(0,10)} {c.createdAt.substring(11,16)}
+                        </span>
                     </div>
                 ))}
                </>
@@ -51,10 +54,10 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
                 onChange={handleCommentChange}
                 className='input input-bordered w-full max-w-xs input-primary'
                 />
-
-                <button className="btn btn-primary w-full max-w-xs" type="Submit">Comment</button>
+                <div>
+                    <button className="btn btn-primary w-full max-w-xs" type="Submit">Comment</button>
+                </div>
             </form>
         </div>
-
     )
 }
