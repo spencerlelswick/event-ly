@@ -7,7 +7,7 @@ export default function MapPin({event}){
             <Popup>
                 <img src={event.image} alt={event.name}/>
                 <div>{event.name} <br /> {event.address} </div>
-                <EventDetailsModal eventId={event._id}/>
+                <EventDetailsModal modalId={event._id+"2"} eventId={event._id}/>
             </Popup>
         </Marker>
     )

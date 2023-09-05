@@ -1,14 +1,14 @@
 import { showEvent } from "../utilities/events-service";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-export default function EventDetailsModal({eventId}) {
+export default function EventDetailsModal({modalId,eventId}) {
 
     const [loadingShow, setLoadingShow] = useState(true)
     const [eventDetails, setEventDetails] = useState(null)
 
     async function handleClick() {
         
-        document.getElementById(eventId).showModal()
+        document.getElementById(modalId).showModal()
 
         const detailResponse = await showEvent(eventId)
 
@@ -28,7 +28,7 @@ export default function EventDetailsModal({eventId}) {
             >
             Event Details
         </button>
-        <dialog id={eventId} className='modal'>
+        <dialog id={modalId} className='modal'>
             <form
                 method='dialog'
                 className='modal-box flex flex-col justify-center align-middle items-center'
