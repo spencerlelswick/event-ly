@@ -4,9 +4,8 @@ import { Marker, Popup } from 'react-leaflet';
 import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import { localityData } from '../mock/data';
 
-const Map = ({ setCoordinates, eventsList }) => {
+const Map = ({ setCoordinates, eventsList, point, setPoint }) => {
   const [locality, setLocality] = useState(null);
-  const [point, setPoint] = useState(null);
   const API_KEY = import.meta.env.VITE_GEOCODE_API;
 
   function MapCtrl() {
@@ -25,21 +24,14 @@ const Map = ({ setCoordinates, eventsList }) => {
 
   function UserPin() {
     const map = useMap();
-
     map.on('click', function (e) {
-      const point = e;
-      const lat = point.latlng.lat;
-      const lng = point.latlng.lng;
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+      // setPoint([lat, lng]);
       setPoint([lat, lng]);
     });
 
-    return (
-      <Marker position={point || [0, 0]}>
-        <Popup>
-          test <br /> test2
-        </Popup>
-      </Marker>
-    );
+    return <>{point && <Marker id='user-pin' position={point}></Marker>}</>;
   }
 
   async function getViewArea(lat, lon) {

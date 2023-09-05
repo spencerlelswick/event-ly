@@ -1,6 +1,6 @@
 import AddressSearch from './AddressSearch';
 
-export default function NewEventModal() {
+export default function NewEventModal({ point }) {
   return (
     <>
       <button
@@ -15,7 +15,8 @@ export default function NewEventModal() {
           className='modal-box flex flex-col justify-center align-middle items-center'
         >
           <div className='form-control w-full max-w-xs'>
-            <AddressSearch />
+            <p>{`lat: ${point[0]}`}</p>
+            <p>{`lat: ${point[1]}`}</p>
             <label className='label'>
               <span className='label-text'>Name your event:</span>
             </label>
@@ -24,6 +25,7 @@ export default function NewEventModal() {
               placeholder='Type here'
               className='input input-bordered w-full max-w-xs input-primary'
             />
+
             <label className='label'>
               <span className='label-text'>Type:</span>
             </label>
