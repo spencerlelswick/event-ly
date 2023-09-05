@@ -1,6 +1,6 @@
 import AddressSearch from './AddressSearch';
 
-export default function NewEventButton() {
+export default function NewEventModal() {
   return (
     <>
       <button

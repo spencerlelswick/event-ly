@@ -7,10 +7,6 @@ const eventSchema = new mongoose.Schema({
         required: true,
     },
     date: Date,
-    // coordinates: {
-    //     type: [Number],
-    //     default:[38.21363852151677, -85.58345588638122],
-    // },
     coordinates: {
         latitude:{
         type: Number,

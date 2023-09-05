@@ -1,4 +1,3 @@
-
 import NewEventModal from "./NewEventModal"
 import EventsList from "./EventsList"
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { getAllEvents } from "../utilities/events-service"
-import EventListItem from "./EventListItem"
+import EventsListItem from "./EventsListItem"
 
 export default function EventsList({coordinates,eventsList,setEventsList}) {
 
@@ -27,7 +27,7 @@ export default function EventsList({coordinates,eventsList,setEventsList}) {
     ) : (eventsList.length ? (
         <div>
             {eventsList.map((event) => (
-               <EventListItem event={event} key={event._id}/>
+               <EventsListItem event={event} key={event._id}/>
             ))}
         </div>
     ) : (
