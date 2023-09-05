@@ -33,7 +33,10 @@ const eventSchema = new mongoose.Schema({
     category: {
         type: [Number]
     },
-    image: String,
+    image: {
+        type: String,
+        default:"https://picsum.photos/400/200"
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
