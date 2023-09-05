@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import MapPin from './MapPin';
 import {
   MapContainer,
   TileLayer,
   useMap,
   useMapEvents,
-  Marker,
-  Popup,
 } from 'react-leaflet';
 
 import { localityData } from '../mock/data';
@@ -68,19 +67,14 @@ const Map = ({setCoordinates, eventsList}) => {
       <MapCtrl />
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
 
-
-    {eventsList !== null ? (
-      <>
-        {eventsList.map((event)=>(
-          <Marker position={[event.coordinates.latitude, event.coordinates.longitude]}>
-            <Popup>
-              {event.name} <br /> {event.address}
-            </Popup>
-          </Marker>
-        ))}
-      </>
-      ):(null)
-    }
+      {eventsList !== null ? (
+        <>
+          {eventsList.map((event)=>(
+            <MapPin event={event} key={event._id}/>
+          ))}
+        </>
+        ):(null)
+      }
 
     </MapContainer>
   );

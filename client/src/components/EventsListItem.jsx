@@ -1,4 +1,4 @@
-export default function EventListItem({event}){
+export default function EventsListItem({event}){
     return(
         <div>
             <hr />
