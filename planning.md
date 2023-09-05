@@ -65,7 +65,11 @@ event.ly is a map-based web application for finding and creating events to conne
 
 ## ERD Diagram
 
-<!-- [ERD](https://LINK) -->
+![ERD](https://github.com/spencerlelswick/event-ly/assets/106488356/18d67691-1871-41df-b617-85fbe9a0c298)
+
+## Component Tree
+
+![componentTree](https://github.com/spencerlelswick/event-ly/assets/106488356/9a8ea3d5-fed3-4c4d-9c4f-40f8d49f0626)
 
 ## User Stories
 
