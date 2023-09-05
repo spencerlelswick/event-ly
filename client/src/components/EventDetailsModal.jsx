@@ -1,27 +1,33 @@
 import { showEvent } from "../utilities/events-service";
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import EventDetailsComments from "./EventDetailsComments";
 
 export default function EventDetailsModal({modalId,eventId}) {
 
     const [loadingShow, setLoadingShow] = useState(true)
     const [eventDetails, setEventDetails] = useState(null)
-    const [comments, setComments] = useState(null)
 
     async function handleClick() {
-        
         document.getElementById(modalId).showModal()
+        retrieveData()
+    }
 
-        const detailResponse = await showEvent(eventId)
+    async function retrieveData(){
+        try{
+            const showResponse = await showEvent(eventId)
 
-        if (detailResponse?._id) {
-            setEventDetails(detailResponse)
-            setLoadingShow(false)
-            setComments(detailResponse.comments)
-        } else {
-            console.log(detailResponse)
+            if (showResponse?._id) {
+                setEventDetails(showResponse)
+                setLoadingShow(false)
+            } else {
+                console.log(showResponse)
+            }
+        }catch(err){
+            console.log(err)
         }
     }
+
+
 
     return (
         <>
@@ -36,7 +42,7 @@ export default function EventDetailsModal({modalId,eventId}) {
             <div className="modal-box flex flex-col justify-center align-middle items-center w-full max-w-5xl">
                 {loadingShow ? (
                 <div>Loading Events Details</div>
-                ): (
+                ) : (
                 <div className="w-full">
                     <div>{eventDetails.name}</div>
                     <img src={eventDetails.image} alt={eventDetails.name}/>
@@ -51,17 +57,12 @@ export default function EventDetailsModal({modalId,eventId}) {
                     <div>Guests:</div>
 
                     <hr/>
-                    <EventDetailsComments comments={comments} setComments={setComments}/>
-
+                    <EventDetailsComments comments={eventDetails.comments} eventId={eventDetails._id}
+                    retrieveData={retrieveData}/>
 
                     <button className="btn btn-primary w-full max-w-xs">Partecipate</button>
                 </div>
                 )}
-                    <form>
-                        <button>Close</button>
-                    </form>
-            
-
                 <div className="modal-action">
                     <form method="dialog" >
                         <button className="btn btn-secondary w-full ">Close</button>

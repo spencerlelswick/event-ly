@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
+import { createComment } from "../utilities/comments-service"
 
-
-export default function EventDetailsComments({comments, setComments}) {
+export default function EventDetailsComments({comments,  eventId, retrieveData}) {
 
     const [comment, setComment] = useState("")
 
@@ -10,25 +10,32 @@ export default function EventDetailsComments({comments, setComments}) {
         setComment(newComment)
     }
 
-    function handleCommentSubmit(e){
+    async function newCommentHandler(e){
         e.preventDefault()
-        console.log(e)
+        const data = {body: comment}
+        await createComment(eventId, data)
+        setComment("")
+        retrieveData()
     }
 
-    return(
 
+
+    return(
         <div>
             Comments
-            { comments.length  ? (
-
-
-                <div>{comments[0].username}:{comments[0].body}</div>
-
-
+            {comments.length  ? (
+                <>
+                {comments.map((c)=>(
+                    <div key={c._id}>
+                        <button onClick={()=>deleteCommentHandler(c._id)}>X</button>
+                        {c.username}: {c.body}
+                    </div>
+                ))}
+               </>
             ) : (
                 <div>No Comments yet</div>
             )}
-            <form onSubmit={handleCommentSubmit}>
+            <form onSubmit={newCommentHandler}>
                 <label className='label'>
                 <span className='label-text'>Enter a comment:</span>
                 </label>
