@@ -4,6 +4,7 @@ import { createComment, deleteComment } from "../utilities/comments-service"
 export default function EventDetailsComments({event, setEvent, retrieveData}) {
 
     const [comment, setComment] = useState("")
+    const [loading, setLoading] = useState(false)
 
     function handleCommentChange(e) {
         const newComment = e.target.value
@@ -12,11 +13,13 @@ export default function EventDetailsComments({event, setEvent, retrieveData}) {
 
     async function newCommentHandler(e){
         e.preventDefault()
+        setLoading(true)
         if (comment.trim() === ""){return}
         const data = {body: comment}
         const updatedEvent = await createComment(event._id, data)
         setComment("")
         setEvent(updatedEvent)
+        setLoading(false)
     }
 
     async function deleteCommentHandler(e, eId, cId){
@@ -58,7 +61,7 @@ export default function EventDetailsComments({event, setEvent, retrieveData}) {
                 />
                 <div>
                     <button className="btn btn-primary w-full max-w-xs" type="Submit"
-                    disabled={comment.trim() === ""}
+                    disabled={comment.trim() === "" || loading}
                     >
                         Comment
                     </button>
