@@ -2,17 +2,18 @@ import { useEffect, useState } from 'react';
 import latLngToAddress from '../util/geocode';
 import Datepicker from 'tailwind-datepicker-react';
 import { createEvent } from '../utilities/events-service';
-const initState = {
-  name: '',
-  category: '1',
-  location: '',
-  date: '',
-  image: 'https://picsum.photos/200/320',
-  title: '',
-  description: '',
-};
 
 function NewEventModal({ point }) {
+  const initState = {
+    name: '',
+    coordinates: point,
+    category: '1',
+    location: '',
+    date: '',
+    image: 'https://picsum.photos/200/320',
+    title: '',
+    description: '',
+  };
   const [newEvent, setNewEvent] = useState(initState);
   const [address, setAddress] = useState('Address not set.');
   const [show, setShow] = useState(false);

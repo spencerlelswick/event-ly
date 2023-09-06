@@ -6,6 +6,7 @@ export default function RightDrawer({
   eventsList,
   setEventsList,
   point,
+  setPannedEvent,
 }) {
   return (
     <div
@@ -19,6 +20,7 @@ export default function RightDrawer({
         coordinates={coordinates}
         eventsList={eventsList}
         setEventsList={setEventsList}
+        setPannedEvent={setPannedEvent}
       />
     </div>
   );
