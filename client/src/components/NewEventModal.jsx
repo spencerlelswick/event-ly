@@ -5,6 +5,7 @@ import { createEvent } from '../utilities/events-service';
 const initState = {
   name: '',
   category: '1',
+  location: '',
   date: '',
   image: 'https://picsum.photos/200/320',
   title: '',
@@ -54,6 +55,7 @@ function NewEventModal({ point }) {
   function handleChange(e) {
     const updatedData = {
       ...newEvent,
+      address: address.name,
       coordinates: point,
       [e.target.name]: e.target.value,
     };
@@ -110,17 +112,32 @@ function NewEventModal({ point }) {
           <div className='form-control w-full max-w-xs'>
             <p className='text-sm'>Confirm address:</p>
             <p className='text-2xl'>{`${address.name}`}</p>
-            <label className='label' htmlFor='name'>
-              <span className='label-text'>Name your event:</span>
-            </label>
-            <input
-              type='text'
-              name='name'
-              value={newEvent.name}
-              onChange={handleChange}
-              className='input input-bordered w-full max-w-xs input-primary'
-            />
 
+            <div className='form-control w-full max-w-xs'>
+              <label className='label' htmlFor='name'>
+                <span className='label-text'>Name your event:</span>
+              </label>
+              <input
+                type='text'
+                name='name'
+                value={newEvent.name}
+                onChange={handleChange}
+                className='input input-bordered w-full max-w-xs input-primary'
+              />
+            </div>
+            <div className='form-control w-full max-w-xs'>
+              <label className='label' htmlFor='location'>
+                <span className='label-text'>Location description</span>
+              </label>
+              <input
+                type='text'
+                name='location'
+                placeholder='Room 5, near the swingset, etc.'
+                value={newEvent.location}
+                onChange={handleChange}
+                className='input input-bordered w-full max-w-xs input-primary'
+              />
+            </div>
             <div className='form-control w-full max-w-xs'>
               <label className='label'>
                 <span className='label-text'>Pick a category:</span>
@@ -134,13 +151,15 @@ function NewEventModal({ point }) {
                 <option value={'1'}>Art</option>
                 <option value={'2'}>Business</option>
                 <option value={'3'}>Exercise</option>
-                <option value={'4'}>Games</option>
-                <option value={'5'}>Language</option>
-                <option value={'6'}>Political</option>
+                <option value={'4'}>Food</option>
+                <option value={'5'}>Games</option>
+                <option value={'6'}>Language</option>
                 <option value={'7'}>Music</option>
-                <option value={'8'}>Science</option>
-                <option value={'9'}>Sports</option>
-                <option value={'10'}>Tech</option>
+                <option value={'8'}>Party</option>
+                <option value={'9'}>Politics</option>
+                <option value={'10'}>Science</option>
+                <option value={'11'}>Sport</option>
+                <option value={'12'}>Tech</option>
               </select>
             </div>
 
