@@ -146,7 +146,7 @@ function NewEventModal({ point }) {
                 name='category'
                 onChange={handleChange}
                 defaultValue={'1'}
-                className='select select-bordered select-bordered select-primary'
+                className='select select-bordered select-primary'
               >
                 <option value={'1'}>Art</option>
                 <option value={'2'}>Business</option>

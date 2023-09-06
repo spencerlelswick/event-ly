@@ -1,15 +1,15 @@
 import { updateEvent } from "../utilities/events-service"
 
-export default function EventDetailsGuests({event, retrieveData}) {
+export default function EventDetailsGuests({event, setEvent}) {
 
-    const userId = "64f397b1dc1e188f1c659f95" //Spencer Placeholder
-    //const userId = "64f7b1b50b6175389101f547" //Federico Placeholder
+    //const userId = "64f397b1dc1e188f1c659f95" //Spencer Placeholder
+    const userId = "64f7b1b50b6175389101f547" //Federico Placeholder
 
     async function handlePartecipate(e){
         e.preventDefault()
         const data = [...event.guests, userId]
-        await updateEvent(event._id, {guests: data})
-        retrieveData()
+        const updatedEvent = await updateEvent(event._id, {guests: data})
+        setEvent(updatedEvent)
     }
 
     async function handleRemove(e){
@@ -17,8 +17,8 @@ export default function EventDetailsGuests({event, retrieveData}) {
         const data = [...event.guests]
         const idx = data.indexOf(data.find((g)=>(g._id === userId)))
         data.splice(idx,1)
-        await updateEvent(event._id, {guests: data})
-        retrieveData()
+        const updatedEvent = await updateEvent(event._id, {guests: data})
+        setEvent(updatedEvent)
     }
 
     return(

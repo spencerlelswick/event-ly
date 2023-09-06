@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { createComment, deleteComment } from "../utilities/comments-service"
 
-export default function EventDetailsComments({comments,  eventId, retrieveData}) {
+export default function EventDetailsComments({event, retrieveData}) {
 
     const [comment, setComment] = useState("")
 
@@ -14,7 +14,7 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
         e.preventDefault()
         if (comment.trim() === ""){return}
         const data = {body: comment}
-        await createComment(eventId, data)
+        await createComment(event._id, data)
         setComment("")
         retrieveData()
     }
@@ -28,11 +28,11 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
     return(
         <div>
             Comments
-            {comments.length  ? (
+            {event.comments.length  ? (
                 <>
-                {comments.map((c)=>(
+                {event.comments.map((c)=>(
                     <div key={c._id}>
-                        <button onClick={(e)=>deleteCommentHandler(e, eventId, c._id)} className="btn-xs btn-secondary ">
+                        <button onClick={(e)=>deleteCommentHandler(e, event._id, c._id)} className="btn-xs btn-secondary ">
                         X
                         </button>
                         {c.username}: {c.body}
