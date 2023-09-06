@@ -10,16 +10,21 @@ export default function EventsList({
 }) {
   const [loading, setLoading] = useState(true);
 
-  async function fetchEvents() {
-    const eventsResponse = await getAllEvents(coordinates);
 
-    if (eventsResponse.length || eventsResponse.length === 0) {
-      setEventsList(eventsResponse);
-      setLoading(false);
-    } else {
-      console.log(eventsResponse);
+    async function fetchEvents() {
+        try{
+            const eventsResponse = await getAllEvents(coordinates)
+
+            if (eventsResponse.length || eventsResponse.length === 0) {
+                setEventsList(eventsResponse)
+                setLoading(false)
+            } else {
+                throw Error("Something went wrong with retrieving events.")
+            }
+        }catch(err){
+            console.log(err)
+        }
     }
-  }
 
   useEffect(() => {
     fetchEvents();

@@ -15,11 +15,14 @@ async function create(req,res){
         const newComment = await Comment.create(data)
       
         const eventId = req.params.eId
-        const udpateEvent = await Event.findById(eventId)
-        udpateEvent.comments.push(newComment._id)
-        udpateEvent.save()
-
-        res.status(201).json(newComment);
+        const updatedEvent = await Event.findById(eventId)
+        .populate("comments")
+        .populate("guests")
+        .populate("createdBy")
+        updatedEvent.comments.push(newComment)
+        updatedEvent.save()
+    
+        res.status(201).json(updatedEvent);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -38,7 +41,15 @@ async function update(req,res){
 async function destroy(req,res){
     try {
         const commentId = req.params.cId
-        res.status(200).json(await Comment.findByIdAndDelete(commentId));
+        await Comment.findByIdAndDelete(commentId)
+
+        const eventId = req.params.eId
+        const updatedEvent = await Event.findById(eventId)
+        .populate("comments")
+        .populate("guests")
+        .populate("createdBy")
+
+        res.status(200).json(updatedEvent);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

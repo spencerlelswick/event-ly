@@ -1,12 +1,12 @@
 import { showEvent } from "../utilities/events-service";
-import { useState,useEffect } from "react"
+import { useState } from "react"
 import EventDetailsComments from "./EventDetailsComments";
 import EventDetailsGuests from "./EventDetailsGuests";
 
 export default function EventDetailsModal({modalId,eventId}) {
 
     const [loadingShow, setLoadingShow] = useState(true)
-    const [eventDetails, setEventDetails] = useState(null)
+    const [event, setEvent] = useState(null)
 
     async function handleClick() {
         document.getElementById(modalId).showModal()
@@ -18,7 +18,7 @@ export default function EventDetailsModal({modalId,eventId}) {
             const showResponse = await showEvent(eventId)
 
             if (showResponse?._id) {
-                setEventDetails(showResponse)
+                setEvent(showResponse)
                 setLoadingShow(false)
             } else {
                 console.log(showResponse)
@@ -43,28 +43,27 @@ export default function EventDetailsModal({modalId,eventId}) {
                     <div>Loading Events Details</div>
                     ) : (
                     <div className="w-full">
-                        <div>{eventDetails.name}</div>
-                        <img src={eventDetails.image} alt={eventDetails.name}/>
-                        <div>{eventDetails.description}</div>
-                        <div>{eventDetails.location}</div>
-                        <div>{eventDetails.address}</div>
-                        <div>{eventDetails.date}</div>
+                        <div>{event.name}</div>
+                        <img src={event.image} alt={event.name}/>
+                        <div>{event.description}</div>
+                        <div>{event.location}</div>
+                        <div>{event.address}</div>
+                        <div>{event.date}</div>
 
                         <hr/>
                         <div>
                             Host
                             <div className="flex flex-row align-middle items-center">
-                                <img src={eventDetails.createdBy.avatar} alt={eventDetails.createdBy.name} className="rounded-full w-12"/>
-                                {eventDetails.createdBy.name}
+                                <img src={event.createdBy.avatar} alt={event.createdBy.name} className="rounded-full w-12"/>
+                                {event.createdBy.name}
                             </div>
                         </div>
 
                         <hr/>
-                        <EventDetailsGuests event={eventDetails} retrieveData={retrieveData}/>
+                        <EventDetailsGuests event={event} setEvent={setEvent}/>
 
                         <hr/>
-                        <EventDetailsComments comments={eventDetails.comments} eventId={eventDetails._id}
-                        retrieveData={retrieveData}/>
+                        <EventDetailsComments event={event} setEvent={setEvent}/>
 
                     </div>
                     )}

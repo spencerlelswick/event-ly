@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default:""
+        default:"https://placekitten.com/100/100"
     },
     email: {
         type: String,

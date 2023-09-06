@@ -11,8 +11,7 @@ module.exports = {
 async function index(req, res) {
     const lat = req.body.coordinates[0]
     const lng = req.body.coordinates[1]
-    const delta = 0.15
-
+    const delta = 0.2
     try {
       res.status(200).json(await Event.find({
         "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
@@ -24,8 +23,6 @@ async function index(req, res) {
 }
 
 async function create(req, res) {
-    console.log(req.body)
-
     const lat = req.body.coordinates[0]
     const lng = req.body.coordinates[1]
     try {
@@ -56,6 +53,9 @@ async function show(req,res){
 async function update(req,res){
     try {
         const foundEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .populate("guests")
+        .populate("createdBy")
+        .populate("comments")
         res.status(200).json(foundEvent);
     } catch (error) {
         res.status(400).json({ error: error.message });

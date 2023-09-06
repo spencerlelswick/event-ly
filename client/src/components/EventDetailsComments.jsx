@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { createComment, deleteComment } from "../utilities/comments-service"
 
-export default function EventDetailsComments({comments,  eventId, retrieveData}) {
+export default function EventDetailsComments({event, setEvent, retrieveData}) {
 
     const [comment, setComment] = useState("")
+    const [loading, setLoading] = useState(false)
 
     function handleCommentChange(e) {
         const newComment = e.target.value
@@ -11,28 +12,46 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
     }
 
     async function newCommentHandler(e){
-        e.preventDefault()
-        if (comment.trim() === ""){return}
-        const data = {body: comment}
-        await createComment(eventId, data)
-        setComment("")
-        retrieveData()
+        try{
+            e.preventDefault()
+            setLoading(true)
+            if (comment.trim() === ""){return}
+            const data = {body: comment}
+            setComment("")
+            const updatedEvent = await createComment(event._id, data)
+            if (updatedEvent._id){
+                setEvent(updatedEvent)
+                setLoading(false)
+            }else {
+                throw Error("Something went wrong with adding a comment.")
+            }
+        }catch(err){
+            console.log(err)
+        }
     }
 
     async function deleteCommentHandler(e, eId, cId){
-        e.preventDefault()
-        await deleteComment(eId,cId)
-        retrieveData()
+        try{
+            e.preventDefault()
+            const updatedEvent = await deleteComment(eId,cId)
+            if (updatedEvent._id){
+                setEvent(updatedEvent)
+            }else {
+                throw Error("Something went wrong with removing a comment.")
+            }
+        }catch(err){
+            console.log(err)
+         }
     }
 
     return(
         <div>
             Comments
-            {comments.length  ? (
+            {event.comments.length  ? (
                 <>
-                {comments.map((c)=>(
+                {event.comments.map((c)=>(
                     <div key={c._id}>
-                        <button onClick={(e)=>deleteCommentHandler(e, eventId, c._id)} className="btn-xs btn-secondary ">
+                        <button onClick={(e)=>deleteCommentHandler(e, event._id, c._id)} className="btn-xs btn-secondary ">
                         X
                         </button>
                         {c.username}: {c.body}
@@ -58,7 +77,7 @@ export default function EventDetailsComments({comments,  eventId, retrieveData})
                 />
                 <div>
                     <button className="btn btn-primary w-full max-w-xs" type="Submit"
-                    disabled={comment.trim() === ""}
+                    disabled={comment.trim() === "" || loading}
                     >
                         Comment
                     </button>
