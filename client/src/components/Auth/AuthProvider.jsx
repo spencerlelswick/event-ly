@@ -16,9 +16,6 @@ export default function Auth0ProviderWithNavigate({children}){
         navigate(appState?.returnTo || window.location.pathname)
     }
 
-    // window.location.pathaname -> /profile /people/id....
-    // window.location.href -> http://localhost:3000/profile
-
     return (
         <Auth0Provider
             domain={domain}
