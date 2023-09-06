@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import latLngToAddress from '../util/geocode';
 import Datepicker from 'tailwind-datepicker-react';
 import { createEvent } from '../utilities/events-service';
+import 'react-toastify/dist/ReactToastify.css';
 
-function NewEventModal({ point }) {
+function NewEventModal({ point, displayToast }) {
   const initState = {
     name: '',
     coordinates: point,
@@ -17,7 +18,7 @@ function NewEventModal({ point }) {
   const [newEvent, setNewEvent] = useState(initState);
   const [address, setAddress] = useState('Address not set.');
   const [show, setShow] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClose = (state) => {
     setShow(state);
   };
@@ -64,10 +65,9 @@ function NewEventModal({ point }) {
     setNewEvent(updatedData);
   }
 
-  function handleCancel(e) {
+  function handleCancel() {
     setNewEvent(initState);
-
-    console.log(e);
+    setIsModalOpen(false);
   }
 
   function handleDateChange(e) {
@@ -75,11 +75,13 @@ function NewEventModal({ point }) {
     const updatedData = { ...newEvent, date: e };
     setNewEvent(updatedData);
   }
+
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(newEvent);
+    displayToast(`${newEvent.name} has been added!`);
     await createEvent(newEvent);
     setNewEvent(initState);
+    setIsModalOpen(false);
   }
 
   async function getAddress() {
@@ -99,12 +101,12 @@ function NewEventModal({ point }) {
   return (
     <>
       <button
-        onClick={() => document.getElementById('event_modal').showModal()}
+        onClick={() => setIsModalOpen(true)}
         className='btn btn-active btn-primary'
       >
         Add Event
       </button>
-      <dialog id='event_modal' className='modal '>
+      <dialog id='event_modal' className='modal' open={isModalOpen}>
         <form
           onSubmit={handleSubmit}
           method='dialog'
