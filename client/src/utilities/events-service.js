@@ -29,7 +29,7 @@ export async function showEvent(id){
 
 export async function updateEvent(id, data){
     try{
-       const resp = await eventAPI.update(id, data)
+       const resp = await eventsAPI.update(id, data)
        return resp
     }catch(err){
         return err
@@ -38,7 +38,7 @@ export async function updateEvent(id, data){
 
 export async function deleteEvent(id){
     try{
-       const data = await eventAPI.destroy(id)
+       const data = await eventsAPI.destroy(id)
        return data
     }catch(err){
         return err

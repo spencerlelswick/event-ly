@@ -4,7 +4,7 @@ export default function NewEventModal() {
   return (
     <>
       <button
-        onClick={() => window.event_modal.showModal()}
+        onClick={() => document.getElementById('event_modal').showModal()}
         className='btn btn-active btn-primary'
       >
         Add Event
