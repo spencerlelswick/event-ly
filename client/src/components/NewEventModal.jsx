@@ -1,6 +1,100 @@
-import AddressSearch from './AddressSearch';
+import { useEffect, useState } from 'react';
+import latLngToAddress from '../util/geocode';
+import Datepicker from 'tailwind-datepicker-react';
+import { createEvent } from '../utilities/events-service';
+const initState = {
+  name: '',
+  category: '1',
+  location: '',
+  date: '',
+  image: 'https://picsum.photos/200/320',
+  title: '',
+  description: '',
+};
 
-export default function NewEventModal() {
+function NewEventModal({ point }) {
+  const [newEvent, setNewEvent] = useState(initState);
+  const [address, setAddress] = useState('Address not set.');
+  const [show, setShow] = useState(false);
+
+  const handleClose = (state) => {
+    setShow(state);
+  };
+
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() - 1);
+
+  const options = {
+    title: 'Event Date',
+    autoHide: true,
+    todayBtn: false,
+    clearBtn: true,
+    maxDate: new Date('2030-01-01'),
+    minDate: new Date(minDate),
+    theme: {
+      border: '',
+      background: '',
+      todayBtn: '',
+      clearBtn: '',
+      icons: '',
+      text: '',
+      disabledText: 'bg-gray-100',
+      input: 'border-primary border-[1px] border-solid',
+      inputIcon: '',
+      selected: '',
+    },
+    icons: {
+      prev: () => <span>Previous</span>,
+      next: () => <span>Next</span>,
+    },
+    datepickerClassNames: 'top-12',
+    defaultDate: new Date(Date.now()),
+    language: 'en',
+  };
+
+  function handleChange(e) {
+    const updatedData = {
+      ...newEvent,
+      address: address.name,
+      coordinates: point,
+      [e.target.name]: e.target.value,
+    };
+    console.log(updatedData);
+    setNewEvent(updatedData);
+  }
+
+  function handleCancel(e) {
+    setNewEvent(initState);
+
+    console.log(e);
+  }
+
+  function handleDateChange(e) {
+    console.log(e);
+    const updatedData = { ...newEvent, date: e };
+    setNewEvent(updatedData);
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log(newEvent);
+    await createEvent(newEvent);
+    setNewEvent(initState);
+  }
+
+  async function getAddress() {
+    try {
+      const geocodeLatLon = await latLngToAddress(point[0], point[1]);
+      setAddress(geocodeLatLon);
+      // setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getAddress();
+  }, [point]);
+
   return (
     <>
       <button
@@ -9,48 +103,100 @@ export default function NewEventModal() {
       >
         Add Event
       </button>
-      <dialog id='event_modal' className='modal'>
+      <dialog id='event_modal' className='modal '>
         <form
+          onSubmit={handleSubmit}
           method='dialog'
           className='modal-box flex flex-col justify-center align-middle items-center'
         >
           <div className='form-control w-full max-w-xs'>
-            <AddressSearch />
-            <label className='label'>
-              <span className='label-text'>Name your event:</span>
-            </label>
-            <input
-              type='text'
-              placeholder='Type here'
-              className='input input-bordered w-full max-w-xs input-primary'
-            />
-            <label className='label'>
-              <span className='label-text'>Type:</span>
-            </label>
-            <input
-              type='text'
-              placeholder='Type here'
-              className='input input-bordered w-full max-w-xs input-primary'
-            />
-            <label className='label'>
-              <span className='label-text'>Describe the event:</span>
-            </label>
-            <input
-              type='text'
-              placeholder='Type here'
-              className='input input-bordered w-full max-w-xs input-primary'
-            />
+            <p className='text-sm'>Confirm address:</p>
+            <p className='text-2xl'>{`${address.name}`}</p>
 
-            <button className='btn btn-primary mt-5'>Submit</button>
-            <button className='btn btn-outline btn-secondary mt-1'>
-              Cancel
-            </button>
+            <div className='form-control w-full max-w-xs'>
+              <label className='label' htmlFor='name'>
+                <span className='label-text'>Name your event:</span>
+              </label>
+              <input
+                type='text'
+                name='name'
+                value={newEvent.name}
+                onChange={handleChange}
+                className='input input-bordered w-full max-w-xs input-primary'
+              />
+            </div>
+            <div className='form-control w-full max-w-xs'>
+              <label className='label' htmlFor='location'>
+                <span className='label-text'>Location description</span>
+              </label>
+              <input
+                type='text'
+                name='location'
+                placeholder='Room 5, near the swingset, etc.'
+                value={newEvent.location}
+                onChange={handleChange}
+                className='input input-bordered w-full max-w-xs input-primary'
+              />
+            </div>
+            <div className='form-control w-full max-w-xs'>
+              <label className='label'>
+                <span className='label-text'>Pick a category:</span>
+              </label>
+              <select
+                name='category'
+                onChange={handleChange}
+                defaultValue={'1'}
+                className='select select-bordered select-bordered select-primary'
+              >
+                <option value={'1'}>Art</option>
+                <option value={'2'}>Business</option>
+                <option value={'3'}>Exercise</option>
+                <option value={'4'}>Food</option>
+                <option value={'5'}>Games</option>
+                <option value={'6'}>Language</option>
+                <option value={'7'}>Music</option>
+                <option value={'8'}>Party</option>
+                <option value={'9'}>Politics</option>
+                <option value={'10'}>Science</option>
+                <option value={'11'}>Sport</option>
+                <option value={'12'}>Tech</option>
+              </select>
+            </div>
+
+            <div className='form-control w-full max-w-xs'>
+              <label className='label' htmlFor='date'>
+                <span className='label-text'>Date:</span>
+              </label>
+              <Datepicker
+                name='date'
+                value={newEvent.date}
+                options={options}
+                onChange={handleDateChange}
+                show={show}
+                setShow={handleClose}
+              />
+            </div>
+            <div className='form-control'>
+              <label className='label'>
+                <span className='label-text'>Event description:</span>
+              </label>
+              <textarea
+                name='description'
+                value={newEvent.description}
+                onChange={handleChange}
+                className='textarea textarea-bordered h-24 border-primary'
+                placeholder='Description'
+              ></textarea>
+            </div>
+            <input type='submit' className='btn btn-primary mt-5' />
           </div>
         </form>
         <form method='dialog' className='modal-backdrop'>
-          <button>close</button>
+          <button onClick={handleCancel}>close</button>
         </form>
       </dialog>
     </>
   );
 }
+
+export default NewEventModal;

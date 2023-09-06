@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <header style={{ height: '5vh' }} className='bg-red-500'>
+    <header style={{ height: '5vh' }} className='bg-primary text-white'>
       <div id='mobile-menu' className='sm:hidden flex justify-between'>
         <p>search</p>
         <h1>Logo</h1>
