@@ -11,7 +11,6 @@ const App = () => {
   const { user, isAuthenticated, isLoading } = useAuth0()  
  
   async function handleAuthUser(){
-    
     if (isAuthenticated){
     const data = {
       name: user.given_name ? user.name : user.nickname ,
@@ -22,7 +21,6 @@ const App = () => {
     user._id = newUser._id
     user.favCategory = newUser.favCategory
     user.name = newUser.name
-    console.log(user)
     }
   }
   
