@@ -11,6 +11,7 @@ const Home = () => {
     38.21363852151677, -85.58345588638122,
   ]);
   const [point, setPoint] = useState(null);
+  const [pannedEvent, setPannedEvent] = useState(null);
 
   return (
     <div style={{ height: '95vh' }} className='sm:text-2xl '>
@@ -19,6 +20,7 @@ const Home = () => {
         eventsList={eventsList}
         setEventsList={setEventsList}
         point={point}
+        setPannedEvent={setPannedEvent}
       />
       <RightDrawerCollapsed />
       {point && <LeftDrawer point={point} setPoint={setPoint} />}
@@ -27,6 +29,7 @@ const Home = () => {
         eventsList={eventsList}
         point={point}
         setPoint={setPoint}
+        pannedEvent={pannedEvent}
       />
     </div>
   );
