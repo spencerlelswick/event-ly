@@ -63,7 +63,7 @@ export default function EventDetailsModal({modalId,eventId}) {
                         <EventDetailsGuests event={event} setEvent={setEvent}/>
 
                         <hr/>
-                        <EventDetailsComments event={event} retrieveData={retrieveData}/>
+                        <EventDetailsComments event={event} setEvent={setEvent}/>
 
                     </div>
                     )}

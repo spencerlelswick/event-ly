@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { createComment, deleteComment } from "../utilities/comments-service"
 
-export default function EventDetailsComments({event, retrieveData}) {
+export default function EventDetailsComments({event, setEvent, retrieveData}) {
 
     const [comment, setComment] = useState("")
 
@@ -14,15 +14,15 @@ export default function EventDetailsComments({event, retrieveData}) {
         e.preventDefault()
         if (comment.trim() === ""){return}
         const data = {body: comment}
-        await createComment(event._id, data)
+        const updatedEvent = await createComment(event._id, data)
         setComment("")
-        retrieveData()
+        setEvent(updatedEvent)
     }
 
     async function deleteCommentHandler(e, eId, cId){
         e.preventDefault()
-        await deleteComment(eId,cId)
-        retrieveData()
+        const updatedEvent = await deleteComment(eId,cId)
+        setEvent(updatedEvent)
     }
 
     return(
