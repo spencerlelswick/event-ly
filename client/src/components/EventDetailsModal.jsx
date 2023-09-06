@@ -45,6 +45,7 @@ export default function EventDetailsModal({modalId,eventId}) {
                     <div className="w-full">
                         <div>{eventDetails.name}</div>
                         <img src={eventDetails.image} alt={eventDetails.name}/>
+                        <div>{eventDetails.description}</div>
                         <div>{eventDetails.location}</div>
                         <div>{eventDetails.address}</div>
                         <div>{eventDetails.date}</div>
