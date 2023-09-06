@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MapPin from './MapPin';
 import { Marker, Popup } from 'react-leaflet';
 import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import { localityData } from '../mock/data';
 
-const Map = ({ setCoordinates, eventsList, point, setPoint }) => {
+let lastPan = [0, 0];
+
+const Map = ({ setCoordinates, eventsList, point, setPoint, pannedEvent }) => {
   const [locality, setLocality] = useState(null);
+  const [mapUpdate, setMapUpdate] = useState(false);
   const API_KEY = import.meta.env.VITE_GEOCODE_API;
 
   function MapCtrl() {
@@ -32,7 +35,24 @@ const Map = ({ setCoordinates, eventsList, point, setPoint }) => {
       setPoint([lat, lng]);
     });
 
+    map.on('contextmenu', function (e) {
+      setPoint(null);
+    });
+
     return <>{point && <Marker id='user-pin' position={point}></Marker>}</>;
+  }
+
+  function MapPanner() {
+    const map = useMap();
+    if (pannedEvent && pannedEvent[0] !== lastPan[0]) {
+      lastPan = [...pannedEvent];
+      map.flyTo(pannedEvent, 18, {
+        animate: true,
+        duration: 2,
+      });
+    }
+
+    return null;
   }
 
   async function getViewArea(lat, lon) {
@@ -72,6 +92,7 @@ const Map = ({ setCoordinates, eventsList, point, setPoint }) => {
     >
       <MapCtrl />
       <UserPin />
+      <MapPanner />
       <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
 
       {eventsList !== null ? (
