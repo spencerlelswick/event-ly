@@ -17,7 +17,13 @@ async function index(req, res) {
 
 async function create(req,res){
     try {
-        res.status(201).json(await User.create(req.body));
+        const foundUser = await User.find({email: req.body.email})
+        if (foundUser.length !== 0 ){
+            res.status(200).json(foundUser[0])
+        }else {
+            const createdUser = await User.create(req.body)
+            res.status(201).json(createdUser)
+        }
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
