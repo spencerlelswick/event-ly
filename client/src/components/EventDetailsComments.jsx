@@ -12,20 +12,36 @@ export default function EventDetailsComments({event, setEvent, retrieveData}) {
     }
 
     async function newCommentHandler(e){
-        e.preventDefault()
-        setLoading(true)
-        if (comment.trim() === ""){return}
-        const data = {body: comment}
-        const updatedEvent = await createComment(event._id, data)
-        setComment("")
-        setEvent(updatedEvent)
-        setLoading(false)
+        try{
+            e.preventDefault()
+            setLoading(true)
+            if (comment.trim() === ""){return}
+            const data = {body: comment}
+            const updatedEvent = await createComment(event._id, data)
+            if (updatedEvent._id){
+                setComment("")
+                setEvent(updatedEvent)
+                setLoading(false)
+            } else{
+                throw Error("Something went wrong.")
+            }
+        }catch(err){
+            console.log(err)
+        }
     }
 
     async function deleteCommentHandler(e, eId, cId){
-        e.preventDefault()
-        const updatedEvent = await deleteComment(eId,cId)
-        setEvent(updatedEvent)
+        try{
+            e.preventDefault()
+            const updatedEvent = await deleteComment(eId,cId)
+            if (updatedEvent._id){
+                setEvent(updatedEvent)
+            } else{
+                throw Error("Something went wrong.")
+            }
+        }catch(err){
+            console.log(err)
+         }
     }
 
     return(
