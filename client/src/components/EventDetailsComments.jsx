@@ -17,9 +17,9 @@ export default function EventDetailsComments({event, setEvent, retrieveData}) {
             setLoading(true)
             if (comment.trim() === ""){return}
             const data = {body: comment}
+            setComment("")
             const updatedEvent = await createComment(event._id, data)
             if (updatedEvent._id){
-                setComment("")
                 setEvent(updatedEvent)
                 setLoading(false)
             }else {
