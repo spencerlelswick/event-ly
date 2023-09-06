@@ -7,14 +7,17 @@ export default function EventsList({coordinates,eventsList,setEventsList}) {
     const [loading, setLoading] = useState(true)
 
     async function fetchEvents() {
+        try{
+            const eventsResponse = await getAllEvents(coordinates)
 
-        const eventsResponse = await getAllEvents(coordinates)
-
-        if (eventsResponse.length || eventsResponse.length === 0) {
-            setEventsList(eventsResponse)
-            setLoading(false)
-        } else {
-            console.log(eventsResponse)
+            if (eventsResponse.length || eventsResponse.length === 0) {
+                setEventsList(eventsResponse)
+                setLoading(false)
+            } else {
+                throw Error("Something went wrong with retrieving events.")
+            }
+        }catch(err){
+            console.log(err)
         }
     }
 
