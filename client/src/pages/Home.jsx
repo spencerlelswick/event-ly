@@ -15,14 +15,10 @@ const Home = () => {
   const [point, setPoint] = useState(null);
   const [pannedEvent, setPannedEvent] = useState(null);
 
-  useEffect(() => {
-    displayToast('test');
-  }, []);
-
   function displayToast(msg) {
     toast.success(`${msg} was added successfully!`, {
       position: 'bottom-right',
-      autoClose: 30000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
