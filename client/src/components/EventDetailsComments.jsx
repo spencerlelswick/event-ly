@@ -22,8 +22,8 @@ export default function EventDetailsComments({event, setEvent, retrieveData}) {
                 setComment("")
                 setEvent(updatedEvent)
                 setLoading(false)
-            } else{
-                throw Error("Something went wrong.")
+            }else {
+                throw Error("Something went wrong with adding a comment.")
             }
         }catch(err){
             console.log(err)
@@ -36,8 +36,8 @@ export default function EventDetailsComments({event, setEvent, retrieveData}) {
             const updatedEvent = await deleteComment(eId,cId)
             if (updatedEvent._id){
                 setEvent(updatedEvent)
-            } else{
-                throw Error("Something went wrong.")
+            }else {
+                throw Error("Something went wrong with removing a comment.")
             }
         }catch(err){
             console.log(err)

@@ -6,19 +6,35 @@ export default function EventDetailsGuests({event, setEvent}) {
     const userId = "64f7b1b50b6175389101f547" //Federico Placeholder
 
     async function handlePartecipate(e){
-        e.preventDefault()
-        const data = [...event.guests, userId]
-        const updatedEvent = await updateEvent(event._id, {guests: data})
-        setEvent(updatedEvent)
+        try{
+            e.preventDefault()
+            const data = [...event.guests, userId]
+            const updatedEvent = await updateEvent(event._id, {guests: data})
+            if (updatedEvent._id){
+                setEvent(updatedEvent)
+            }else {
+                throw Error("Something went wrong with adding a guest.")
+            }
+        }catch(err){    
+            console.log(err)
+        }
     }
 
     async function handleRemove(e){
-        e.preventDefault()
-        const data = [...event.guests]
-        const idx = data.indexOf(data.find((g)=>(g._id === userId)))
-        data.splice(idx,1)
-        const updatedEvent = await updateEvent(event._id, {guests: data})
-        setEvent(updatedEvent)
+        try{
+            e.preventDefault()
+            const data = [...event.guests]
+            const idx = data.indexOf(data.find((g)=>(g._id === userId)))
+            data.splice(idx,1)
+            const updatedEvent = await updateEvent(event._id, {guests: data})
+            if (updatedEvent._id){
+                setEvent(updatedEvent)
+            }else {
+                throw Error("Something went wrong with removing a guest.")
+            }
+        }catch(err){    
+            console.log(err)
+        }
     }
 
     return(
