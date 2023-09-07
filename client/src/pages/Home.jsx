@@ -52,6 +52,7 @@ const Home = () => {
         point={point}
         setPoint={setPoint}
         pannedEvent={pannedEvent}
+        setPannedEvent={setPannedEvent}
       />
       <ToastContainer transition={Slide} />
     </div>
