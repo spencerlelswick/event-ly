@@ -3,6 +3,7 @@ import { useState } from "react"
 import EventDetailsComments from "./EventDetailsComments";
 import EventDetailsGuests from "./EventDetailsGuests";
 import { useAuth0 } from "@auth0/auth0-react"
+import LoginButton from "./Auth/LoginButton";
 
 export default function EventDetailsModal({modalId,eventId}) {
     const { user, isAuthenticated, isLoading } = useAuth0()  
@@ -76,6 +77,7 @@ export default function EventDetailsModal({modalId,eventId}) {
                                 
                             </div>
                         )}
+                        <LoginButton hidden={isAuthenticated}/>
                     </>
                     ):null}
 
