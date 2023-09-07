@@ -8,12 +8,7 @@ module.exports = {
 
 async function create(req,res){
     try {
-        const userId = "64f397b1dc1e188f1c659f95" //placeholder
-        const user = await User.findById(userId)
-
-        const data = {...req.body, createdBy: userId, username: user.name}
-        const newComment = await Comment.create(data)
-      
+        const newComment = await Comment.create(req.body)
         const eventId = req.params.eId
         const updatedEvent = await Event.findById(eventId)
         .populate("comments")
@@ -21,7 +16,6 @@ async function create(req,res){
         .populate("createdBy")
         updatedEvent.comments.push(newComment)
         updatedEvent.save()
-    
         res.status(201).json(updatedEvent);
     } catch (error) {
         res.status(400).json({ error: error.message });

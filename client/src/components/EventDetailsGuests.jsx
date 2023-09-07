@@ -1,12 +1,10 @@
 import { updateEvent } from "../utilities/events-service"
+import { useAuth0 } from "@auth0/auth0-react"
 
-export default function EventDetailsGuests({event, setEvent, user}) {
-
-    console.log( "consol loggin from event", event.name)
-
+export default function EventDetailsGuests({event, setEvent}) {
     
+    const { user, isAuthenticated, isLoading } = useAuth0()  
     const userId = user._id
-    console.log(user)
 
     async function handlePartecipate(e){
         try{

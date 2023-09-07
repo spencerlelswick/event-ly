@@ -1,7 +1,10 @@
 import { useState } from "react"
 import { createComment, deleteComment } from "../utilities/comments-service"
+import { useAuth0 } from "@auth0/auth0-react"
 
-export default function EventDetailsComments({event, setEvent, user}) {
+export default function EventDetailsComments({event, setEvent}) {
+
+    const { user, isAuthenticated, isLoading } = useAuth0()  
 
     const [comment, setComment] = useState("")
     const [loading, setLoading] = useState(false)
@@ -16,7 +19,11 @@ export default function EventDetailsComments({event, setEvent, user}) {
             e.preventDefault()
             setLoading(true)
             if (comment.trim() === ""){return}
-            const data = {body: comment}
+            const data = {
+                body: comment,
+                createdBy: user._id,
+                username: user.name
+            }
             setComment("")
             const updatedEvent = await createComment(event._id, data)
             if (updatedEvent._id){

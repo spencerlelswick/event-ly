@@ -69,10 +69,10 @@ export default function EventDetailsModal({modalId,eventId}) {
                                 </div>
 
                                 <hr/>
-                                <EventDetailsGuests event={event} setEvent={setEvent} user={user} />
+                                <EventDetailsGuests event={event} setEvent={setEvent}/>
 
                                 <hr/>
-                                <EventDetailsComments event={event} setEvent={setEvent} user={user} />
+                                <EventDetailsComments event={event} setEvent={setEvent}/>
                                 
                             </div>
                         )}
@@ -80,7 +80,7 @@ export default function EventDetailsModal({modalId,eventId}) {
                     ):null}
 
                     <form method="dialog">
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleCancel}>✕</button>
                     </form>
                 </div>
                 <form method='dialog' className='modal-backdrop'>
