@@ -5,10 +5,6 @@ const commentSchema = new mongoose.Schema({
         type: String,
         default:"Text placeholder",
     },
-    username: {
-        type: String,
-        default:"username",
-    },
     edited:{
         type: Boolean,
         default: false,

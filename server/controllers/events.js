@@ -26,7 +26,6 @@ async function create(req, res) {
     const lat = req.body.coordinates[0]
     const lng = req.body.coordinates[1]
     try {
-
         const data = {
             ...req.body,
             coordinates: {latitude: lat, longitude: lng}
@@ -43,6 +42,10 @@ async function show(req,res){
         .populate("guests")
         .populate("createdBy")
         .populate("comments")
+        .populate({
+            path: "comments",
+            populate: "createdBy"
+        })
         res.status(200).json(foundEvent)
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -55,6 +58,10 @@ async function update(req,res){
         .populate("guests")
         .populate("createdBy")
         .populate("comments")
+        .populate({
+            path: "comments",
+            populate: "createdBy"
+        })
         res.status(200).json(foundEvent);
     } catch (error) {
         res.status(400).json({ error: error.message });

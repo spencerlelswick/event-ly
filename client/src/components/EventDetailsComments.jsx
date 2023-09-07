@@ -21,8 +21,7 @@ export default function EventDetailsComments({event, setEvent}) {
             if (comment.trim() === ""){return}
             const data = {
                 body: comment,
-                createdBy: user._id,
-                username: user.name
+                createdBy: user._id
             }
             setComment("")
             const updatedEvent = await createComment(event._id, data)
@@ -54,6 +53,7 @@ export default function EventDetailsComments({event, setEvent}) {
     return(
         <div>
             Comments
+            {console.log(event.comments)}
             {event.comments.length  ? (
                 <>
                 {event.comments.map((c)=>(
@@ -61,7 +61,8 @@ export default function EventDetailsComments({event, setEvent}) {
                         <button onClick={(e)=>deleteCommentHandler(e, event._id, c._id)} className="btn-xs btn-secondary ">
                         X
                         </button>
-                        {c.username}: {c.body}
+                        <img src={c.createdBy.picture} alt={c.createdBy.name} className="rounded-full w-10"/>
+                        {c.createdBy.name}: {c.body}
                         <span className="text-sm ml-5">
                          {c.createdAt.substring(0,10)} {c.createdAt.substring(11,16)}
                         </span>
