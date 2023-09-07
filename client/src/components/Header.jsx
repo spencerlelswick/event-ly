@@ -47,7 +47,7 @@ const Header = () => {
           {isAuthenticated && currUser ?  (
             <>
               <Link to={`/user/${currUser.ID}`}>
-                <h1>User Panel</h1>
+                <h1>My Events</h1>
               </Link>
               <LogoutButton/>
             </>
