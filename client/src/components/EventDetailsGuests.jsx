@@ -1,14 +1,13 @@
 import { updateEvent } from "../utilities/events-service"
-import { useAuth0 } from "@auth0/auth0-react"
+import { useContext } from "react"
+import { UserContext } from "./App"
 
 export default function EventDetailsGuests({event, setEvent}) {
-
-    const { user, isAuthenticated, isLoading } = useAuth0()  
-
+    const currUser = useContext(UserContext)
     async function handlePartecipate(e){
         try{
             e.preventDefault()
-            const data = [...event.guests, user._id]
+            const data = [...event.guests, currUser]
             const updatedEvent = await updateEvent(event._id, {guests: data})
             if (updatedEvent._id){
                 setEvent(updatedEvent)
@@ -24,7 +23,7 @@ export default function EventDetailsGuests({event, setEvent}) {
         try{
             e.preventDefault()
             const data = [...event.guests]
-            const idx = data.indexOf(data.find((g)=>(g._id === user._id)))
+            const idx = data.indexOf(data.find((g)=>(g._id === currUser)))
             data.splice(idx,1)
             const updatedEvent = await updateEvent(event._id, {guests: data})
             if (updatedEvent._id){
@@ -53,11 +52,11 @@ export default function EventDetailsGuests({event, setEvent}) {
                 <div>No one yet. Be the first!</div>
             )}
 
-            {isAuthenticated ? (   
+            {currUser ? (   
                 <>
-                {event.guests.find((g)=>(g._id === user._id)) === undefined ? (
+                {event.guests.find((g)=>(g._id === currUser)) === undefined ? (
                     <button onClick={handlePartecipate} className="btn btn-primary w-full max-w-xs"
-                    disabled={user._id === event.createdBy._id}
+                    disabled={ currUser === event.createdBy._id}
                     >
                         Partecipate
                     </button>

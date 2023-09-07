@@ -1,9 +1,11 @@
 import NewEventModal from './NewEventModal';
-import { useAuth0 } from "@auth0/auth0-react"
-import LoginButton from './Auth/LoginButton';
+import LoginButton from './LoginButton';
+import { useContext } from 'react';
+import { UserContext } from './App';
 
 export default function LeftDrawer({ point, setPoint, displayToast }) {
-  const { user, isAuthenticated, isLoading } = useAuth0()
+  const currUser = useContext(UserContext)
+
   return (
     <div className='h-1/6 w-3/5 flex flex-col justify-center items-center z-10 bg-white absolute bottom-0 border-t-1 border-primary left-auto'>
       {
@@ -11,7 +13,7 @@ export default function LeftDrawer({ point, setPoint, displayToast }) {
           <h2>Nice! You've found a spot, create an event?</h2>
           <div className='mt-5'>
 
-          {isAuthenticated ? (
+          {currUser ? (
             <NewEventModal
               point={point}
               displayToast={displayToast}

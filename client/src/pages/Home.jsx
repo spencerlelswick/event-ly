@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Map from '../components/Map';
 import RightDrawer from '../components/RightDrawer';
 import RightDrawerCollapsed from '../components/RightDrawerCollapsed';
-import { useState, useEffect } from 'react';
 import LeftDrawer from '../components/LeftDrawer';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
