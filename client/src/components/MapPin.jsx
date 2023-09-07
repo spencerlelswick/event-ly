@@ -9,7 +9,7 @@ export default function MapPin({ event }) {
     // iconRetinaUrl: `./src/assets/${event.category}.svg`,
     iconRetinaUrl: `./src/assets/${event.category}.svg`,
     iconAnchor: [8, 36],
-    popupAnchor: [10, -44],
+    popupAnchor: [-30, -50],
     iconSize: [16, 16],
     shadowUrl: `./src/assets/marker-bg-${event.category}.png`,
     shadowSize: [46, 46],
