@@ -18,9 +18,9 @@ const Header = () => {
         
         {!isLoading ? (
           <>
-          {isAuthenticated && currUser? (
+          {isAuthenticated && currUser ? (
             <>
-              <Link to={`/user/${currUser}`}>
+              <Link to={`/user/${currUser.ID}`}>
                 <h1>User Panel</h1>
               </Link>
               <LogoutButton/>
@@ -46,7 +46,7 @@ const Header = () => {
           <>
           {isAuthenticated && currUser ?  (
             <>
-              <Link to={`/user/${currUser}`}>
+              <Link to={`/user/${currUser.ID}`}>
                 <h1>User Panel</h1>
               </Link>
               <LogoutButton/>

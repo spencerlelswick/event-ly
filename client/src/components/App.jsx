@@ -23,7 +23,7 @@ const App = () => {
       email : user.email,
     }
     const newUser = await createUser(data)
-    setCurrUser(newUser._id)
+    setCurrUser({ID:newUser._id, PIC: newUser.picture})
     //localStorage.setItem("USER_ID", newUser._id)
     }
   }

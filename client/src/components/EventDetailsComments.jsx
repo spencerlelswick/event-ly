@@ -20,7 +20,7 @@ export default function EventDetailsComments({event, setEvent}) {
             if (comment.trim() === ""){return}
             const data = {
                 body: comment,
-                createdBy: currUser
+                createdBy: currUser.ID
             }
             setComment("")
             const updatedEvent = await createComment(event._id, data)
@@ -66,7 +66,7 @@ export default function EventDetailsComments({event, setEvent}) {
 
                         {currUser ? (
                             <button onClick={(e)=>deleteCommentHandler(e, event._id, c._id)} className="btn-xs btn-secondary"
-                                hidden={ currUser !== c.createdBy._id}>
+                                hidden={ currUser.ID !== c.createdBy._id}>
                                 X
                             </button>
                         ) : null

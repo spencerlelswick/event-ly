@@ -7,7 +7,7 @@ export default function EventDetailsGuests({event, setEvent}) {
     async function handlePartecipate(e){
         try{
             e.preventDefault()
-            const data = [...event.guests, currUser]
+            const data = [...event.guests, currUser.ID]
             const updatedEvent = await updateEvent(event._id, {guests: data})
             if (updatedEvent._id){
                 setEvent(updatedEvent)
@@ -23,7 +23,7 @@ export default function EventDetailsGuests({event, setEvent}) {
         try{
             e.preventDefault()
             const data = [...event.guests]
-            const idx = data.indexOf(data.find((g)=>(g._id === currUser)))
+            const idx = data.indexOf(data.find((g)=>(g._id === currUser.ID)))
             data.splice(idx,1)
             const updatedEvent = await updateEvent(event._id, {guests: data})
             if (updatedEvent._id){
@@ -54,9 +54,9 @@ export default function EventDetailsGuests({event, setEvent}) {
 
             {currUser ? (   
                 <>
-                {event.guests.find((g)=>(g._id === currUser)) === undefined ? (
+                {event.guests.find((g)=>(g._id === currUser.ID)) === undefined ? (
                     <button onClick={handlePartecipate} className="btn btn-primary w-full max-w-xs"
-                    disabled={ currUser === event.createdBy._id}
+                    disabled={ currUser.ID === event.createdBy._id}
                     >
                         Partecipate
                     </button>

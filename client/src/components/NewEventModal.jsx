@@ -17,7 +17,7 @@ function NewEventModal({ point, displayToast }) {
     image: 'https://picsum.photos/200/200',
     title: '',
     description: '',
-    createdBy: currUser
+    createdBy: currUser.ID
   };
   const [newEvent, setNewEvent] = useState(initState);
   const [address, setAddress] = useState('Address not set.');
