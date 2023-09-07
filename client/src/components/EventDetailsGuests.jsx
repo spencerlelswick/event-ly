@@ -1,11 +1,12 @@
 import { updateEvent } from "../utilities/events-service"
 
-export default function EventDetailsGuests({event, setEvent}) {
+export default function EventDetailsGuests({event, setEvent, user}) {
 
     console.log( "consol loggin from event", event.name)
 
-    //const userId = "64f397b1dc1e188f1c659f95" //Spencer Placeholder
-    const userId = "64f7b1b50b6175389101f547" //Federico Placeholder
+    
+    const userId = user._id
+    console.log(user)
 
     async function handlePartecipate(e){
         try{
@@ -46,7 +47,7 @@ export default function EventDetailsGuests({event, setEvent}) {
                 <div>
                 {event.guests.map((g)=>(
                     <div key={g._id} className="flex flex-row align-middle items-center">
-                        <img src={g.avatar} alt={g.name} className="rounded-full w-12"/>
+                        <img src={g.picture} alt={g.name} className="rounded-full w-12"/>
                         {g.name}
                     </div>
                 ))}

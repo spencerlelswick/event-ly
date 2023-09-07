@@ -63,16 +63,16 @@ export default function EventDetailsModal({modalId,eventId}) {
                                 <div>
                                     Host
                                     <div className="flex flex-row align-middle items-center">
-                                        <img src={event.createdBy.avatar} alt={event.createdBy.name} className="rounded-full w-12"/>
+                                        <img src={event.createdBy.picture} alt={event.createdBy.name} className="rounded-full w-12"/>
                                         {event.createdBy.name}
                                     </div>
                                 </div>
 
                                 <hr/>
-                                <EventDetailsGuests event={event} setEvent={setEvent} />
+                                <EventDetailsGuests event={event} setEvent={setEvent} user={user} />
 
                                 <hr/>
-                                <EventDetailsComments event={event} setEvent={setEvent} />
+                                <EventDetailsComments event={event} setEvent={setEvent} user={user} />
                                 
                             </div>
                         )}
