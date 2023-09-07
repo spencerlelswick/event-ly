@@ -1,5 +1,6 @@
 import EventDetailsModal from './EventDetailsModal';
 
+
 export default function EventsListItem({ event, setPannedEvent }) {
   const handleClick = (e) => {
     // console.log(event);
@@ -13,10 +14,10 @@ export default function EventsListItem({ event, setPannedEvent }) {
   };
 
   return (
-    <div onClick={handleClick}>
+    <div>
       <hr />
       <div>{event.name}</div>
-      <img src={event.image} alt={event.name} />
+      <img src={event.image} alt={event.name} onClick={handleClick}/>
       <EventDetailsModal modalId={event._id + '1'} eventId={event._id} />
       <hr />
     </div>

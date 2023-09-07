@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { createComment, deleteComment } from "../utilities/comments-service"
 
-export default function EventDetailsComments({event, setEvent, retrieveData}) {
+export default function EventDetailsComments({event, setEvent}) {
 
     const [comment, setComment] = useState("")
     const [loading, setLoading] = useState(false)

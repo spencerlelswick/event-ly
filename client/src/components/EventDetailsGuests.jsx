@@ -2,6 +2,8 @@ import { updateEvent } from "../utilities/events-service"
 
 export default function EventDetailsGuests({event, setEvent}) {
 
+    console.log( "consol loggin from event", event.name)
+
     //const userId = "64f397b1dc1e188f1c659f95" //Spencer Placeholder
     const userId = "64f7b1b50b6175389101f547" //Federico Placeholder
 
