@@ -74,10 +74,10 @@ export default function EventDetailsModal({modalId,eventId}) {
 
                                 <hr/>
                                 <EventDetailsComments event={event} setEvent={setEvent}/>
-                                
+
+                                {!isAuthenticated ? <LoginButton /> : null}
                             </div>
                         )}
-                        <LoginButton hidden={isAuthenticated}/>
                     </>
                     ):null}
 
