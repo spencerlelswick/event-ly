@@ -4,12 +4,31 @@ import { Marker, Popup } from 'react-leaflet';
 import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import { localityData } from '../mock/data';
 
-let lastPan = [0, 0];
+let lastPan = [[0, 0], 15];
 
-const Map = ({ setCoordinates, eventsList, point, setPoint, pannedEvent }) => {
+const Map = ({
+  setCoordinates,
+  eventsList,
+  point,
+  setPoint,
+  pannedEvent,
+  setPannedEvent,
+}) => {
   const [locality, setLocality] = useState(null);
-  const [mapUpdate, setMapUpdate] = useState(false);
+  const [userLoc, setUserLoc] = useState([
+    38.21363852151677, -83.58345588638122,
+  ]);
   const API_KEY = import.meta.env.VITE_GEOCODE_API;
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setUserLoc([position.coords.latitude, position.coords.longitude]);
+      setPannedEvent([
+        [position.coords.latitude, position.coords.longitude],
+        10,
+      ]);
+    });
+  }, []);
 
   function MapCtrl() {
     const map = useMap();
@@ -44,9 +63,13 @@ const Map = ({ setCoordinates, eventsList, point, setPoint, pannedEvent }) => {
 
   function MapPanner() {
     const map = useMap();
-    if (pannedEvent && pannedEvent[0] !== lastPan[0]) {
-      lastPan = [...pannedEvent];
-      map.flyTo(pannedEvent, 18, {
+    if (pannedEvent && pannedEvent[0][0] !== lastPan[0][0]) {
+      console.log(lastPan);
+      console.log(pannedEvent);
+      console.log(pannedEvent[0]);
+
+      lastPan = [[...pannedEvent[0]], 18];
+      map.flyTo(pannedEvent[0], pannedEvent[1], {
         animate: true,
         duration: 2,
       });
@@ -86,7 +109,7 @@ const Map = ({ setCoordinates, eventsList, point, setPoint, pannedEvent }) => {
     <MapContainer
       className='flex justify-center items-center h-full'
       style={{ height: '100%', width: '100%', zIndex: 0 }}
-      center={[38.21363852151677, -85.58345588638122]}
+      center={userLoc}
       zoom={12}
       scrollWheelZoom={true}
     >

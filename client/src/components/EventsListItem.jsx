@@ -2,11 +2,10 @@ import EventDetailsModal from './EventDetailsModal';
 
 export default function EventsListItem({ event, setPannedEvent }) {
   const handleClick = (e) => {
-    // console.log(event);
     setTimeout(() => {
       const lat = event.coordinates.latitude;
       const lng = event.coordinates.longitude;
-      setPannedEvent([lat, lng]);
+      setPannedEvent([[lat, lng], 14]);
     }, 100);
 
     return null;
