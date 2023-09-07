@@ -53,44 +53,57 @@ export default function EventDetailsComments({event, setEvent}) {
     return(
         <div>
             Comments
-            {console.log(event.comments)}
+
             {event.comments.length  ? (
                 <>
                 {event.comments.map((c)=>(
-                    <div key={c._id}>
-                        <button onClick={(e)=>deleteCommentHandler(e, event._id, c._id)} className="btn-xs btn-secondary ">
-                        X
-                        </button>
+                    <div key={c._id}  className="flex flex-row align-middle items-center">
+
                         <img src={c.createdBy.picture} alt={c.createdBy.name} className="rounded-full w-10"/>
                         {c.createdBy.name}: {c.body}
                         <span className="text-sm ml-5">
-                         {c.createdAt.substring(0,10)} {c.createdAt.substring(11,16)}
+                        {c.createdAt.substring(0,10)} {c.createdAt.substring(11,16)}
                         </span>
+
+                        {isAuthenticated ? (
+                            <button onClick={(e)=>deleteCommentHandler(e, event._id, c._id)} className="btn-xs btn-secondary"
+                                hidden={ user._id !== c.createdBy._id}>
+                                X
+                            </button>
+                        ) : null
+                        }
+                        
                     </div>
                 ))}
                </>
             ) : (
                 <div>No Comments yet</div>
             )}
-            <form onSubmit={newCommentHandler}>
-                <label className='label'>
-                <span className='label-text'>Enter a comment:</span>
-                </label>
-                <input
-                type='text'
-                placeholder="Type a comment"
-                value={comment}
-                onChange={handleCommentChange}
-                className='input input-bordered w-full max-w-xs input-primary'
-                />
-                <div>
-                    <button className="btn btn-primary w-full max-w-xs" type="Submit"
-                    disabled={comment.trim() === "" || loading}
-                    >
-                        Comment
-                    </button>
-                </div>
-            </form>
+
+            {isAuthenticated ? (
+                <form onSubmit={newCommentHandler} >
+                    <label className='label'>
+                    <span className='label-text'>Enter a comment:</span>
+                    </label>
+                    <input
+                    type='text'
+                    placeholder="Type a comment"
+                    value={comment}
+                    onChange={handleCommentChange}
+                    className='input input-bordered w-full max-w-xs input-primary'
+                    />
+                    <div>
+                        <button className="btn btn-primary w-full max-w-xs" type="Submit"
+                        disabled={comment.trim() === "" || loading}
+                        >
+                            Comment
+                        </button>
+                    </div>
+                </form>
+            ):(
+                <p>LOG IN TO ADD A COMMENT</p>
+            )}
+
         </div>
     )
 }

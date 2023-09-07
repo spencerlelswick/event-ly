@@ -63,7 +63,7 @@ export default function EventDetailsModal({modalId,eventId}) {
                                 <div>
                                     Host
                                     <div className="flex flex-row align-middle items-center">
-                                        <img src={event.createdBy.picture} alt={event.createdBy.name} className="rounded-full w-12"/>
+                                        <img src={event.createdBy.picture} alt={event.createdBy.name} className="rounded-full w-10"/>
                                         {event.createdBy.name}
                                     </div>
                                 </div>
