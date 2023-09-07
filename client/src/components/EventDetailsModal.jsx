@@ -78,18 +78,15 @@ export default function EventDetailsModal({modalId,eventId}) {
                         )}
                     </>
                     ):null}
-                </div>
 
+                    <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                </div>
                 <form method='dialog' className='modal-backdrop'>
                     <button onClick={handleCancel}>close</button>
                 </form>
-
-                <form method="dialog">
-                    <button className="btn">✕</button>
-                </form>
-
             </dialog>
-            
         </>
     );
 }
