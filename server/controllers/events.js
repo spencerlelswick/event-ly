@@ -9,14 +9,23 @@ module.exports = {
 }
 
 async function index(req, res) {
-    const lat = req.body.coordinates[0]
-    const lng = req.body.coordinates[1]
-    const delta = 0.2
     try {
-      res.status(200).json(await Event.find({
-        "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
-        "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
-    }));
+        if (req.body.filterBy === "coord"){
+            const lat = req.body.coordinates[0]
+            const lng = req.body.coordinates[1]
+            const delta = 0.2
+            
+            res.status(200).json(await Event.find({
+                "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
+                "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
+            }));
+        }else if (req.body.filterBy === "created"){
+            const userId = req.body.userId
+            res.status(200).json(await Event.find({"createdBy": userId}))
+        }else if (req.body.filterBy === "guest"){
+            const userId = req.body.userId
+            res.status(200).json(await Event.find({"guests": userId}))
+        }
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

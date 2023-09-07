@@ -1,15 +1,15 @@
 import { showEvent } from "../utilities/events-service";
-import { useState } from "react"
+import { useState, useContext } from "react"
 import EventDetailsComments from "./EventDetailsComments";
 import EventDetailsGuests from "./EventDetailsGuests";
-import { useAuth0 } from "@auth0/auth0-react"
-import LoginButton from "./Auth/LoginButton";
+import LoginButton from "./LoginButton";
+import { UserContext } from "./App";
 
 export default function EventDetailsModal({modalId,eventId}) {
-    const { user, isAuthenticated, isLoading } = useAuth0()  
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loadingShow, setLoadingShow] = useState(true)
     const [event, setEvent] = useState(null)
+    const currUser = useContext(UserContext)
 
     async function handleClick() {
         setIsModalOpen(true)
@@ -23,7 +23,6 @@ export default function EventDetailsModal({modalId,eventId}) {
     async function retrieveData(){
         try{
             const showResponse = await showEvent(eventId)
-
             if (showResponse?._id) {
                 setEvent(showResponse)
                 setLoadingShow(false)
@@ -75,7 +74,7 @@ export default function EventDetailsModal({modalId,eventId}) {
                                 <hr/>
                                 <EventDetailsComments event={event} setEvent={setEvent}/>
 
-                                {!isAuthenticated ? <LoginButton /> : null}
+                                {!currUser ? <LoginButton /> : null}
                             </div>
                         )}
                     </>

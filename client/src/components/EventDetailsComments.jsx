@@ -1,11 +1,10 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { createComment, deleteComment } from "../utilities/comments-service"
-import { useAuth0 } from "@auth0/auth0-react"
+import { UserContext } from "./App"
 
 export default function EventDetailsComments({event, setEvent}) {
-
-    const { user, isAuthenticated, isLoading } = useAuth0()  
-
+    const currUser = useContext(UserContext) 
+    
     const [comment, setComment] = useState("")
     const [loading, setLoading] = useState(false)
 
@@ -21,7 +20,7 @@ export default function EventDetailsComments({event, setEvent}) {
             if (comment.trim() === ""){return}
             const data = {
                 body: comment,
-                createdBy: user._id
+                createdBy: currUser.ID
             }
             setComment("")
             const updatedEvent = await createComment(event._id, data)
@@ -54,7 +53,7 @@ export default function EventDetailsComments({event, setEvent}) {
         <div>
             Comments
 
-            {event.comments.length  ? (
+            {event.comments.length > 0  ? (
                 <>
                 {event.comments.map((c)=>(
                     <div key={c._id}  className="flex flex-row align-middle items-center">
@@ -65,9 +64,9 @@ export default function EventDetailsComments({event, setEvent}) {
                         {c.createdAt.substring(0,10)} {c.createdAt.substring(11,16)}
                         </span>
 
-                        {isAuthenticated ? (
+                        {currUser ? (
                             <button onClick={(e)=>deleteCommentHandler(e, event._id, c._id)} className="btn-xs btn-secondary"
-                                hidden={ user._id !== c.createdBy._id}>
+                                hidden={ currUser.ID !== c.createdBy._id}>
                                 X
                             </button>
                         ) : null
@@ -80,7 +79,7 @@ export default function EventDetailsComments({event, setEvent}) {
                 <div>No Comments yet</div>
             )}
 
-            {isAuthenticated ? (
+            {currUser ? (
                 <form onSubmit={newCommentHandler} >
                     <label className='label'>
                     <span className='label-text'>Enter a comment:</span>
