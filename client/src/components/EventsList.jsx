@@ -12,7 +12,7 @@ export default function EventsList({
 
   async function fetchEvents() {
     try {
-      const eventsResponse = await getAllEvents(coordinates);
+      const eventsResponse = await getAllEvents({coordinates:coordinates, filterBy:"coord"});
 
       if (eventsResponse.length || eventsResponse.length === 0) {
         setEventsList(eventsResponse);

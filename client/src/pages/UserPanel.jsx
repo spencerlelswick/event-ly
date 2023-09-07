@@ -2,18 +2,18 @@ import React, { useEffect } from 'react';
 import { showUser } from '../utilities/users-service';
 import { useContext, useState } from 'react';
 import { UserContext } from '../components/App';
+import { getAllEvents } from '../utilities/events-service';
 
 export default function UserPanel() {
   const currUser = useContext(UserContext)
-  const [userInfo, setUserInfo] = useState(null)
+  const [userEvents, setUserEvents] = useState(null)
 
-  async function retrieveUser(){
+  async function retrieveEvents(){
     try{
       if (currUser){
-      const data = await showUser(currUser)
+      const data = await getAllEvents({userId: currUser.ID, filterBy: "user"})
       console.log("data",data)
-      setUserInfo(data)
-      console.log(userInfo)
+  
       }
     }catch (err){
       console.log(err)
@@ -21,16 +21,22 @@ export default function UserPanel() {
   }
 
   useEffect(()=>{
-    retrieveUser()
+    retrieveEvents()
   },[currUser])
 
   return (
     <div>
 
       <h1>USER PANEL</h1>
-      {userInfo ? (
-        <div>{userInfo.name} </div>
-      ):(null)}
+      {currUser ? (
+        <>
+          <img src={currUser.PIC}/>
+          <div>{currUser.NAME}</div>
+        </>
+
+      ): (
+        <div>Loading Content</div>
+      )}
 
 
 
