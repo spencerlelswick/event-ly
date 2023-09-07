@@ -19,40 +19,13 @@ function NewEventModal({ point, displayToast }) {
   const [address, setAddress] = useState('Address not set.');
   const [show, setShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleClose = (state) => {
     setShow(state);
   };
 
   const minDate = new Date();
   minDate.setDate(minDate.getDate() - 1);
-
-  const options = {
-    title: 'Event Date',
-    autoHide: true,
-    todayBtn: false,
-    clearBtn: true,
-    maxDate: new Date('2030-01-01'),
-    minDate: new Date(minDate),
-    theme: {
-      border: '',
-      background: '',
-      todayBtn: '',
-      clearBtn: '',
-      icons: '',
-      text: '',
-      disabledText: 'bg-gray-100',
-      input: 'border-primary border-[1px] border-solid',
-      inputIcon: '',
-      selected: '',
-    },
-    icons: {
-      prev: () => <span>Previous</span>,
-      next: () => <span>Next</span>,
-    },
-    datepickerClassNames: 'top-12',
-    defaultDate: new Date(Date.now()),
-    language: 'en',
-  };
 
   function handleChange(e) {
     const updatedData = {
@@ -68,12 +41,6 @@ function NewEventModal({ point, displayToast }) {
   function handleCancel() {
     setNewEvent(initState);
     setIsModalOpen(false);
-  }
-
-  function handleDateChange(e) {
-    console.log(e);
-    const updatedData = { ...newEvent, date: e };
-    setNewEvent(updatedData);
   }
 
   async function handleSubmit(e) {
@@ -122,6 +89,7 @@ function NewEventModal({ point, displayToast }) {
               </label>
               <input
                 type='text'
+                required
                 name='name'
                 value={newEvent.name}
                 onChange={handleChange}
@@ -135,6 +103,7 @@ function NewEventModal({ point, displayToast }) {
               <input
                 type='text'
                 name='location'
+                required
                 placeholder='Room 5, near the swingset, etc.'
                 value={newEvent.location}
                 onChange={handleChange}
@@ -168,15 +137,17 @@ function NewEventModal({ point, displayToast }) {
 
             <div className='form-control w-full max-w-xs'>
               <label className='label' htmlFor='date'>
-                <span className='label-text'>Date:</span>
+                <span className='label-text'>Event start time:</span>
               </label>
-              <Datepicker
-                name='date'
+              <input
+                className='primary label-text input input-bordered w-full max-w-xs input-primary'
+                type='datetime-local'
                 value={newEvent.date}
-                options={options}
-                onChange={handleDateChange}
-                show={show}
-                setShow={handleClose}
+                onChange={handleChange}
+                id='date'
+                required
+                name='date'
+                min={Date.now()}
               />
             </div>
             <div className='form-control'>
@@ -189,6 +160,7 @@ function NewEventModal({ point, displayToast }) {
                 onChange={handleChange}
                 className='textarea textarea-bordered h-24 border-primary'
                 placeholder='Description'
+                required
               ></textarea>
             </div>
             <input type='submit' className='btn btn-primary mt-5' />
