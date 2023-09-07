@@ -3,8 +3,11 @@ import latLngToAddress from '../util/geocode';
 import Datepicker from 'tailwind-datepicker-react';
 import { createEvent } from '../utilities/events-service';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth0 } from "@auth0/auth0-react"
 
 function NewEventModal({ point, displayToast }) {
+  const { user, isAuthenticated, isLoading } = useAuth0()
+  
   const initState = {
     name: '',
     coordinates: point,
@@ -14,6 +17,7 @@ function NewEventModal({ point, displayToast }) {
     image: 'https://picsum.photos/200/320',
     title: '',
     description: '',
+    createdBy: user._id
   };
   const [newEvent, setNewEvent] = useState(initState);
   const [address, setAddress] = useState('Address not set.');

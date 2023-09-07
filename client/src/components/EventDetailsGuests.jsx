@@ -1,14 +1,14 @@
 import { updateEvent } from "../utilities/events-service"
+import { useAuth0 } from "@auth0/auth0-react"
 
 export default function EventDetailsGuests({event, setEvent}) {
 
-    //const userId = "64f397b1dc1e188f1c659f95" //Spencer Placeholder
-    const userId = "64f7b1b50b6175389101f547" //Federico Placeholder
+    const { user, isAuthenticated, isLoading } = useAuth0()  
 
     async function handlePartecipate(e){
         try{
             e.preventDefault()
-            const data = [...event.guests, userId]
+            const data = [...event.guests, user._id]
             const updatedEvent = await updateEvent(event._id, {guests: data})
             if (updatedEvent._id){
                 setEvent(updatedEvent)
@@ -24,7 +24,7 @@ export default function EventDetailsGuests({event, setEvent}) {
         try{
             e.preventDefault()
             const data = [...event.guests]
-            const idx = data.indexOf(data.find((g)=>(g._id === userId)))
+            const idx = data.indexOf(data.find((g)=>(g._id === user._id)))
             data.splice(idx,1)
             const updatedEvent = await updateEvent(event._id, {guests: data})
             if (updatedEvent._id){
@@ -44,7 +44,7 @@ export default function EventDetailsGuests({event, setEvent}) {
                 <div>
                 {event.guests.map((g)=>(
                     <div key={g._id} className="flex flex-row align-middle items-center">
-                        <img src={g.avatar} alt={g.name} className="rounded-full w-12"/>
+                        <img src={g.picture} alt={g.name} className="rounded-full w-10"/>
                         {g.name}
                     </div>
                 ))}
@@ -53,17 +53,24 @@ export default function EventDetailsGuests({event, setEvent}) {
                 <div>No one yet. Be the first!</div>
             )}
 
-            {event.guests.find((g)=>(g._id === userId)) === undefined ? (
-                <button onClick={handlePartecipate} className="btn btn-primary w-full max-w-xs"
-                disabled={userId===event.createdBy._id}
-                 >
-                    Partecipate
-                </button>
-            ) : (
-                <button onClick={handleRemove} className="btn btn-primary w-full max-w-xs">
-                    Remove me
-                </button>
-            )}
+            {isAuthenticated ? (   
+                <>
+                {event.guests.find((g)=>(g._id === user._id)) === undefined ? (
+                    <button onClick={handlePartecipate} className="btn btn-primary w-full max-w-xs"
+                    disabled={user._id === event.createdBy._id}
+                    >
+                        Partecipate
+                    </button>
+                ) : (
+                    <button onClick={handleRemove} className="btn btn-primary w-full max-w-xs">
+                        Remove me
+                    </button>
+                )}
+                </>
+            ):(
+                <p>LOG IN TO PARTECIPATE</p>
+            )} 
+
         </div>
     )
 }

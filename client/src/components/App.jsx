@@ -14,7 +14,7 @@ const App = () => {
     if (isAuthenticated){
     const data = {
       name: user.given_name ? user.name : user.nickname ,
-      avatar : user.picture,
+      picture : user.picture,
       email : user.email,
     }
     const newUser = await createUser(data)

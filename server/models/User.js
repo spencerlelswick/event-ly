@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: "User name"
     },
-    avatar: {
+    picture: {
         type: String,
         required: true,
         default:"https://placekitten.com/100/100"

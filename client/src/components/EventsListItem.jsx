@@ -1,5 +1,6 @@
 import EventDetailsModal from './EventDetailsModal';
 
+
 export default function EventsListItem({ event, setPannedEvent }) {
   const handleClick = (e) => {
     setTimeout(() => {
