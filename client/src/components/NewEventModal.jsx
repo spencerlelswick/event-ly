@@ -6,8 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from './App';
 
 function NewEventModal({ point, displayToast }) {
-  const currUser = useContext(UserContext)
-  
+  const currUser = useContext(UserContext);
+
   const initState = {
     name: '',
     coordinates: point,
@@ -17,7 +17,7 @@ function NewEventModal({ point, displayToast }) {
     image: 'https://picsum.photos/200/200',
     title: '',
     description: '',
-    createdBy: currUser.ID
+    createdBy: currUser.ID,
   };
   const [newEvent, setNewEvent] = useState(initState);
   const [address, setAddress] = useState('Address not set.');
@@ -38,7 +38,6 @@ function NewEventModal({ point, displayToast }) {
       coordinates: point,
       [e.target.name]: e.target.value,
     };
-    console.log(updatedData);
     setNewEvent(updatedData);
   }
 
