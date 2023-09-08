@@ -1,4 +1,3 @@
-import { update } from "../utilities/events-api"
 import { updateEvent } from "../utilities/events-service"
 import { deleteEvent } from "../utilities/events-service"
 import { useState } from "react"
@@ -27,7 +26,8 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
             name: event.name,
             location: event.location,
             description: event.description,
-            category: event.category
+            category: event.category,
+            date: null
         }
         setEditEvent(data)
     }
@@ -41,15 +41,19 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
             ...editEvent,
             [e.target.name]: e.target.value
         }
+        data.date === null ? data.date = event.date : null
         setEditEvent(data)
+        console.log(data)
     }
 
     async function handleSubmit(e){
         try{
             e.preventDefault()
-            const res = updateEvent(event._id ,editEvent)
-            setIsModalOpen(false)
-            retrieveEvents()
+            const res = await updateEvent(event._id ,editEvent)
+            if (res._id){
+                setIsModalOpen(false)
+                retrieveEvents()
+            }
         }catch(err){
             console.log(err)
         }
@@ -58,13 +62,13 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
     return (
         <>
             <div>
-                <div>{event.name}</div>
                 <img src={event.image} alt={event.name} className=' w-20' />
-                <div>Description: {event.description}</div>
+                <div>Name: {event.name}</div>
                 <div>Address: {event.address}</div>
                 <div>Location: {event.location}</div>
-                <div>Date: {event.date}</div>
                 <div>Category: {event.category}</div>
+                <div>Date: {new Date(event.date).toLocaleString()}</div>
+                <div>Description: {event.description}</div>
                 <div>Partecipants: {event.guests.length}</div>
                 {currUser.ID === routeId ? (
                     <div>
@@ -84,15 +88,18 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                 
             <dialog className='modal' open={isModalOpen} >
                 <div className='modal-box flex flex-col justify-center align-middle items-center'>
-                    <form method="dialog" className="w-full max-w-xs">
-
+                    <img src={event.image} alt={event.name} />
+                    <form method="dialog" className="w-full max-w-xs" onSubmit={handleSubmit}>
+                        
                         <div className='form-control w-full max-w-xs'>
-                            <label className='label' htmlFor='name'>
-                                <span className='label-text'>Edit name:</span>
+                            <label className='label label-text' >
+                                Edit name:
                             </label>
                             <input
                                 type='text'
                                 name='name'
+                                required
+                                defaultValue={event.value}
                                 value={editEvent.name}
                                 onChange={handleChange}
                                 className='input input-bordered w-full max-w-xs input-primary'
@@ -100,8 +107,8 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                         </div>
 
                         <div className='form-control w-full max-w-xs'>
-                            <label className='label' htmlFor='location'>
-                                <span className='label-text'>Location description</span>
+                            <label className='label label-text' >
+                                Edit location description
                             </label>
                             <input
                                 type='text'
@@ -114,33 +121,40 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                         </div>
 
                         <div className='form-control w-full max-w-xs'>
-                            <label className='label'>
-                                <span className='label-text'>Pick a category:</span>
+                            <label className='label label-text'>
+                                Edit category:
                             </label>
                             <select
                                 name='category'
+                                required
                                 onChange={handleChange}
                                 value={editEvent.category}
                                 className='select select-bordered select-primary'
                             >
-                                <option value={'1'}>Art</option>
-                                <option value={'2'}>Business</option>
-                                <option value={'3'}>Exercise</option>
-                                <option value={'4'}>Food</option>
-                                <option value={'5'}>Games</option>
-                                <option value={'6'}>Language</option>
-                                <option value={'7'}>Music</option>
-                                <option value={'8'}>Party</option>
-                                <option value={'9'}>Politics</option>
-                                <option value={'10'}>Science</option>
-                                <option value={'11'}>Sport</option>
-                                <option value={'12'}>Tech</option>
+                                <option value={1}>Art</option>
+                                <option value={2}>Business</option>
+                                <option value={3}>Exercise</option>
+                                <option value={4}>Food</option>
+                                <option value={5}>Games</option>
+                                <option value={6}>Language</option>
+                                <option value={7}>Music</option>
+                                <option value={8}>Party</option>
+                                <option value={9}>Politics</option>
+                                <option value={10}>Science</option>
+                                <option value={11}>Sport</option>
+                                <option value={12}>Tech</option>
                             </select>
                         </div>
+                        <label className='label label-text' >
+                                Set start time:
+                            </label>
+                        <p className='text-xl'>
+                        {new Date(event.date).toLocaleString().slice(0,-3)}
+                            </p>    
 
-                        {/* <div className='form-control w-full max-w-xs'>
-                            <label className='label' htmlFor='date'>
-                                <span className='label-text'>Event start time:</span>
+                        <div className='form-control w-full max-w-xs'>
+                            <label className='label label-text' >
+                                Edit start time:
                             </label>
                             <input
                                 className='primary label-text input input-bordered w-full max-w-xs input-primary'
@@ -148,15 +162,14 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                                 value={editEvent.date}
                                 onChange={handleChange}
                                 id='date'
-                                required
                                 name='date'
-                                min={Date.now()}
+                                min={new Date().toISOString().slice(0, -8)}
                             />
-                        </div> */}
+                        </div>
 
                         <div className='form-control'>
-                            <label className='label'>
-                                <span className='label-text'>Event description:</span>
+                            <label className='label label-text'>
+                                Edit description:
                             </label>
                             <textarea
                                 name='description'
@@ -167,9 +180,12 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                             ></textarea>
                         </div>
 
-                        <button className="btn btn-primary" onClick={handleSubmit}>CONFIRM EDIT</button> 
+                        <button className="btn btn-primary" type="submit" >CONFIRM EDIT</button>
+                        
                     </form>
-                    
+                    <form method='dialog'>
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleCancel}>✕</button>
+                    </form>
                 </div>
                 <form method='dialog' className='modal-backdrop'>
                     <button onClick={handleCancel}>close</button>

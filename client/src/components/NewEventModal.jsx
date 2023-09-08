@@ -151,7 +151,7 @@ function NewEventModal({ point, displayToast }) {
                 id='date'
                 required
                 name='date'
-                min={Date.now()}
+                min={new Date().toISOString().slice(0, -8)}
               />
             </div>
             <div className='form-control'>

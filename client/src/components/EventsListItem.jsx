@@ -15,8 +15,11 @@ export default function EventsListItem({ event, setPannedEvent }) {
   return (
     <div onClick={handleClick}>
       <hr />
-      <div>{event.name}</div>
       <img src={event.image} alt={event.name} />
+      <div>{event.name}</div>
+      <div>{new Date(event.date).toLocaleString().slice(0,-3)}</div>
+      <div>{event.address}</div>
+      <div>{event.location}</div>
       <EventDetailsModal modalId={event._id + '1'} eventId={event._id} />
       <hr />
     </div>
