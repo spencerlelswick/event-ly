@@ -10,6 +10,7 @@ module.exports = {
 
 async function index(req, res) {
     try {
+        const today = new Date()
         if (req.body.filterBy === "coord"){
             const lat = req.body.coordinates[0]
             const lng = req.body.coordinates[1]
@@ -18,10 +19,14 @@ async function index(req, res) {
             res.status(200).json(await Event.find({
                 "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
                 "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
+                "date":{$gte: today}
             }));
         }else if (req.body.filterBy === "user"){
             const userId = req.body.userId
-            const events = await Event.find({$or:[{"createdBy": userId},{"guests": userId}]})
+            const events = await Event.find({
+                "date":{$gte: today},
+                $or:[{"createdBy": userId},{"guests": userId}]
+            })
             res.status(200).json(events)
         }
     } catch (error) {
