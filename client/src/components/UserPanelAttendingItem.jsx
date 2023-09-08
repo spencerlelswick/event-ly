@@ -1,7 +1,7 @@
 import { updateEvent } from "../utilities/events-service"
 import { Link } from "react-router-dom"
 
-export default function UserPanedlAttendingItem({ event, currUser, routeId , attendingEvents, setAttendingEvents}){
+export default function UserPanedlAttendingItem({ event, currUser, routeId , retrieveEvents}){
 
     async function handleRemove(e){
         try{
@@ -13,10 +13,7 @@ export default function UserPanedlAttendingItem({ event, currUser, routeId , att
             const updatedEvent = await updateEvent(event._id, {guests: data})
             console.log(updatedEvent)
             if (updatedEvent._id){
-                const list = [...attendingEvents]
-                const idx = list.indexOf(list.find((e)=>(e._id === updatedEvent._id)))
-                list.splice(idx,1)
-                setAttendingEvents(list)
+                retrieveEvents()
             }else {
                 throw Error("Something went wrong with removing a guest.")
             }

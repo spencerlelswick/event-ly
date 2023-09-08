@@ -100,6 +100,7 @@ export default function UserPanel() {
                     {createdEvents.map((event) => (
                        <UserPanelCreatedItem key={event._id} event={event} currUser={currUser} routeId={routeId}
                        createdEvents={createdEvents} setCreatedEvents={setCreatedEvents}
+                       retrieveEvents={retrieveEvents}
                        />
                     ))}
                   </>
@@ -114,6 +115,7 @@ export default function UserPanel() {
                     {attendingEvents.map((event) => (
                       <UserPanelAttendingItem key={event._id} event={event} currUser={currUser} routeId={routeId}
                       attendingEvents={attendingEvents} setAttendingEvents={setAttendingEvents}
+                      retrieveEvents={retrieveEvents}
                       />
                     ))}
                   </>
