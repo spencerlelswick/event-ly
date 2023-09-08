@@ -3,32 +3,37 @@ import { showUser } from '../utilities/users-service';
 import { useContext, useState } from 'react';
 import { UserContext } from '../components/App';
 import { getAllEvents } from '../utilities/events-service';
+import { useParams } from "react-router-dom";
 
 export default function UserPanel() {
   const currUser = useContext(UserContext)
+  const routeParams = useParams()
   const [createdEvents, setCreatedEvents] = useState(null)
-  const [loadingCreated, setLoadingCreated] = useState(true)
   const [attendingEvents, setAttendingEvents] = useState(null)
-  const [loadingAttending, setLoadingAttending] = useState(true)
+  const [loadingEvents, setLoadingEvents] = useState(true)
+
 
   async function retrieveEvents() {
     try {
       if (currUser) {
-        const created = await getAllEvents({ userId: currUser.ID, filterBy: "created" })
-        const attending = await getAllEvents({ userId: currUser.ID, filterBy: "guest" })
-        if (created.length >= 0) {
+        const userId = routeParams.id
+        const allEvents = await getAllEvents({ userId: userId, filterBy: "user" })
+        if (allEvents.length >= 0) {
+          const created = []
+          const attending = []
+          allEvents.map((event) => (
+            event.createdBy === userId ? created.push(event) : attending.push(event)
+          ))
           setCreatedEvents(created)
-          setLoadingCreated(false)
-        }
-        if (attending.length >= 0) {
           setAttendingEvents(attending)
-          setLoadingAttending(false)
+          setLoadingEvents(false)
         }
       }
     } catch (err) {
       console.log(err)
     }
   }
+
 
   useEffect(() => {
     retrieveEvents()
@@ -42,46 +47,41 @@ export default function UserPanel() {
           <img src={currUser.PIC} />
           <div>{currUser.NAME}</div>
           <hr />
-          <h1>EVENTS YOU CREATED</h1>
 
-          {loadingCreated ? (
+
+          {loadingEvents ? (
             <div>Loading Created Events...</div>
           ) : (
             <>
+              <h1>CREATED EVENTS</h1>
               {createdEvents.length ? (
                 <>
                   {createdEvents.map((event) => (
                     <div key={event._id}>
                       <div>{event.name}</div>
                       <img src={event.image} alt={event.name} className=' w-20' />
+                      {console.log(event)}
                     </div>
                   ))}
                 </>
               ) : (
                 <div>You don't have any created event. Plan something!</div>
               )}
-            </>
-          )}
 
-          <hr />
-          <h1>EVENTS YOU WANT TO ATTEND</h1>
-
-          {loadingAttending ? (
-            <div>Loading Attending Events...</div>
-          ) : (
-            <>
-              {attendingEvents.length ? (
-                <>
-                  {attendingEvents.map((event) => (
-                    <div key={event._id}>
-                      <div>{event.name}</div>
-                      <img src={event.image} alt={event.name} className=' w-20' />
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <div>Seems like you are not partecipating at any events. Go explore events in your area!</div>
-              )}
+              <hr />
+              <h1>ATTENDING EVENTS</h1>
+                {attendingEvents.length ? (
+                  <>
+                    {attendingEvents.map((event) => (
+                      <div key={event._id}>
+                        <div>{event.name}</div>
+                        <img src={event.image} alt={event.name} className=' w-20' />
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <div>Seems like you are not partecipating at any events. Go explore events in your area!</div>
+                )}
             </>
           )}
         </>
