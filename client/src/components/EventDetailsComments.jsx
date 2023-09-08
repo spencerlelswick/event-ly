@@ -66,7 +66,7 @@ export default function EventDetailsComments({event, setEvent}) {
 
                         {currUser ? (
                             <button onClick={(e)=>deleteCommentHandler(e, event._id, c._id)} className="btn-xs btn-secondary"
-                                hidden={ currUser.ID !== c.createdBy._id}>
+                                hidden={ currUser.ID !== event.createdBy._id &&  currUser.ID !== c.createdBy._id}>
                                 X
                             </button>
                         ) : null
