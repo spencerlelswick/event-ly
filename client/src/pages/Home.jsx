@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Map from '../components/Map';
-import RightDrawer from '../components/RightDrawer';
-import RightDrawerCollapsed from '../components/RightDrawerCollapsed';
+import EventsList from '../components/EventsList';
+import EventsListCollapsed from '../components/EventsListCollapsed';
 import LeftDrawer from '../components/LeftDrawer';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -38,10 +38,8 @@ const Home = () => {
       const eventsResponse = await getAllEvents({coordinates:coordinates, filterBy:"coord"});
       if (eventsResponse.length || eventsResponse.length === 0) {
 
-        const sorted = eventsResponse.sort((a,b)=>
-          (calcDist(a)) < (calcDist(b)) ? -1 : 1
-        )
-        
+        const sorted = eventsResponse.sort((a,b)=> (calcDist(a)) < (calcDist(b)) ? -1 : 1)
+
         setEventsList(sorted);
         setLoadingEventList(false);
       } else {
@@ -59,7 +57,7 @@ const Home = () => {
 
   return (
     <div style={{ height: '95vh' }} className='sm:text-2xl '>
-      <RightDrawer
+      <EventsList
         coordinates={coordinates}
         eventsList={eventsList}
         setEventsList={setEventsList}
@@ -68,7 +66,7 @@ const Home = () => {
         fetchEvents={fetchEvents}
         loadingEventsList={loadingEventsList}
       />
-      <RightDrawerCollapsed />
+      <EventsListCollapsed />
 
       {point && (
         <LeftDrawer

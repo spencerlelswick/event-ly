@@ -1,6 +1,6 @@
 import EventsListItem from "./EventsListItem";
 
-export default function RightDrawer({
+export default function EventsList({
   eventsList,
   setPannedEvent,
   loadingEventsList
@@ -28,9 +28,7 @@ export default function RightDrawer({
         </div>
       ) : (
         <div>No events in the area.</div>
-      )};
-
-
+      )}
     </div>
-  );
+  )
 }
