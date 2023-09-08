@@ -29,11 +29,20 @@ const Home = () => {
     });
   }
 
+  function calcDist(ev){
+    return ((ev.coordinates.latitude - coordinates[0])**2 + (ev.coordinates.longitude-coordinates[1])**2)
+  }
+
   async function fetchEvents() {
     try {
       const eventsResponse = await getAllEvents({coordinates:coordinates, filterBy:"coord"});
       if (eventsResponse.length || eventsResponse.length === 0) {
-        setEventsList(eventsResponse);
+
+        const sorted = eventsResponse.sort((a,b)=>
+          (calcDist(a)) < (calcDist(b)) ? -1 : 1
+        )
+        
+        setEventsList(sorted);
         setLoadingEventList(false);
       } else {
         throw Error('Something went wrong with retrieving events.');
