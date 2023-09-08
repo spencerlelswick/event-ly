@@ -42,7 +42,6 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
             [e.target.name]: e.target.value
         }
         setEditEvent(data)
-        console.log(data)
     }
 
     async function handleSubmit(e){
@@ -56,6 +55,8 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
             if (res._id){
                 setIsModalOpen(false)
                 retrieveEvents()
+            }else {
+                throw Error("Something went wrong retrieving the events.")
             }
         }catch(err){
             console.log(err)
@@ -194,10 +195,6 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                     <button onClick={handleCancel}>close</button>
                 </form>
             </dialog>
-
-
-
-
         </>
     )
 }

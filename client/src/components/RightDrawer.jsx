@@ -1,12 +1,9 @@
-import NewEventModal from './NewEventModal';
-import EventsList from './EventsList';
+import EventsListItem from "./EventsListItem";
 
 export default function RightDrawer({
-  coordinates,
   eventsList,
-  setEventsList,
-  point,
   setPannedEvent,
+  loadingEventsList
 }) {
   return (
     <div
@@ -16,12 +13,24 @@ export default function RightDrawer({
       <div className='flex justify-between m-2'>
         <h2 className='text-4xl'>Event List:</h2>
       </div>
-      <EventsList
-        coordinates={coordinates}
-        eventsList={eventsList}
-        setEventsList={setEventsList}
-        setPannedEvent={setPannedEvent}
-      />
+
+      {loadingEventsList ? (
+        <div>loading Events</div>
+        ) : eventsList.length ? (
+        <div>
+          {eventsList.map((event) => (
+            <EventsListItem
+              event={event}
+              key={event._id}
+              setPannedEvent={setPannedEvent}
+            />
+          ))}
+        </div>
+      ) : (
+        <div>no events in the area</div>
+      )};
+
+
     </div>
   );
 }
