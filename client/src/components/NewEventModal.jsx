@@ -4,9 +4,10 @@ import { createEvent } from '../utilities/events-service';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from './App';
 
+
 function NewEventModal({ point, displayToast, fetchEvents }) {
   const currUser = useContext(UserContext)
-  
+
   const initState = {
     name: '',
     coordinates: point,
@@ -16,7 +17,7 @@ function NewEventModal({ point, displayToast, fetchEvents }) {
     image: 'https://picsum.photos/200/200',
     title: '',
     description: '',
-    createdBy: currUser.ID
+    createdBy: currUser.ID,
   };
   const [newEvent, setNewEvent] = useState(initState);
   const [address, setAddress] = useState('Address not set.');

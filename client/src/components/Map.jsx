@@ -64,11 +64,11 @@ const Map = ({
   function MapPanner() {
     const map = useMap();
     if (pannedEvent && pannedEvent[0][0] !== lastPan[0][0]) {
-      console.log(lastPan);
-      console.log(pannedEvent);
-      console.log(pannedEvent[0]);
-
       lastPan = [[...pannedEvent[0]], 18];
+
+      setPoint(null);
+
+      console.log(map);
       map.flyTo(pannedEvent[0], pannedEvent[1], {
         animate: true,
         duration: 2,

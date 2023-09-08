@@ -10,7 +10,6 @@ export default async function latLngToAddress(lat, lon) {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-    console.log(data.resourceSets[0].resources[0])
     return data.resourceSets[0].resources[0]
   } catch (error) {
     console.log(error);
