@@ -8,10 +8,8 @@ export default function UserPanedlAttendingItem({ event, currUser, routeId , ret
             e.preventDefault()
             const data = [...event.guests]
             const idx = data.indexOf(currUser.ID)
-            console.log(idx)
             data.splice(idx,1)
             const updatedEvent = await updateEvent(event._id, {guests: data})
-            console.log(updatedEvent)
             if (updatedEvent._id){
                 retrieveEvents()
             }else {

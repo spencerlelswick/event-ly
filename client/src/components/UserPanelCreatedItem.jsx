@@ -11,7 +11,6 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
         try{
             e.preventDefault()
             const res = await deleteEvent(event._id)
-            console.log(res)
             if(res._id){
                 retrieveEvents()
             }else {

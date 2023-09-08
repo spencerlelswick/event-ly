@@ -18,7 +18,6 @@ export async function index(data) {
 }
 
 export async function create(data) {
-  console.log(EVENTS_URL)
   const config = {
     method: "POST",
     headers: {
