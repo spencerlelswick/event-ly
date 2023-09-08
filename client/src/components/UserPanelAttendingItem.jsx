@@ -21,7 +21,7 @@ export default function UserPanedlAttendingItem({ event, currUser, routeId , ret
     }
 
     return (
-        <div key={event._id}>
+        <div>
             <div>{event.name}</div>
             <img src={event.image} alt={event.name} className=' w-20' />
             <div>Description: {event.description}</div>
