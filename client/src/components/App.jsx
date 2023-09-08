@@ -14,10 +14,9 @@ const App = () => {
   const { user, isAuthenticated, isLoading } = useAuth0() 
   const [currUser, setCurrUser] = useState(false)
 
-
   async function handleAuthUser(){
     if (isAuthenticated){
-    const data = {
+    const data = { 
       name: user.given_name ? user.name : user.nickname ,
       picture : user.picture,
       email : user.email,

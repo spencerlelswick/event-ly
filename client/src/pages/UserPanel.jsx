@@ -1,28 +1,63 @@
 import React, { useEffect } from 'react';
-import { showUser } from '../utilities/users-service';
 import { useContext, useState } from 'react';
 import { UserContext } from '../components/App';
 import { getAllEvents } from '../utilities/events-service';
+import { useParams } from "react-router-dom";
+import { showUser } from '../utilities/users-service';
+import { useAuth0 } from "@auth0/auth0-react"
+import UserPanelAttendingItem from '../components/UserPanelAttendingItem';
+import UserPanelCreatedItem from '../components/UserPanelCreatedItem';
 
 export default function UserPanel() {
+  const {isLoading } = useAuth0()
   const currUser = useContext(UserContext)
+  const routeId = useParams().id
+  const [routeUser, setRouteUser] = useState(null)
   const [createdEvents, setCreatedEvents] = useState(null)
-  const [loadingCreated, setLoadingCreated] = useState(true)
   const [attendingEvents, setAttendingEvents] = useState(null)
-  const [loadingAttending, setLoadingAttending] = useState(true)
+  const [loadingEvents, setLoadingEvents] = useState(true)
+  const [loadingUser, setLoadingUser] = useState(true)
+
+  async function retrieveUser() {
+    try {
+      setLoadingEvents(true)
+      setLoadingUser(true)
+      setAttendingEvents(null)
+      setCreatedEvents(null)
+      if (currUser) {
+        if (currUser.ID === routeId) {
+          setRouteUser({
+            name: currUser.NAME,
+            picture: currUser.PIC,
+            _id: currUser.ID
+          })
+          setLoadingUser(false)
+        } else {
+          const res = await showUser(routeId)
+          if (res._id) {
+            setRouteUser(res)
+            setLoadingUser(false)
+          }
+        }
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   async function retrieveEvents() {
     try {
-      if (currUser) {
-        const created = await getAllEvents({ userId: currUser.ID, filterBy: "created" })
-        const attending = await getAllEvents({ userId: currUser.ID, filterBy: "guest" })
-        if (created.length >= 0) {
+      if (currUser && routeUser) {
+        const allEvents = await getAllEvents({ userId: routeId, filterBy: "user" })
+        if (allEvents.length >= 0) {
+          const created = []
+          const attending = []
+          allEvents.map((event) => (
+            event.createdBy === routeId ? created.push(event) : attending.push(event)
+          ))
           setCreatedEvents(created)
-          setLoadingCreated(false)
-        }
-        if (attending.length >= 0) {
           setAttendingEvents(attending)
-          setLoadingAttending(false)
+          setLoadingEvents(false)
         }
       }
     } catch (err) {
@@ -31,63 +66,73 @@ export default function UserPanel() {
   }
 
   useEffect(() => {
+    retrieveUser()
+  }, [currUser, routeId])
+
+  useEffect(() => {
     retrieveEvents()
-  }, [currUser])
+  }, [routeUser])
 
   return (
     <div>
       <h1>USER PANEL</h1>
-      {currUser ? (
-        <>
-          <img src={currUser.PIC} />
-          <div>{currUser.NAME}</div>
-          <hr />
-          <h1>EVENTS YOU CREATED</h1>
+      {!isLoading ? (<>
+        {currUser ? (
+          <>
+            {loadingUser ? (
+              <div>Loading User Info...</div>
+            ) : (
+              <div>
+                <img src={routeUser.picture} alt={routeUser.name} className='w-20'/>
+                <div>{routeUser.name}</div>
+              </div>
+            )}
 
-          {loadingCreated ? (
-            <div>Loading Created Events...</div>
-          ) : (
-            <>
-              {createdEvents.length ? (
-                <>
-                  {createdEvents.map((event) => (
-                    <div key={event._id}>
-                      <div>{event.name}</div>
-                      <img src={event.image} alt={event.name} className=' w-20' />
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <div>You don't have any created event. Plan something!</div>
-              )}
-            </>
-          )}
+            <hr />
 
-          <hr />
-          <h1>EVENTS YOU WANT TO ATTEND</h1>
+            {loadingEvents ? (
+              <div>Loading Events...</div>
+            ) : (
+              <>
+                <h1>CREATED EVENTS</h1>
+                {createdEvents.length ? (
+                  <>
+                    {createdEvents.map((event) => (
+                       <UserPanelCreatedItem key={event._id} event={event} currUser={currUser} routeId={routeId}
+                       createdEvents={createdEvents} setCreatedEvents={setCreatedEvents}
+                       retrieveEvents={retrieveEvents}
+                       />
+                    ))}
+                  </>
+                ) : (
+                  <div>Not hosting any event yet.</div>
+                )}
 
-          {loadingAttending ? (
-            <div>Loading Attending Events...</div>
-          ) : (
-            <>
-              {attendingEvents.length ? (
-                <>
-                  {attendingEvents.map((event) => (
-                    <div key={event._id}>
-                      <div>{event.name}</div>
-                      <img src={event.image} alt={event.name} className=' w-20' />
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <div>Seems like you are not partecipating at any events. Go explore events in your area!</div>
-              )}
-            </>
-          )}
-        </>
-      ) : (
-        <div>Loading Content...</div>
-      )}
+                <hr />
+                <h1>ATTENDING EVENTS</h1>
+                {attendingEvents.length ? (
+                  <>
+                    {attendingEvents.map((event) => (
+                      <UserPanelAttendingItem key={event._id} event={event} currUser={currUser} routeId={routeId}
+                      attendingEvents={attendingEvents} setAttendingEvents={setAttendingEvents}
+                      retrieveEvents={retrieveEvents}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <div>Not attending any event yet.</div>
+                )}
+
+              </>
+            )}
+          </>
+        ) : (
+          <div>Log in to see info</div>
+        )}
+      </>
+      ) :
+        <>Loading Content...</>
+      }
     </div>
   );
 };

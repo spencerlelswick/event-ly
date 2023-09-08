@@ -1,12 +1,12 @@
 import { useEffect, useState, useContext } from 'react';
 import latLngToAddress from '../util/geocode';
-import Datepicker from 'tailwind-datepicker-react';
 import { createEvent } from '../utilities/events-service';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from './App';
 
-function NewEventModal({ point, displayToast }) {
-  const currUser = useContext(UserContext);
+
+function NewEventModal({ point, displayToast, fetchEvents }) {
+  const currUser = useContext(UserContext)
 
   const initState = {
     name: '',
@@ -49,9 +49,17 @@ function NewEventModal({ point, displayToast }) {
   async function handleSubmit(e) {
     e.preventDefault();
     displayToast(`${newEvent.name} has been added!`);
-    await createEvent(newEvent);
-    setNewEvent(initState);
-    setIsModalOpen(false);
+    try{
+      const res = await createEvent(newEvent);
+      if (res._id){
+        console.log(res)
+        setNewEvent(initState);
+        setIsModalOpen(false);
+        fetchEvents()
+      }
+    }catch(err){
+      console.log(err)
+    }
   }
 
   async function getAddress() {
@@ -150,7 +158,7 @@ function NewEventModal({ point, displayToast }) {
                 id='date'
                 required
                 name='date'
-                min={Date.now()}
+                min={new Date().toISOString().slice(0, -8)}
               />
             </div>
             <div className='form-control'>

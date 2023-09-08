@@ -10,6 +10,7 @@ module.exports = {
 
 async function index(req, res) {
     try {
+        const today = new Date()
         if (req.body.filterBy === "coord"){
             const lat = req.body.coordinates[0]
             const lng = req.body.coordinates[1]
@@ -18,13 +19,15 @@ async function index(req, res) {
             res.status(200).json(await Event.find({
                 "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
                 "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
-            }));
-        }else if (req.body.filterBy === "created"){
+                "date":{$gte: today}
+            }))
+        }else if (req.body.filterBy === "user"){
             const userId = req.body.userId
-            res.status(200).json(await Event.find({"createdBy": userId}))
-        }else if (req.body.filterBy === "guest"){
-            const userId = req.body.userId
-            res.status(200).json(await Event.find({"guests": userId}))
+            const events = await Event.find({
+                "date":{$gte: today},
+                $or:[{"createdBy": userId},{"guests": userId}]
+            }).sort({date:1})
+            res.status(200).json(events)
         }
     } catch (error) {
       res.status(400).json({ error: error.message });

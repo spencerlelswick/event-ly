@@ -2,7 +2,6 @@ const BASE_URL = import.meta.env.VITE_BASE_URL
 const EVENTS_URL = BASE_URL + "/events"
 
 export async function index(data) {
-
   const config = {
     method: "POST",
     headers: {
@@ -10,9 +9,7 @@ export async function index(data) {
     },
     body: JSON.stringify(data),
   };
-
   const res = await fetch(EVENTS_URL, config);
- 
   if (res.ok) {
     return res.json();
   } else {
@@ -21,7 +18,6 @@ export async function index(data) {
 }
 
 export async function create(data) {
-  console.log(EVENTS_URL)
   const config = {
     method: "POST",
     headers: {
@@ -29,11 +25,7 @@ export async function create(data) {
     },
     body: JSON.stringify(data),
   };
-
   const res = await fetch(`${ EVENTS_URL }/new`, config);
-
-  console.log(res);
-
   if (res.ok) {
     return res.json();
   } else {
@@ -47,7 +39,6 @@ export async function show(id) {
     method: "GET",
   };
   const res = await fetch(URL, config);
-
   if (res.ok) {
     return res.json();
   } else {
@@ -56,9 +47,7 @@ export async function show(id) {
 }
 
 export async function update(id, data) {
-
   const URL = `${EVENTS_URL}/${id}`;
-
   const config = {
     method: "PUT",
     headers: {
@@ -80,9 +69,6 @@ export async function destroy(id) {
     method: "DELETE",
   };
   const res = await fetch(URL, config);
-
-  console.log(res);
-
   if (res.ok) {
     return res.json();
   } else {

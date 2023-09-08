@@ -54,10 +54,10 @@ export default function EventDetailsModal({modalId,eventId}) {
                             <div className="w-full">
                                 <div>{event.name}</div>
                                 <img src={event.image} alt={event.name}/>
-                                <div>{event.description}</div>
-                                <div>{event.location}</div>
+                                <div>{new Date(event.date).toLocaleString().slice(0,-3)}</div>
                                 <div>{event.address}</div>
-                                <div>{event.date}</div>
+                                <div>{event.location}</div>
+                                <div>{event.description}</div>
 
                                 <hr/>
                                 <div>
