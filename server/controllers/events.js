@@ -20,13 +20,13 @@ async function index(req, res) {
                 "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
                 "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
                 "date":{$gte: today}
-            }));
+            }))
         }else if (req.body.filterBy === "user"){
             const userId = req.body.userId
             const events = await Event.find({
                 "date":{$gte: today},
                 $or:[{"createdBy": userId},{"guests": userId}]
-            })
+            }).sort({date:1})
             res.status(200).json(events)
         }
     } catch (error) {
