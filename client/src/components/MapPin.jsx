@@ -3,8 +3,8 @@ import EventDetailsModal from './EventDetailsModal';
 
 export default function MapPin({ event }) {
   const pointerIcon = new L.Icon({
-    iconUrl: `./src/assets/${event.category}.svg`,
-    iconRetinaUrl: `./src/assets/${event.category}.svg`,
+    iconUrl: `/assets/${event.category}.svg`,
+    iconRetinaUrl: `/assets/${event.category}.svg`,
     iconAnchor: [32, 60],
     popupAnchor: [0, -60],
     iconSize: [64, 64],
