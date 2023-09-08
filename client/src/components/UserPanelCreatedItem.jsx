@@ -1,24 +1,21 @@
 import { updateEvent } from "../utilities/events-service"
+import { deleteEvent } from "../utilities/events-service"
 import { Link } from "react-router-dom"
 
-export default function UserPanedlAttendingItem({ event, currUser, routeId , attendingEvents, setAttendingEvents}){
+export default function UserPanelCreatedItem({ event, currUser, routeId , createdEvents, setCreatedEvents}){
 
-    async function handleRemove(e){
+    async function handleDelete(e){
         try{
             e.preventDefault()
-            const data = [...event.guests]
-            const idx = data.indexOf(currUser.ID)
-            console.log(idx)
-            data.splice(idx,1)
-            const updatedEvent = await updateEvent(event._id, {guests: data})
-            console.log(updatedEvent)
-            if (updatedEvent._id){
-                const list = [...attendingEvents]
-                const idx = list.indexOf(list.find((e)=>(e._id === updatedEvent._id)))
+            const res = await deleteEvent(event._id)
+            console.log(res)
+            if(res._id){
+                const list = [...createdEvents]
+                const idx = list.indexOf(list.find((e)=>(e._id === res._id)))
                 list.splice(idx,1)
-                setAttendingEvents(list)
+                setCreatedEvents(list)
             }else {
-                throw Error("Something went wrong with removing a guest.")
+                throw Error("Something went wrong with deleting an event.")
             }
         }catch(err){    
             console.log(err)
@@ -34,15 +31,11 @@ export default function UserPanedlAttendingItem({ event, currUser, routeId , att
             <div>Location: {event.location}</div>
             <div>Date: {event.date}</div>
             <div>Category: {event.category}</div>
-            <div>
-                Host:
-                <Link to={`/user/${event.createdBy}`}> CLICK ME</Link>
-            </div>
             <div>Partecipants: {event.guests.length}</div>
             {currUser.ID === routeId ? (
                 <button className='btn btn-secondary'
-                    onClick={handleRemove}
-                >Remove me
+                    onClick={handleDelete}
+                >Delete Event
                 </button>
             ) : (
                 null

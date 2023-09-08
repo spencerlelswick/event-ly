@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { showUser } from '../utilities/users-service';
 import { useAuth0 } from "@auth0/auth0-react"
 import UserPanelAttendingItem from '../components/UserPanelAttendingItem';
+import UserPanelCreatedItem from '../components/UserPanelCreatedItem';
 
 export default function UserPanel() {
   const {isLoading } = useAuth0()
@@ -97,24 +98,9 @@ export default function UserPanel() {
                 {createdEvents.length ? (
                   <>
                     {createdEvents.map((event) => (
-                      <div key={event._id}>
-                        <br />
-                        <div>{event.name}</div>
-                        <img src={event.image} alt={event.name} className=' w-20' />
-                        <div>Description: {event.description}</div>
-                        <div>Address: {event.address}</div>
-                        <div>Location: {event.location}</div>
-                        <div>Date: {event.date}</div>
-                        <div>Category: {event.category}</div>
-                        {currUser.ID === routeId ? (
-                          <button className='btn btn-secondary'
-                          >
-                            Delete event
-                          </button>
-                        ) : (
-                          null
-                        )}
-                      </div>
+                       <UserPanelCreatedItem key={event._id} event={event} currUser={currUser} routeId={routeId}
+                       createdEvents={createdEvents} setCreatedEvents={setCreatedEvents}
+                       />
                     ))}
                   </>
                 ) : (
