@@ -15,7 +15,7 @@ export default function RightDrawer({
       </div>
 
       {loadingEventsList ? (
-        <div>loading Events</div>
+        <div>Loading events...</div>
         ) : eventsList.length ? (
         <div>
           {eventsList.map((event) => (
@@ -27,7 +27,7 @@ export default function RightDrawer({
           ))}
         </div>
       ) : (
-        <div>no events in the area</div>
+        <div>No events in the area.</div>
       )};
 
 

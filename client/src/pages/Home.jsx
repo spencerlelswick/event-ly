@@ -32,7 +32,6 @@ const Home = () => {
   async function fetchEvents() {
     try {
       const eventsResponse = await getAllEvents({coordinates:coordinates, filterBy:"coord"});
-
       if (eventsResponse.length || eventsResponse.length === 0) {
         setEventsList(eventsResponse);
         setLoadingEventList(false);
@@ -67,6 +66,7 @@ const Home = () => {
           point={point}
           setPoint={setPoint}
           displayToast={displayToast}
+          fetchEvents={fetchEvents}
         />
       )}
       <Map

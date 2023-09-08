@@ -3,7 +3,7 @@ import LoginButton from './LoginButton';
 import { useContext } from 'react';
 import { UserContext } from './App';
 
-export default function LeftDrawer({ point, setPoint, displayToast }) {
+export default function LeftDrawer({ point, setPoint, displayToast, fetchEvents }) {
   const currUser = useContext(UserContext)
 
   return (
@@ -17,6 +17,7 @@ export default function LeftDrawer({ point, setPoint, displayToast }) {
             <NewEventModal
               point={point}
               displayToast={displayToast}
+              fetchEvents={fetchEvents}
               className=''
             />
             ):
