@@ -6,7 +6,7 @@ export default function MapPin({ event }) {
     iconUrl: `./src/assets/${event.category}.svg`,
     iconRetinaUrl: `./src/assets/${event.category}.svg`,
     iconAnchor: [32, 60],
-    popupAnchor: [-30, -50],
+    popupAnchor: [0, -60],
     iconSize: [64, 64],
   });
 
@@ -15,7 +15,7 @@ export default function MapPin({ event }) {
       position={[event.coordinates.latitude, event.coordinates.longitude]}
       icon={pointerIcon}
     >
-      <Popup>
+      <Popup autoPan={false}>
         <img src={event.image} alt={event.name} />
         <div>
           {event.name} <br /> {event.address}{' '}
