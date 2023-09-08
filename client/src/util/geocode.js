@@ -3,7 +3,7 @@ export default async function latLngToAddress(lat, lon) {
 
   try {
     // BING API URL
-    const url = `http://dev.virtualearth.net/REST/v1/Locations/${lat},${lon}?o=json&key=${API_KEY}`;
+    const url = `https://dev.virtualearth.net/REST/v1/Locations/${lat},${lon}?o=json&key=${API_KEY}`;
     const options = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
