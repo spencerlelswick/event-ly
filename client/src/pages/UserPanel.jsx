@@ -5,6 +5,7 @@ import { getAllEvents } from '../utilities/events-service';
 import { useParams } from "react-router-dom";
 import { showUser } from '../utilities/users-service';
 import { useAuth0 } from "@auth0/auth0-react"
+import UserPanelAttendingItem from '../components/UserPanelAttendingItem';
 
 export default function UserPanel() {
   const {isLoading } = useAuth0()
@@ -18,6 +19,10 @@ export default function UserPanel() {
 
   async function retrieveUser() {
     try {
+      setLoadingEvents(true)
+      setLoadingUser(true)
+      setAttendingEvents(null)
+      setCreatedEvents(null)
       if (currUser) {
         if (currUser.ID === routeId) {
           setRouteUser({
@@ -67,26 +72,6 @@ export default function UserPanel() {
     retrieveEvents()
   }, [routeUser])
 
-  async function handleRemove(e){
-    try{
-        e.preventDefault()
-        const data = [...event.guests]
-        const idx = data.indexOf(data.find((g)=>(g._id === currUser.ID)))
-        data.splice(idx,1)
-        const updatedEvent = await updateEvent(event._id, {guests: data})
-        if (updatedEvent._id){
-            setEvent(updatedEvent)
-        }else {
-            throw Error("Something went wrong with removing a guest.")
-        }
-    }catch(err){    
-        console.log(err)
-    }
-}
-
-
-
-
   return (
     <div>
       <h1>USER PANEL</h1>
@@ -122,7 +107,10 @@ export default function UserPanel() {
                         <div>Date: {event.date}</div>
                         <div>Category: {event.category}</div>
                         {currUser.ID === routeId ? (
-                          <button className='btn btn-secondary'>Delete event</button>
+                          <button className='btn btn-secondary'
+                          >
+                            Delete event
+                          </button>
                         ) : (
                           null
                         )}
@@ -138,20 +126,9 @@ export default function UserPanel() {
                 {attendingEvents.length ? (
                   <>
                     {attendingEvents.map((event) => (
-                      <div key={event._id}>
-                        <div>{event.name}</div>
-                        <img src={event.image} alt={event.name} className=' w-20' />
-                        <div>Description: {event.description}</div>
-                        <div>Address: {event.address}</div>
-                        <div>Location: {event.location}</div>
-                        <div>Date: {event.date}</div>
-                        <div>Category: {event.category}</div>
-                        {currUser.ID === routeId ? (
-                          <button className='btn btn-secondary'>Remove me</button>
-                        ) : (
-                          null
-                        )}
-                      </div>
+                      <UserPanelAttendingItem key={event._id} event={event} currUser={currUser} routeId={routeId}
+                      attendingEvents={attendingEvents} setAttendingEvents={setAttendingEvents}
+                      />
                     ))}
                   </>
                 ) : (

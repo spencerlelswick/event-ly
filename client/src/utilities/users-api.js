@@ -5,9 +5,7 @@ export async function index() {
   const res = await fetch(USERS_URL, {
     method: "GET",
   });
-
-  console.log(res);
-
+  
   if (res.ok) {
     return res.json();
   } else {
@@ -20,9 +18,8 @@ export async function show(id) {
   const config = {
     method: "GET",
   };
-  const res = await fetch(URL, config);
 
-  console.log(res);
+  const res = await fetch(URL, config);
 
   if (res.ok) {
     return res.json();
@@ -43,8 +40,6 @@ export async function update(id, data) {
   };
 
   const res = await fetch(URL, config);
-
-  console.log("update response", res);
 
   if (res.ok) {
     return res.json();

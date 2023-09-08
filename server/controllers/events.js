@@ -21,9 +21,8 @@ async function index(req, res) {
             }));
         }else if (req.body.filterBy === "user"){
             const userId = req.body.userId
-            res.status(200).json(await Event.find({
-                $or:[{"createdBy": userId},{"guests": userId}]
-            }))
+            const events = await Event.find({$or:[{"createdBy": userId},{"guests": userId}]})
+            res.status(200).json(events)
         }
     } catch (error) {
       res.status(400).json({ error: error.message });
