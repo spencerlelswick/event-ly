@@ -41,7 +41,6 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
             ...editEvent,
             [e.target.name]: e.target.value
         }
-        data.date === null ? data.date = event.date : null
         setEditEvent(data)
         console.log(data)
     }
@@ -49,7 +48,11 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
     async function handleSubmit(e){
         try{
             e.preventDefault()
-            const res = await updateEvent(event._id ,editEvent)
+            const data = {...editEvent}
+            if (data.date === null){
+                delete data.date
+            }
+            const res = await updateEvent(event._id ,data)
             if (res._id){
                 setIsModalOpen(false)
                 retrieveEvents()
