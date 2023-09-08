@@ -8,12 +8,12 @@ export default function MapPin({ event }) {
     iconUrl: `./src/assets/${event.category}.svg`,
     // iconRetinaUrl: `./src/assets/${event.category}.svg`,
     iconRetinaUrl: `./src/assets/${event.category}.svg`,
-    iconAnchor: [8, 36],
+    iconAnchor: [32, 60],
     popupAnchor: [-30, -50],
-    iconSize: [16, 16],
-    shadowUrl: `./src/assets/marker-bg-${event.category}.png`,
-    shadowSize: [46, 46],
-    shadowAnchor: [22, 44],
+    iconSize: [64, 64],
+    // shadowUrl: `./src/assets/marker-bg-${event.category}.png`,
+    // shadowSize: [46, 46],
+    // shadowAnchor: [22, 44],
   });
 
   return (
