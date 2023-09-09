@@ -30,7 +30,7 @@ export default function EventsList({
       ) : (
         <>
           <div>No events in the area.</div>
-          <img src="../../public/assets/evently-logo.png" />
+          <img src="/assets/evently-logo.png" />
         </>
       )}
     </div>
