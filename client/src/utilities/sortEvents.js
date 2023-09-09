@@ -42,7 +42,7 @@ function sortByGuests(list){
 }
 
 export function sortEvents(list, coord, sorted) {
-    if (list?.length){
+    if (list?.length && list.length > 1){
         if (sorted === "dist") {
             return sortByDist(list,coord)
         }else if (sorted ==="date"){

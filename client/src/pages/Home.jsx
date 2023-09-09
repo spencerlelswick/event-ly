@@ -46,7 +46,7 @@ const Home = () => {
         if (sorted !== "date") {
           newList = sortEvents(eventsResponse, coordinates, sorted)
         }
-        
+
         setEventsList(newList)
         setLoadingEventList(false);
       } else {
@@ -62,7 +62,7 @@ const Home = () => {
   }, [coordinates]);
 
   useEffect(()=>{
-    if (eventsList?.length){
+    if (eventsList?.length && eventsList.length > 1){
       const data = [...eventsList]
       const list = sortEvents(data,coordinates,sorted)
       setEventsList(list)
