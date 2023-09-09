@@ -53,7 +53,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
               ) : (
                 <div className='w-full'>
                   <div>{event.name}</div>
-                  <img src={event.image} alt={event.name} />
+                  <img src={event.image} alt={event.name} className="w-1/4"/>
                   <div>
                     {new Date(event.date).toLocaleString().slice(0, -3)}
                   </div>

@@ -10,9 +10,9 @@ export default function EventsListSort({setSorted}) {
           >
             <option value={"date"}>Upcoming</option>
             <option value={"dist"}>Proximity</option>
-            <option value={"guests"}>Number of Guests</option>
-            <option value={"name"}>Name</option>
-            <option value={"nameInv"}>Name - inverse</option>
+            <option value={"guests"}>Number of guests</option>
+            <option value={"name"}>Name - ascending</option>
+            <option value={"nameInv"}>Name - descending</option>
           </select>
         </form>
       </div>
