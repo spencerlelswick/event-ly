@@ -35,7 +35,7 @@ const Header = () => {
 
       <div id='desktop-menu' className='hidden sm:flex justify-between'>
         <Link to="/">
-          <h1>Logo</h1>
+          <img src="../../public/assets/evently-logo.png" className="h-10"/>
         </Link>
         <ul className='flex'>
           <li className='mx-2'>link 1</li>
