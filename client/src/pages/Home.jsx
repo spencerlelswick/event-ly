@@ -18,7 +18,13 @@ const Home = () => {
   const [pannedEvent, setPannedEvent] = useState(null);
   const [loadingEventsList, setLoadingEventList] = useState(true);
   const [eventFilter, setEventFilter] = useState(initFilter());
-  const [sorted, setSorted] = useState("date")
+  const [sorted, setSorted] = useState('date');
+
+  useEffect(() => {
+    document.getElementsByClassName(
+      'leaflet-control-attribution'
+    )[0].style.display = 'none';
+  }, []);
 
   function displayToast(msg) {
     toast.success(`${msg} was added successfully!`, {
@@ -40,14 +46,13 @@ const Home = () => {
         filterBy: 'coord',
       });
       if (eventsResponse.length || eventsResponse.length === 0) {
+        let newList = eventsResponse;
 
-        let newList = eventsResponse
-
-        if (sorted !== "date") {
-          newList = sortEvents(eventsResponse, coordinates, sorted)
+        if (sorted !== 'date') {
+          newList = sortEvents(eventsResponse, coordinates, sorted);
         }
 
-        setEventsList(newList)
+        setEventsList(newList);
         setLoadingEventList(false);
       } else {
         throw Error('Something went wrong with retrieving events.');
@@ -61,44 +66,48 @@ const Home = () => {
     fetchEvents();
   }, [coordinates]);
 
-  useEffect(()=>{
-    if (eventsList?.length && eventsList.length > 1){
-      const data = [...eventsList]
-      const list = sortEvents(data,coordinates,sorted)
-      setEventsList(list)
+  useEffect(() => {
+    if (eventsList?.length && eventsList.length > 1) {
+      const data = [...eventsList];
+      const list = sortEvents(data, coordinates, sorted);
+      setEventsList(list);
     }
-  },[sorted])
+  }, [sorted]);
 
   return (
-    <div style={{ height: '95vh' }} className='sm:text-2xl '>
-      <EventsList
-        eventsList={eventsList}
-        setPannedEvent={setPannedEvent}
-        loadingEventsList={loadingEventsList}
-        eventFilter={eventFilter}
-        setEventFilter={setEventFilter}
-        setSorted={setSorted}
-      />
-      <EventsListCollapsed />
-
-      {point && (
-        <LeftDrawer
+    <div style={{ height: '95vh' }} className='flex flex-row'>
+      <div className='w-3/5 h-full'>
+        <Map
+          setCoordinates={setCoordinates}
+          eventsList={eventsList}
           point={point}
           setPoint={setPoint}
-          displayToast={displayToast}
-          fetchEvents={fetchEvents}
+          pannedEvent={pannedEvent}
+          setPannedEvent={setPannedEvent}
+          eventFilter={eventFilter}
         />
-      )}
-      <Map
-        setCoordinates={setCoordinates}
-        eventsList={eventsList}
-        point={point}
-        setPoint={setPoint}
-        pannedEvent={pannedEvent}
-        setPannedEvent={setPannedEvent}
-        eventFilter={eventFilter}
-      />
-      <ToastContainer transition={Slide} />
+        {point && (
+          <LeftDrawer
+            point={point}
+            setPoint={setPoint}
+            displayToast={displayToast}
+            fetchEvents={fetchEvents}
+          />
+        )}
+      </div>
+      <div>
+        <EventsList
+          eventsList={eventsList}
+          setPannedEvent={setPannedEvent}
+          loadingEventsList={loadingEventsList}
+          eventFilter={eventFilter}
+          setEventFilter={setEventFilter}
+          setSorted={setSorted}
+        />
+        <EventsListCollapsed />
+
+        <ToastContainer transition={Slide} />
+      </div>
     </div>
   );
 };
