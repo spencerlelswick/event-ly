@@ -10,7 +10,11 @@ export default async function latLngToAddress(lat, lon) {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-    return data.resourceSets[0].resources[0]
+    if (data.resourceSets[0].estimatedTotal){
+      return data.resourceSets[0].resources[0]
+    }else{
+      return false
+    }
   } catch (error) {
     console.log(error);
   }

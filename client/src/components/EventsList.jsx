@@ -9,7 +9,7 @@ export default function EventsList({
   loadingEventsList,
   eventFilter,
   setEventFilter,
-  setSorted
+  setSorted,
 }) {
 
   return (
@@ -39,7 +39,7 @@ export default function EventsList({
       ) : (
         <>
           <div>No events in the area.</div>
-          <img src="/assets/evently-logo.png" />
+          <img src='/assets/evently-logo.png' />
         </>
       )}
     </div>
