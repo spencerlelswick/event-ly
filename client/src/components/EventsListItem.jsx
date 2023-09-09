@@ -17,7 +17,7 @@ export default function EventsListItem({ event, setPannedEvent }) {
       <hr />
       <img src={event.image} alt={event.name} className="w-1/4" />
       <div>{event.name}</div>
-      <div>{new Date(event.date).toLocaleString().slice(0,-3)}</div>
+      <div>{new Date(event.date).toLocaleString()}</div>
       <div>{event.address}</div>
       <div>{event.location}</div>
       <div>{decodeCat(event.category)}</div>
