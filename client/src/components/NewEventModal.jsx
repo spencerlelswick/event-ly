@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from './App';
 import { decodeCat } from '../utilities/category';
 
-function NewEventModal({ point, displayToast, fetchEvents }) {
+function NewEventModal({ point, displayToast, fetchEvents, address, setAddress }) {
   const currUser = useContext(UserContext);
 
   const initState = {
@@ -20,7 +20,6 @@ function NewEventModal({ point, displayToast, fetchEvents }) {
     createdBy: currUser.ID,
   };
   const [newEvent, setNewEvent] = useState(initState);
-  const [address, setAddress] = useState('Address not set.');
   const [show, setShow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -65,7 +64,11 @@ function NewEventModal({ point, displayToast, fetchEvents }) {
   async function getAddress() {
     try {
       const geocodeLatLon = await latLngToAddress(point[0], point[1]);
-      setAddress(geocodeLatLon);
+      if (geocodeLatLon){
+        setAddress(geocodeLatLon);
+      } else{
+        setAddress(false)
+      }
       // setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -78,12 +81,14 @@ function NewEventModal({ point, displayToast, fetchEvents }) {
 
   return (
     <>
+      {address ? (
       <button
         onClick={() => setIsModalOpen(true)}
         className='btn btn-active btn-primary'
       >
         Add Event
       </button>
+      ):(null)}
       <dialog id='event_modal' className='modal' open={isModalOpen}>
         <form
           onSubmit={handleSubmit}
