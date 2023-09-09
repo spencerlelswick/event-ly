@@ -1,7 +1,7 @@
 import React, { useEffect, useState, createContext} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
-import Error from '../pages/Error';
+import PageNotFound from '../pages/PageNotFound';
 import UserPanel from '../pages/UserPanel';
 import Header from './Header';
 import { useAuth0 } from "@auth0/auth0-react"
@@ -23,7 +23,6 @@ const App = () => {
     }
     const newUser = await createUser(data)
     setCurrUser({ID:newUser._id, PIC: newUser.picture, NAME: newUser.name})
-    //localStorage.setItem("USER_ID", newUser._id)
     }
   }
 
@@ -38,7 +37,7 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/user/:id' element={<UserPanel />} />
-            <Route path='/*' element={<Error />} />
+            <Route path='/*' element={<PageNotFound />} />
           </Routes>
         </UserContext.Provider>
 
