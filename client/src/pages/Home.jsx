@@ -6,6 +6,7 @@ import LeftDrawer from '../components/LeftDrawer';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAllEvents } from '../utilities/events-service';
+import { initFilter } from '../utilities/category';
 
 const Home = () => {
   const [eventsList, setEventsList] = useState(null);
@@ -15,6 +16,7 @@ const Home = () => {
   const [point, setPoint] = useState(null);
   const [pannedEvent, setPannedEvent] = useState(null);
   const [loadingEventsList, setLoadingEventList] = useState(true);
+  const [eventFilter, setEventFilter] = useState(initFilter());
 
   function displayToast(msg) {
     toast.success(`${msg} was added successfully!`, {
@@ -29,16 +31,23 @@ const Home = () => {
     });
   }
 
-  function calcDist(ev){
-    return ((ev.coordinates.latitude - coordinates[0])**2 + (ev.coordinates.longitude-coordinates[1])**2)
+  function calcDist(ev) {
+    return (
+      (ev.coordinates.latitude - coordinates[0]) ** 2 +
+      (ev.coordinates.longitude - coordinates[1]) ** 2
+    );
   }
 
   async function fetchEvents() {
     try {
-      const eventsResponse = await getAllEvents({coordinates:coordinates, filterBy:"coord"});
+      const eventsResponse = await getAllEvents({
+        coordinates: coordinates,
+        filterBy: 'coord',
+      });
       if (eventsResponse.length || eventsResponse.length === 0) {
-
-        const sorted = eventsResponse.sort((a,b)=> (calcDist(a)) < (calcDist(b)) ? -1 : 1)
+        const sorted = eventsResponse.sort((a, b) =>
+          calcDist(a) < calcDist(b) ? -1 : 1
+        );
 
         setEventsList(sorted);
         setLoadingEventList(false);
@@ -54,7 +63,6 @@ const Home = () => {
     fetchEvents();
   }, [coordinates]);
 
-
   return (
     <div style={{ height: '95vh' }} className='sm:text-2xl '>
       <EventsList
@@ -65,6 +73,8 @@ const Home = () => {
         setPannedEvent={setPannedEvent}
         fetchEvents={fetchEvents}
         loadingEventsList={loadingEventsList}
+        eventFilter={eventFilter}
+        setEventFilter={setEventFilter}
       />
       <EventsListCollapsed />
 
@@ -83,6 +93,7 @@ const Home = () => {
         setPoint={setPoint}
         pannedEvent={pannedEvent}
         setPannedEvent={setPannedEvent}
+        eventFilter={eventFilter}
       />
       <ToastContainer transition={Slide} />
     </div>
