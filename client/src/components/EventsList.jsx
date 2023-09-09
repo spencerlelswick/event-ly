@@ -1,7 +1,8 @@
 import EventsListItem from './EventsListItem';
-import { Categories } from '../utilities/category';
 import { isFiltered } from '../utilities/category';
 import EventsListFilter from './EventsListFilter';
+import EventsListSort from './EventsListSort';
+
 export default function EventsList({
   eventsList,
   setPannedEvent,
@@ -16,24 +17,10 @@ export default function EventsList({
       style={{ height: '95vh' }}
       className='z-10 invisible sm:visible absolute border-b  bg-white right-0 w-2/5 overflow-auto'
     >
+
       <EventsListFilter eventFilter={eventFilter} setEventFilter={setEventFilter}/>
 
-      <div className='flex justify-between m-2'>
-        <form >
-          <h2>Sort by</h2>
-          <select
-          defaultValue={"date"}
-          className='select select-bordered select-primary'
-          onChange={(e)=>setSorted(e.target.value)}
-          >
-            <option value={"date"}>Upcoming</option>
-            <option value={"dist"}>Proximity</option>
-            <option value={"guests"}>Number of Guests</option>
-            <option value={"name"}>Name</option>
-            <option value={"nameInv"}>Name - inverse</option>
-          </select>
-        </form>
-      </div>
+      <EventsListSort setSorted={setSorted}/>
 
       {loadingEventsList ? (
         <div>Loading events...</div>
