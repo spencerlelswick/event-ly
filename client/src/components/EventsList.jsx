@@ -20,10 +20,33 @@ export default function EventsList({
   const filterCats = () => {
     const filterOpts = [];
     Categories.forEach((c, idx) => {
+      console.log(eventFilter[c]);
+
       filterOpts.push(
-        <label key={idx} htmlFor={c} className='btn'>
-          {c}
-          <input type='checkbox' value={idx + 1} name={c} id={c} />
+        <label
+          key={idx}
+          htmlFor={c}
+          className={`h-auto btn btn-square ${
+            eventFilter[c] === true ? 'btn-primary text-white' : ''
+          }`}
+        >
+          <p className='text-xs'>{c}</p>
+          <div className='h-5 w-20 overflow-hidden'>
+            <img
+              src={`/assets/${idx + 1}.svg`}
+              alt=''
+              srcset=''
+              className='relative object-fill'
+            />
+          </div>
+
+          <input
+            type='checkbox'
+            value={idx + 1}
+            name={c}
+            id={c}
+            className={`hidden`}
+          />
         </label>
       );
     });
@@ -34,12 +57,12 @@ export default function EventsList({
   return (
     <div
       style={{ height: '95vh' }}
-      className='z-10 invisible sm:visible absolute bg-white right-0 w-2/5 overflow-auto'
+      className='z-10 invisible sm:visible absolute border-b  bg-white right-0 w-2/5 overflow-auto'
     >
       <div className='flex justify-between m-2'>
         <form onChange={handleChange}>
           <h2>Event Filter</h2>
-          {filterCats()}
+          {filterCats(eventFilter)}
         </form>
       </div>
 
