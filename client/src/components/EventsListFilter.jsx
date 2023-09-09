@@ -4,12 +4,11 @@ import { useState } from 'react';
 
 
 export default function EventsListFilter({ eventFilter, setEventFilter }) {
-    
-    const initDate={
-        minDate: new Date().toISOString().slice(0, -14),
-        maxDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().slice(0, -14)
-    }
-    const [dateFilter, setDateFilter] = useState(initDate)
+
+    const [dateFilter, setDateFilter] = useState({
+        minDate: eventFilter.minDate,
+        maxDate: eventFilter.maxDate
+    })
 
     function handleDateChange(e){
         const newDates={...dateFilter}
@@ -20,11 +19,23 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
 
     function handleDateSubmit(e){
         e.preventDefault()
+        const data = {
+            ...eventFilter,
+            ...dateFilter
+        }
+        setEventFilter(data)
     }
 
     function handleDateClear(e){
         e.preventDefault()
+        const init = initFilter()
+        const initDate={
+            minDate: init.minDate,
+            maxDate: init.maxDate
+        }
         setDateFilter(initDate)
+        const data = {...eventFilter, ...initDate}
+        setEventFilter(data)
     }
 
     function handleChange(e) {
@@ -35,7 +46,8 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
 
     function handleClear(e) {
         e.preventDefault()
-        setEventFilter(initFilter())
+        const init = initFilter()
+        setEventFilter(init)
     }
 
     const filterCats = () => {
@@ -121,7 +133,6 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                 <button className="btn btn-primary btn-sm">
                     Filter Date
                 </button >
-            {console.log(dateFilter)}
 
             </form>
         </div>
