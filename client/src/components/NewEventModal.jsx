@@ -7,7 +7,13 @@ import { decodeCat } from '../utilities/category';
 import { FaSearch } from 'react-icons/fa';
 import { getSearchImage } from '../utilities/images-service';
 
-function NewEventModal({ point, displayToast, fetchEvents, address, setAddress }) {
+function NewEventModal({
+  point,
+  displayToast,
+  fetchEvents,
+  address,
+  setAddress,
+}) {
   const currUser = useContext(UserContext);
   const initState = {
     name: '',
@@ -87,10 +93,10 @@ function NewEventModal({ point, displayToast, fetchEvents, address, setAddress }
   async function getAddress() {
     try {
       const geocodeLatLon = await latLngToAddress(point[0], point[1]);
-      if (geocodeLatLon){
+      if (geocodeLatLon) {
         setAddress(geocodeLatLon);
-      } else{
-        setAddress(false)
+      } else {
+        setAddress(false);
       }
       // setIsLoading(false);
     } catch (err) {
@@ -109,13 +115,13 @@ function NewEventModal({ point, displayToast, fetchEvents, address, setAddress }
   return (
     <>
       {address ? (
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className='btn btn-active btn-primary'
-      >
-        Add Event
-      </button>
-      ):(null)}
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className='btn btn-active btn-primary'
+        >
+          Add Event
+        </button>
+      ) : null}
       <dialog id='event_modal' className='modal' open={isModalOpen}>
         <form
           onSubmit={handleSubmit}
@@ -222,6 +228,17 @@ function NewEventModal({ point, displayToast, fetchEvents, address, setAddress }
                     className='input input-bordered w-full max-w-xs input-primary'
                   />
 
+                  <div className='h-48 carousel carousel-vertical rounded-box'>
+                    {images.map((i, idx) => (
+                      <div className='carousel-item h-48'>
+                        <img
+                          className='w-full'
+                          src={i.urls.regular}
+                          onClick={() => handleImgClick(i)}
+                        />
+                      </div>
+                    ))}
+                  </div>
                   <div className='input-group '>
                     <input
                       type='text'
@@ -232,17 +249,6 @@ function NewEventModal({ point, displayToast, fetchEvents, address, setAddress }
                     <button className='btn btn-square btn-primary'>
                       <FaSearch />
                     </button>
-                  </div>
-                  <div className='h-48 mt-5 carousel carousel-vertical rounded-box'>
-                    {images.map((i, idx) => (
-                      <div className='carousel-item h-48'>
-                        <img
-                          className='w-full'
-                          src={i.urls.regular}
-                          onClick={() => handleImgClick(i)}
-                        />
-                      </div>
-                    ))}
                   </div>
                 </div>
               ) : (

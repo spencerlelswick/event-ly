@@ -1,62 +1,57 @@
 import React, { useContext } from 'react';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
-import { useAuth0 } from "@auth0/auth0-react";
-import {Link} from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../components/App';
 
-
 const Header = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0()
-  const currUser = useContext(UserContext)
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const currUser = useContext(UserContext);
 
   return (
     <header style={{ height: '5vh' }} className='bg-primary text-white'>
-      <div id='mobile-menu' className='sm:hidden flex justify-between'>
-        <p>search</p>
-        <h1>Logo</h1>
-        
+      <div id='mobile-menu' className='sm:hidden h- flex justify-between'>
+        <Link to='/'>
+          <img src='/assets/evently-logo.png' className='h-10' />
+        </Link>
+
         {!isLoading ? (
           <>
-          {isAuthenticated && currUser ? (
-            <>
-              <Link to={`/user/${currUser.ID}`}>
-                <h1>User Panel</h1>
-              </Link>
-              <LogoutButton/>
-            </>
-          ) : (
-            <LoginButton/>
-          )}
+            {isAuthenticated && currUser ? (
+              <>
+                <div>
+                  <Link to={`/user/${currUser.ID}`}>
+                    <h1>User Panel</h1>
+                  </Link>
+                </div>
+                <LogoutButton />
+              </>
+            ) : (
+              <LoginButton />
+            )}
           </>
-        ) : (null)}
-        
+        ) : null}
       </div>
 
       <div id='desktop-menu' className='hidden sm:flex justify-between'>
-        <Link to="/">
-          <img src="../../public/assets/evently-logo.png" className="h-10"/>
+        <Link to='/'>
+          <img src='/assets/evently-logo.png' className='h-10' />
         </Link>
-        <ul className='flex'>
-          <li className='mx-2'>link 1</li>
-          <li className='mx-2'>link 2</li>
-          <li className='mx-2'>link 3</li>
-        </ul>
         {!isLoading ? (
           <>
-          {isAuthenticated && currUser ?  (
-            <>
-              <Link to={`/user/${currUser.ID}`}>
-                <h1>My Events</h1>
-              </Link>
-              <LogoutButton/>
-            </>
-          ) : (
-            <LoginButton/>
-          )}
+            {isAuthenticated && currUser ? (
+              <>
+                <Link to={`/user/${currUser.ID}`}>
+                  <h1>My Events</h1>
+                </Link>
+                <LogoutButton />
+              </>
+            ) : (
+              <LoginButton />
+            )}
           </>
         ) : null}
-
       </div>
     </header>
   );
