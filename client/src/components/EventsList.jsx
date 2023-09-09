@@ -8,9 +8,8 @@ export default function EventsList({
   loadingEventsList,
   eventFilter,
   setEventFilter,
-  setSorted
+  setSorted,
 }) {
-
   const handleChange = (e) => {
     const updatedData = { ...eventFilter };
     updatedData[e.target.name] = e.target.checked;
@@ -24,8 +23,9 @@ export default function EventsList({
         <label
           key={idx}
           htmlFor={c}
-          className={`h-auto btn btn-square ${eventFilter[c] === true ? 'btn-primary text-white' : ''
-            }`}
+          className={`h-auto btn btn-square ${
+            eventFilter[c] === true ? 'btn-primary text-white' : ''
+          }`}
         >
           <p className='text-xs'>{c}</p>
           <div className='h-5 w-20 overflow-hidden'>
@@ -62,18 +62,18 @@ export default function EventsList({
       </div>
 
       <div className='flex justify-between m-2'>
-        <form >
+        <form>
           <h2>Sort by</h2>
           <select
-          defaultValue={"date"}
-          className='select select-bordered select-primary'
-          onChange={(e)=>setSorted(e.target.value)}
+            defaultValue={'date'}
+            className='select select-bordered select-primary'
+            onChange={(e) => setSorted(e.target.value)}
           >
-            <option value={"date"}>Upcoming</option>
-            <option value={"dist"}>Proximity</option>
-            <option value={"guests"}>Number of Guests</option>
-            <option value={"name"}>Name</option>
-            <option value={"nameInv"}>Name - inverse</option>
+            <option value={'date'}>Upcoming</option>
+            <option value={'dist'}>Proximity</option>
+            <option value={'guests'}>Number of Guests</option>
+            <option value={'name'}>Name</option>
+            <option value={'nameInv'}>Name - inverse</option>
           </select>
         </form>
       </div>
@@ -95,7 +95,7 @@ export default function EventsList({
       ) : (
         <>
           <div>No events in the area.</div>
-          <img src="/assets/evently-logo.png" />
+          <img src='/assets/evently-logo.png' />
         </>
       )}
     </div>
