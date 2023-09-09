@@ -57,7 +57,7 @@ export default function EventsList({
     >
       <div className='flex justify-between m-2'>
         <form onChange={handleChange}>
-          <h2>Event Filter</h2>
+          <h2>Filter by categories</h2>
           {filterCats(eventFilter)}
         </form>
       </div>

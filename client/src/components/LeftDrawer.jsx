@@ -19,7 +19,6 @@ export default function LeftDrawer({ point, setPoint, displayToast, fetchEvents 
               <div className='h-1/6 w-3/5'>
                 <h2>Nice! You've found a spot:</h2>
                 <h2>{address.name}.</h2>
-                <h2>Create an event?</h2>
               </div>
             ) : (
               <div className='h-1/6 w-3/5'>
