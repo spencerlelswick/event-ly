@@ -1,4 +1,5 @@
-import { Categories } from '../utilities/category';
+import { Categories, initFilter } from '../utilities/category';
+
 
 export default function EventsListFilter({ eventFilter, setEventFilter }) {
 
@@ -8,10 +9,14 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
         setEventFilter(updatedData);
     };
 
+    function handleClear(e){
+        e.preventDefault()
+        setEventFilter(initFilter())
+    }
+
     const filterCats = () => {
         const filterOpts = [];
         Categories.forEach((c, idx) => {
-
             filterOpts.push(
                 <label
                     key={idx}
@@ -26,7 +31,6 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                             className='relative object-fill'
                         />
                     </div>
-
                     <input
                         type='checkbox'
                         value={idx + 1}
@@ -37,15 +41,19 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                 </label>
             );
         });
-
         return filterOpts;
     };
 
     return (
         <div className='flex justify-between m-2'>
             <form onChange={handleChange}>
-                <h2>Event Filter</h2>
-                {filterCats(eventFilter)}
+                <h2>Filter by category</h2>
+                <button onClick={handleClear} className='btn btn-primary btn-xs btn-outline'>
+                    clear filters
+                </button>
+                <div>
+                    {filterCats(eventFilter)}
+                </div>
             </form>
         </div>
     )
