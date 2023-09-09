@@ -5,9 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from './App';
 import { decodeCat } from '../utilities/category';
 
-
 function NewEventModal({ point, displayToast, fetchEvents }) {
-  const currUser = useContext(UserContext)
+  const currUser = useContext(UserContext);
 
   const initState = {
     name: '',
@@ -50,16 +49,16 @@ function NewEventModal({ point, displayToast, fetchEvents }) {
   async function handleSubmit(e) {
     e.preventDefault();
     displayToast(`${newEvent.name} has been added!`);
-    try{
+    try {
       const res = await createEvent(newEvent);
-      if (res._id){
-        console.log(res)
+      if (res._id) {
+        console.log(res);
         setNewEvent(initState);
         setIsModalOpen(false);
-        fetchEvents()
+        fetchEvents();
       }
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -132,15 +131,17 @@ function NewEventModal({ point, displayToast, fetchEvents }) {
                 defaultValue={'1'}
                 className='select select-bordered select-primary'
               >
-
-                {(()=>{
-                  const arr=[]
-                  for(let i=1; i<=12; i++){
-                    arr.push(<option value={i}>{decodeCat(i)}</option>) 
+                {(() => {
+                  const arr = [];
+                  for (let i = 1; i <= 12; i++) {
+                    arr.push(
+                      <option key={i} value={i}>
+                        {decodeCat(i)}
+                      </option>
+                    );
                   }
-                  return arr
+                  return arr;
                 })()}
-
               </select>
             </div>
 

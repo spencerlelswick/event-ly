@@ -3,6 +3,7 @@ import MapPin from './MapPin';
 import { Marker, Popup } from 'react-leaflet';
 import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import { localityData } from '../mock/data';
+import { isFiltered } from '../utilities/category';
 
 let lastPan = [[0, 0], 15];
 
@@ -13,6 +14,7 @@ const Map = ({
   setPoint,
   pannedEvent,
   setPannedEvent,
+  eventFilter,
 }) => {
   const [locality, setLocality] = useState(null);
   const [userLoc, setUserLoc] = useState([
@@ -54,6 +56,10 @@ const Map = ({
       setPoint([lat, lng]);
     });
 
+    map.on('movestart', function (e) {
+      setPoint(null);
+    });
+
     map.on('contextmenu', function (e) {
       setPoint(null);
     });
@@ -66,9 +72,6 @@ const Map = ({
     if (pannedEvent && pannedEvent[0][0] !== lastPan[0][0]) {
       lastPan = [[...pannedEvent[0]], 18];
 
-      setPoint(null);
-
-      console.log(map);
       map.flyTo(pannedEvent[0], pannedEvent[1], {
         animate: true,
         duration: 2,
@@ -120,9 +123,11 @@ const Map = ({
 
       {eventsList !== null ? (
         <>
-          {eventsList.map((event) => (
-            <MapPin event={event} key={event._id} />
-          ))}
+          {eventsList.map((event) =>
+            isFiltered(event, eventFilter) ? (
+              <MapPin event={event} key={event._id} />
+            ) : null
+          )}
         </>
       ) : null}
     </MapContainer>
