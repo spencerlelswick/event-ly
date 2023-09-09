@@ -19,6 +19,7 @@ export default function EventsList({
         ) : eventsList.length ? (
         <div>
           {eventsList.map((event) => (
+            
             <EventsListItem
               event={event}
               key={event._id}
