@@ -20,8 +20,6 @@ export default function EventsList({
   const filterCats = () => {
     const filterOpts = [];
     Categories.forEach((c, idx) => {
-      console.log(eventFilter[c]);
-
       filterOpts.push(
         <label
           key={idx}
@@ -34,8 +32,6 @@ export default function EventsList({
           <div className='h-5 w-20 overflow-hidden'>
             <img
               src={`/assets/${idx + 1}.svg`}
-              alt=''
-              srcset=''
               className='relative object-fill'
             />
           </div>
