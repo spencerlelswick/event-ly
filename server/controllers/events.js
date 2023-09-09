@@ -20,7 +20,7 @@ async function index(req, res) {
                 "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
                 "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
                 "date":{$gte: today}
-            }))
+            }).sort({date:1}))
         }else if (req.body.filterBy === "user"){
             const userId = req.body.userId
             const events = await Event.find({
