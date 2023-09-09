@@ -1,7 +1,5 @@
 import EventsListItem from './EventsListItem';
 import { Categories } from '../utilities/category';
-import { initFilter } from '../utilities/category';
-import { decodeCat } from '../utilities/category';
 import { isFiltered } from '../utilities/category';
 
 export default function EventsList({
@@ -10,7 +8,9 @@ export default function EventsList({
   loadingEventsList,
   eventFilter,
   setEventFilter,
+  setSorted
 }) {
+
   const handleChange = (e) => {
     const updatedData = { ...eventFilter };
     updatedData[e.target.name] = e.target.checked;
@@ -24,9 +24,8 @@ export default function EventsList({
         <label
           key={idx}
           htmlFor={c}
-          className={`h-auto btn btn-square ${
-            eventFilter[c] === true ? 'btn-primary text-white' : ''
-          }`}
+          className={`h-auto btn btn-square ${eventFilter[c] === true ? 'btn-primary text-white' : ''
+            }`}
         >
           <p className='text-xs'>{c}</p>
           <div className='h-5 w-20 overflow-hidden'>
@@ -62,6 +61,23 @@ export default function EventsList({
         </form>
       </div>
 
+      <div className='flex justify-between m-2'>
+        <form >
+          <h2>Sort by</h2>
+          <select
+          defaultValue={"date"}
+          className='select select-bordered select-primary'
+          onChange={(e)=>setSorted(e.target.value)}
+          >
+            <option value={"date"}>Upcoming</option>
+            <option value={"dist"}>Proximity</option>
+            <option value={"guests"}>Number of Guests</option>
+            <option value={"name"}>Name</option>
+            <option value={"nameInv"}>Name - inverse</option>
+          </select>
+        </form>
+      </div>
+
       {loadingEventsList ? (
         <div>Loading events...</div>
       ) : eventsList.length ? (
@@ -77,7 +93,10 @@ export default function EventsList({
           )}
         </div>
       ) : (
-        <div>No events in the area.</div>
+        <>
+          <div>No events in the area.</div>
+          <img src="/assets/evently-logo.png" />
+        </>
       )}
     </div>
   );
