@@ -7,6 +7,7 @@ import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAllEvents } from '../utilities/events-service';
 import { initFilter } from '../utilities/category';
+import { sortEvents } from '../utilities/sortEvents';
 
 const Home = () => {
   const [eventsList, setEventsList] = useState(null);
@@ -17,6 +18,7 @@ const Home = () => {
   const [pannedEvent, setPannedEvent] = useState(null);
   const [loadingEventsList, setLoadingEventList] = useState(true);
   const [eventFilter, setEventFilter] = useState(initFilter());
+  const [sorted, setSorted] = useState("date")
 
   function displayToast(msg) {
     toast.success(`${msg} was added successfully!`, {
@@ -31,13 +33,6 @@ const Home = () => {
     });
   }
 
-  function calcDist(ev) {
-    return (
-      (ev.coordinates.latitude - coordinates[0]) ** 2 +
-      (ev.coordinates.longitude - coordinates[1]) ** 2
-    );
-  }
-
   async function fetchEvents() {
     try {
       const eventsResponse = await getAllEvents({
@@ -45,11 +40,14 @@ const Home = () => {
         filterBy: 'coord',
       });
       if (eventsResponse.length || eventsResponse.length === 0) {
-        const sorted = eventsResponse.sort((a, b) =>
-          calcDist(a) < calcDist(b) ? -1 : 1
-        );
 
-        setEventsList(sorted);
+        let newList = eventsResponse
+
+        if (sorted !== "date") {
+          newList = sortEvents(eventsResponse, coordinates, sorted)
+        }
+        
+        setEventsList(newList)
         setLoadingEventList(false);
       } else {
         throw Error('Something went wrong with retrieving events.');
@@ -63,18 +61,23 @@ const Home = () => {
     fetchEvents();
   }, [coordinates]);
 
+  useEffect(()=>{
+    if (eventsList?.length){
+      const data = [...eventsList]
+      const list = sortEvents(data,coordinates,sorted)
+      setEventsList(list)
+    }
+  },[sorted])
+
   return (
     <div style={{ height: '95vh' }} className='sm:text-2xl '>
       <EventsList
-        coordinates={coordinates}
         eventsList={eventsList}
-        setEventsList={setEventsList}
-        point={point}
         setPannedEvent={setPannedEvent}
-        fetchEvents={fetchEvents}
         loadingEventsList={loadingEventsList}
         eventFilter={eventFilter}
         setEventFilter={setEventFilter}
+        setSorted={setSorted}
       />
       <EventsListCollapsed />
 
