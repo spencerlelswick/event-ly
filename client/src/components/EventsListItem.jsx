@@ -1,4 +1,5 @@
 import EventDetailsModal from './EventDetailsModal';
+import { decodeCat } from '../utilities/category';
 
 export default function EventsListItem({ event, setPannedEvent }) {
   const handleClick = (e) => {
@@ -19,6 +20,7 @@ export default function EventsListItem({ event, setPannedEvent }) {
       <div>{new Date(event.date).toLocaleString().slice(0,-3)}</div>
       <div>{event.address}</div>
       <div>{event.location}</div>
+      <div>{decodeCat(event.category)}</div>
       <EventDetailsModal modalId={event._id + '1'} eventId={event._id} />
       <hr />
     </div>

@@ -1,42 +1,43 @@
 import { updateEvent } from "../utilities/events-service"
 import { deleteEvent } from "../utilities/events-service"
 import { useState } from "react"
+import { decodeCat } from "../utilities/category"
 
-export default function UserPanelCreatedItem({ event, currUser, routeId , retrieveEvents}){
+export default function UserPanelCreatedItem({ event, currUser, routeId, retrieveEvents }) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [editEvent, setEditEvent] = useState("")
 
-    async function handleDelete(e){
-        try{
+    async function handleDelete(e) {
+        try {
             e.preventDefault()
             const res = await deleteEvent(event._id)
-            if(res._id){
+            if (res._id) {
                 retrieveEvents()
-            }else {
+            } else {
                 throw Error("Something went wrong with deleting an event.")
             }
-        }catch(err){    
+        } catch (err) {
             console.log(err)
         }
     }
 
-    function handleClick(){
+    function handleClick() {
         setIsModalOpen(true)
-        const data={
+        const data = {
             name: event.name,
             location: event.location,
             description: event.description,
             category: event.category,
-            date: null
+            date: undefined
         }
         setEditEvent(data)
     }
 
-    function handleCancel(){
+    function handleCancel() {
         setIsModalOpen(false)
     }
 
-    function handleChange(e){
+    function handleChange(e) {
         const data = {
             ...editEvent,
             [e.target.name]: e.target.value
@@ -44,21 +45,21 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
         setEditEvent(data)
     }
 
-    async function handleSubmit(e){
-        try{
+    async function handleSubmit(e) {
+        try {
             e.preventDefault()
-            const data = {...editEvent}
-            if (data.date === null){
+            const data = { ...editEvent }
+            if (data.date === undefined) {
                 delete data.date
             }
-            const res = await updateEvent(event._id ,data)
-            if (res._id){
+            const res = await updateEvent(event._id, data)
+            if (res._id) {
                 setIsModalOpen(false)
                 retrieveEvents()
-            }else {
+            } else {
                 throw Error("Something went wrong retrieving the events.")
             }
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -70,7 +71,7 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                 <div>Name: {event.name}</div>
                 <div>Address: {event.address}</div>
                 <div>Location: {event.location}</div>
-                <div>Category: {event.category}</div>
+                <div>Category: {decodeCat(event.category)}</div>
                 <div>Date: {new Date(event.date).toLocaleString()}</div>
                 <div>Description: {event.description}</div>
                 <div>Partecipants: {event.guests.length}</div>
@@ -89,12 +90,12 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                     null
                 )}
             </div>
-                
+
             <dialog className='modal' open={isModalOpen} >
                 <div className='modal-box flex flex-col justify-center align-middle items-center'>
                     <img src={event.image} alt={event.name} />
                     <form method="dialog" className="w-full max-w-xs" onSubmit={handleSubmit}>
-                        
+
                         <div className='form-control w-full max-w-xs'>
                             <label className='label label-text' >
                                 Edit name:
@@ -135,26 +136,22 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                                 value={editEvent.category}
                                 className='select select-bordered select-primary'
                             >
-                                <option value={1}>Art</option>
-                                <option value={2}>Business</option>
-                                <option value={3}>Exercise</option>
-                                <option value={4}>Food</option>
-                                <option value={5}>Games</option>
-                                <option value={6}>Language</option>
-                                <option value={7}>Music</option>
-                                <option value={8}>Party</option>
-                                <option value={9}>Politics</option>
-                                <option value={10}>Science</option>
-                                <option value={11}>Sport</option>
-                                <option value={12}>Tech</option>
+                                {(() => {
+                                    const arr = []
+                                    for (let i = 1; i <= 12; i++) {
+                                        arr.push(<option value={i}>{decodeCat(i)}</option>)
+                                    }
+                                    return arr
+                                })()}
+                                
                             </select>
                         </div>
                         <label className='label label-text' >
-                                Set start time:
-                            </label>
+                            Set start time:
+                        </label>
                         <p className='text-xl'>
-                        {new Date(event.date).toLocaleString().slice(0,-3)}
-                            </p>    
+                            {new Date(event.date).toLocaleString().slice(0, -3)}
+                        </p>
 
                         <div className='form-control w-full max-w-xs'>
                             <label className='label label-text' >
@@ -185,10 +182,10 @@ export default function UserPanelCreatedItem({ event, currUser, routeId , retrie
                         </div>
 
                         <button className="btn btn-primary" type="submit" >CONFIRM EDIT</button>
-                        
+
                     </form>
                     <form method='dialog'>
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleCancel}>✕</button>
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleCancel}>✕</button>
                     </form>
                 </div>
                 <form method='dialog' className='modal-backdrop'>

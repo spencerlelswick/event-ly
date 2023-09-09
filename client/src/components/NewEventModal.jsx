@@ -1,8 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
-import latLngToAddress from '../util/geocode';
+import latLngToAddress from '../utilities/geocode';
 import { createEvent } from '../utilities/events-service';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from './App';
+import { decodeCat } from '../utilities/category';
 
 
 function NewEventModal({ point, displayToast, fetchEvents }) {
@@ -131,18 +132,15 @@ function NewEventModal({ point, displayToast, fetchEvents }) {
                 defaultValue={'1'}
                 className='select select-bordered select-primary'
               >
-                <option value={'1'}>Art</option>
-                <option value={'2'}>Business</option>
-                <option value={'3'}>Exercise</option>
-                <option value={'4'}>Food</option>
-                <option value={'5'}>Games</option>
-                <option value={'6'}>Language</option>
-                <option value={'7'}>Music</option>
-                <option value={'8'}>Party</option>
-                <option value={'9'}>Politics</option>
-                <option value={'10'}>Science</option>
-                <option value={'11'}>Sport</option>
-                <option value={'12'}>Tech</option>
+
+                {(()=>{
+                  const arr=[]
+                  for(let i=1; i<=12; i++){
+                    arr.push(<option value={i}>{decodeCat(i)}</option>) 
+                  }
+                  return arr
+                })()}
+
               </select>
             </div>
 

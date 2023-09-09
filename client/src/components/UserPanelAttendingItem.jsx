@@ -1,34 +1,35 @@
 import { updateEvent } from "../utilities/events-service"
 import { Link } from "react-router-dom"
+import { decodeCat } from "../utilities/category"
 
-export default function UserPanedlAttendingItem({ event, currUser, routeId , retrieveEvents}){
+export default function UserPanedlAttendingItem({ event, currUser, routeId, retrieveEvents }) {
 
-    async function handleRemove(e){
-        try{
+    async function handleRemove(e) {
+        try {
             e.preventDefault()
             const data = [...event.guests]
             const idx = data.indexOf(currUser.ID)
-            data.splice(idx,1)
-            const updatedEvent = await updateEvent(event._id, {guests: data})
-            if (updatedEvent._id){
+            data.splice(idx, 1)
+            const updatedEvent = await updateEvent(event._id, { guests: data })
+            if (updatedEvent._id) {
                 retrieveEvents()
-            }else {
+            } else {
                 throw Error("Something went wrong with removing a guest.")
             }
-        }catch(err){    
+        } catch (err) {
             console.log(err)
         }
     }
 
     return (
         <div>
-            <div>{event.name}</div>
             <img src={event.image} alt={event.name} className=' w-20' />
-            <div>Description: {event.description}</div>
+            <div>Name: {event.name}</div>
             <div>Address: {event.address}</div>
             <div>Location: {event.location}</div>
-            <div>Date: {event.date}</div>
-            <div>Category: {event.category}</div>
+            <div>Category: {decodeCat(event.category)}</div>
+            <div>Date: {new Date(event.date).toLocaleString()}</div>
+            <div>Description: {event.description}</div>
             <div>
                 Host:
                 <Link to={`/user/${event.createdBy}`}> CLICK ME</Link>

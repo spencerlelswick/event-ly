@@ -4,6 +4,7 @@ import EventDetailsComments from "./EventDetailsComments";
 import EventDetailsGuests from "./EventDetailsGuests";
 import LoginButton from "./LoginButton";
 import { UserContext } from "./App";
+import { decodeCat } from "../utilities/category";
 
 export default function EventDetailsModal({modalId,eventId}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,6 +58,7 @@ export default function EventDetailsModal({modalId,eventId}) {
                                 <div>{new Date(event.date).toLocaleString().slice(0,-3)}</div>
                                 <div>{event.address}</div>
                                 <div>{event.location}</div>
+                                <div>{decodeCat(event.category)}</div>
                                 <div>{event.description}</div>
 
                                 <hr/>

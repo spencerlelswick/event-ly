@@ -38,7 +38,11 @@ const eventSchema = new mongoose.Schema({
         required: true,
     },
     category: {
-        type: [Number]
+        type: Number,
+        min: 1,
+        max: 12,
+        
+
     },
     image: {
         type: String,
