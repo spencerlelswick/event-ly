@@ -20,7 +20,6 @@ export default function EventsList({
   const filterCats = () => {
     const filterOpts = [];
     Categories.forEach((c, idx) => {
-
       filterOpts.push(
         <label
           key={idx}
