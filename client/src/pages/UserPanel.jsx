@@ -1,47 +1,41 @@
-import React, { useEffect } from 'react';
-import { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { UserContext } from '../components/App';
 import { getAllEvents } from '../utilities/events-service';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { showUser } from '../utilities/users-service';
 import { useAuth0 } from "@auth0/auth0-react"
 import UserPanelAttendingItem from '../components/UserPanelAttendingItem';
 import UserPanelCreatedItem from '../components/UserPanelCreatedItem';
 
 export default function UserPanel() {
-  const {isLoading } = useAuth0()
+  const { isLoading } = useAuth0()
   const currUser = useContext(UserContext)
   const routeId = useParams().id
   const [routeUser, setRouteUser] = useState(null)
-  const [createdEvents, setCreatedEvents] = useState(null)
-  const [attendingEvents, setAttendingEvents] = useState(null)
+  const [created, setCreated] = useState(null)
+  const [createdPast, setCreatedPast] = useState(null)
+  const [attending, setAttending] = useState(null)
+  const [attendingPast, setAttendingPast] = useState(null)
   const [loadingEvents, setLoadingEvents] = useState(true)
   const [loadingUser, setLoadingUser] = useState(true)
+  const [activeTab, setActiveTab] = useState(["created", "active"])
+  const navigate = useNavigate();
 
   async function retrieveUser() {
     try {
       setLoadingEvents(true)
       setLoadingUser(true)
-      setAttendingEvents(null)
-      setCreatedEvents(null)
-      if (currUser) {
-        if (currUser.ID === routeId) {
-          setRouteUser({
-            name: currUser.NAME,
-            picture: currUser.PIC,
-            _id: currUser.ID
-          })
-          setLoadingUser(false)
-        } else {
-          const res = await showUser(routeId)
-          if (res._id) {
-            setRouteUser(res)
-            setLoadingUser(false)
-          }
-        }
+      setActiveTab(["created", "active"])
+      setAttending(null)
+      setCreated(null)
+      const res = await showUser(routeId)
+      if (res._id) {
+        setRouteUser(res)
+        setLoadingUser(false)
       }
     } catch (err) {
       console.log(err)
+      navigate("/*")
     }
   }
 
@@ -50,13 +44,26 @@ export default function UserPanel() {
       if (currUser && routeUser) {
         const allEvents = await getAllEvents({ userId: routeId, filterBy: "user" })
         if (allEvents.length >= 0) {
-          const created = []
-          const attending = []
+          const c = []
+          const a = []
+          const cP = []
+          const aP = []
+          const today = new Date().toISOString()
           allEvents.map((event) => (
-            event.createdBy === routeId ? created.push(event) : attending.push(event)
+            event.createdBy === routeId ? (
+              event.date > today ?
+                c.push(event) :
+                cP.push(event)
+            ) : (
+              event.date > today ?
+                a.push(event) :
+                aP.push(event)
+            )
           ))
-          setCreatedEvents(created)
-          setAttendingEvents(attending)
+          setCreated(c)
+          setCreatedPast(cP)
+          setAttending(a)
+          setAttendingPast(aP)
           setLoadingEvents(false)
         }
       }
@@ -67,71 +74,166 @@ export default function UserPanel() {
 
   useEffect(() => {
     retrieveUser()
-  }, [currUser, routeId])
+  }, [routeId])
 
   useEffect(() => {
     retrieveEvents()
-  }, [routeUser])
+  }, [currUser, routeUser])
+
+  function handleClick(e) {
+    e.preventDefault()
+    let data = [...activeTab]
+    if (e.target.id === "active" || e.target.id === "past") {
+      data[1] = e.target.id
+    } else {
+      data[0] = e.target.id
+      data[1] = "active"
+    }
+    setActiveTab(data)
+  }
+
+  const active = "tab tab-lifted tab-xl tab-active"
+  const inactive = "tab tab-lifted"
 
   return (
-    <div>
-      <h1>USER PANEL</h1>
-      {!isLoading ? (<>
-        {currUser ? (
-          <>
-            {loadingUser ? (
-              <div>Loading User Info...</div>
-            ) : (
-              <div>
-                <img src={routeUser.picture} alt={routeUser.name} className='w-20'/>
-                <div>{routeUser.name}</div>
+    <div className="flex flex-col justify-center align-middle items-center w-full mt-5">
+      {!isLoading ? (
+        <>
+          {currUser ? (
+            <>
+              {loadingUser ? (
+                <div>Loading User Info...</div>
+              ) : (
+                <div >
+                  <p className="text-4xl font-bold">{routeUser.name}</p>
+                  <div className="flex flex-row justify-center  ">
+                    <div className="stats shadow-md mx-1">
+                      <div className="avatar">
+                        <div className="w-24 rounded-xl m-3">
+                          <img src={routeUser.picture} alt={routeUser.name} />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="hidden sm:stats shadow-md mx-1">
+                      <div className="stat place-items-center">
+                        <div className="stat-title">Member Since</div>
+                        <div className="stat-value">{new Date(routeUser.createdAt).toLocaleDateString()}</div>
+                        <div className="stat-desc">description</div>
+                      </div>
+                    </div>
+                    <div className="hidden md:stats shadow-md mx-1">
+                      <div className="stat place-items-center">
+                        <div className="stat-title">Hosted Events</div>
+                        <div className="stat-value">{createdPast?.length}</div>
+                        <div className="stat-desc">description</div>
+                      </div>
+                    </div>
+                    <div className="hidden md:stats shadow-md mx-1">
+                      <div className="stat place-items-center">
+                        <div className="stat-title">Attended Events</div>
+                        <div className="stat-value">{attendingPast?.length}</div>
+                        <div className="stat-desc">description</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <br />
+
+              <div className="tabs w-full">
+                <a id="created" className={activeTab[0] === "created" ? active : inactive} onClick={handleClick} >
+                  CREATED EVENTS
+                </a>
+                <a id="attending" className={activeTab[0] === "attending" ? active : inactive} onClick={handleClick} >
+                  ATTENDING EVENTS
+                </a>
               </div>
-            )}
+              <br />
+              <div className="tabs">
+                <a id="active" className={activeTab[1] === "active" ? active : inactive} onClick={handleClick} >
+                  ACTIVE
+                </a>
+                <a id="past" className={activeTab[1] === "past" ? active : inactive} onClick={handleClick} >
+                  PAST
+                </a>
+              </div>
 
-            <hr />
+              <br />
 
-            {loadingEvents ? (
-              <div>Loading Events...</div>
-            ) : (
-              <>
-                <h1>CREATED EVENTS</h1>
-                {createdEvents.length ? (
-                  <>
-                    {createdEvents.map((event) => (
-                       <UserPanelCreatedItem key={event._id} event={event} currUser={currUser} routeId={routeId}
-                       createdEvents={createdEvents} setCreatedEvents={setCreatedEvents}
-                       retrieveEvents={retrieveEvents}
-                       />
-                    ))}
-                  </>
-                ) : (
-                  <div>Not hosting any event yet.</div>
-                )}
+              {loadingEvents ? (
+                <div className="flex flex-col justify-center align-middle items-center w-3/4 lg:w-1/2">
+                  Loading Events...
+                </div>
+              ) : (
+                <div className="flex flex-col justify-center align-middle items-center w-3/4 lg:w-1/2">
 
-                <hr />
-                <h1>ATTENDING EVENTS</h1>
-                {attendingEvents.length ? (
-                  <>
-                    {attendingEvents.map((event) => (
-                      <UserPanelAttendingItem key={event._id} event={event} currUser={currUser} routeId={routeId}
-                      attendingEvents={attendingEvents} setAttendingEvents={setAttendingEvents}
-                      retrieveEvents={retrieveEvents}
-                      />
-                    ))}
-                  </>
-                ) : (
-                  <div>Not attending any event yet.</div>
-                )}
+                  <section 
+                  hidden={!(activeTab[0] === "created" && activeTab[1] === "active")}>
+                    {created.length ? (
+                      <>
+                        {created.map((event) => (
+                          <UserPanelCreatedItem key={event._id} event={event} currUser={currUser}
+                            routeId={routeId} retrieveEvents={retrieveEvents} past={false}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <div>Not hosting any event yet.</div>
+                    )}
+                  </section>
 
-              </>
-            )}
-          </>
-        ) : (
-          <div>Log in to see info</div>
-        )}
-      </>
+                  <section hidden={!(activeTab[0] === "created" && activeTab[1] === "past")}>
+                    {createdPast.length ? (
+                      <>
+                        {createdPast.map((event) => (
+                          <UserPanelCreatedItem key={event._id} event={event} currUser={currUser}
+                            routeId={routeId} retrieveEvents={retrieveEvents} past={true}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <div>Not hosted any event yet.</div>
+                    )}
+                  </section>
+
+                  <section hidden={!(activeTab[0] === "attending" && activeTab[1] === "active")}>
+                    {attending.length ? (
+                      <>
+                        {attending.map((event) => (
+                          <UserPanelAttendingItem key={event._id} event={event} currUser={currUser}
+                            routeId={routeId} retrieveEvents={retrieveEvents} past={false}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <div>Not attending any event yet.</div>
+                    )}
+                  </section>
+
+                  <section hidden={!(activeTab[0] === "attending" && activeTab[1] === "past")}>
+                    {attendingPast.length ? (
+                      <>
+                        {attendingPast.map((event) => (
+                          <UserPanelAttendingItem key={event._id} event={event} currUser={currUser}
+                            routeId={routeId} retrieveEvents={retrieveEvents} past={true}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <div>Not attended any event yet.</div>
+                    )}
+                  </section>
+
+                </div>
+              )}
+            </>
+          ) : (
+            <div>Log in to see info</div>
+          )}
+        </>
       ) :
-        <>Loading Content...</>
+        <div>Loading Content...</div>
       }
     </div>
   );
