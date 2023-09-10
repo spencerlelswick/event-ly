@@ -1,4 +1,5 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
+import { MdLogout } from 'react-icons/md';
 
 const LogoutButton = () => {
   const { logout } = useAuth0();
@@ -8,8 +9,9 @@ const LogoutButton = () => {
       onClick={() =>
         logout({ logoutParams: { returnTo: window.location.origin } })
       }
+      className='text-white text-5xl sm:text-3xl w-1/3 flex items-center justify-end'
     >
-      Log Out
+      <MdLogout />
     </button>
   );
 };

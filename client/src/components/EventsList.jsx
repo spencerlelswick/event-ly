@@ -11,16 +11,14 @@ export default function EventsList({
   setEventFilter,
   setSorted,
 }) {
-
   return (
-    <div
-      style={{ height: '95vh' }}
-      className='z-10 invisible sm:visible absolute border-b  bg-white right-0 w-2/5 overflow-auto'
-    >
+    <div className='z-10 h-[90vh] invisible sm:visible absolute border-b  bg-white right-0 w-2/5 overflow-auto'>
+      <EventsListFilter
+        eventFilter={eventFilter}
+        setEventFilter={setEventFilter}
+      />
 
-      <EventsListFilter eventFilter={eventFilter} setEventFilter={setEventFilter}/>
-
-      <EventsListSort setSorted={setSorted}/>
+      <EventsListSort setSorted={setSorted} />
 
       {loadingEventsList ? (
         <>

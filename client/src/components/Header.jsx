@@ -4,25 +4,34 @@ import LogoutButton from './LogoutButton';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../components/App';
+import { FiUser } from 'react-icons/fi';
 
 const Header = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const currUser = useContext(UserContext);
 
   return (
-    <header style={{ height: '5vh' }} className='bg-primary text-white'>
-      <div id='mobile-menu' className='sm:hidden h- flex justify-between'>
-        <Link to='/'>
-          <img src='/assets/evently-logo.png' className='h-10' />
-        </Link>
+    <header className='bg-primary h-[10vh] text-white'>
+      <div
+        id='mobile-menu'
+        className='sm:hidden h-full flex justify-between mx-5'
+      >
+        <div className='flex items-center justify-start w-1/3'>
+          <Link to='/'>
+            <img src='/assets/evently-logo.png' className='h-20' />
+          </Link>
+        </div>
 
         {!isLoading ? (
           <>
             {isAuthenticated && currUser ? (
               <>
-                <div>
-                  <Link to={`/user/${currUser.ID}`}>
-                    <h1>User Panel</h1>
+                <div className='flex flex-row items-center w-1/3'>
+                  <Link
+                    to={`/user/${currUser.ID}`}
+                    className='w-full flex justify-center align-middle items-center'
+                  >
+                    <FiUser className='inline text-5xl md:text-2xl' />
                   </Link>
                 </div>
                 <LogoutButton />
@@ -34,16 +43,23 @@ const Header = () => {
         ) : null}
       </div>
 
-      <div id='desktop-menu' className='hidden sm:flex justify-between'>
-        <Link to='/'>
-          <img src='/assets/evently-logo.png' className='h-10' />
+      <div
+        id='desktop-menu'
+        className='hidden sm:flex h-full justify-between mx-5'
+      >
+        <Link to='/' className='w-1/3 flex justify-start items-center'>
+          <img src='/assets/evently-logo.png' className='h-16' />
         </Link>
         {!isLoading ? (
           <>
             {isAuthenticated && currUser ? (
               <>
-                <Link to={`/user/${currUser.ID}`}>
-                  <h1>My Events</h1>
+                <Link
+                  to={`/user/${currUser.ID}`}
+                  className='w-1/3 flex justify-center items-center '
+                >
+                  <FiUser className='inline text-3xl md:text-3xl' />
+                  <span className='sm:text-2xl ml-2'>My Events</span>
                 </Link>
                 <LogoutButton />
               </>

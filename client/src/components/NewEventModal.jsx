@@ -58,7 +58,6 @@ function NewEventModal({
 
   const [search, setSearch] = useState(null);
   const [images, setImages] = useState([]);
-  console.log(images);
   useEffect(() => {
     const getData = setTimeout(() => {
       getSearchImage(search)
@@ -69,7 +68,6 @@ function NewEventModal({
           setImages(results);
         });
     }, 1000);
-    console.log(getData);
     return () => clearTimeout(getData);
   }, [search]);
 
@@ -93,7 +91,7 @@ function NewEventModal({
       {address && currUser ? (
         <button
           onClick={() => setIsModalOpen(true)}
-          className='btn btn-active btn-primary'
+          className='w-full md:w-6/12 btn btn-active btn-primary '
         >
           Add Event
         </button>
@@ -102,7 +100,7 @@ function NewEventModal({
         <form
           onSubmit={handleSubmit}
           method='dialog'
-          className='modal-box flex flex-col justify-center align-middle items-center'
+          className=' z-30 modal-box flex flex-col justify-center align-middle items-center'
         >
           <div className='form-control w-full max-w-xs'>
             <p className='text-sm'>Confirm address:</p>
@@ -206,7 +204,7 @@ function NewEventModal({
 
                   <div className='h-48 carousel carousel-vertical rounded-box'>
                     {images.map((i, idx) => (
-                      <div className='carousel-item h-48'>
+                      <div className='carousel-item h-48' key={idx}>
                         <img
                           className='w-full'
                           src={i.urls.regular}

@@ -28,7 +28,7 @@ const Home = () => {
 
   function displayToast(msg) {
     toast.success(`${msg} was added successfully!`, {
-      position: 'bottom-right',
+      position: 'top-left',
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -75,7 +75,7 @@ const Home = () => {
 
   return (
     <div className='flex flex-row'>
-      <div style={{ height: '95vh' }} className='w-full md:w-3/5 h-full'>
+      <div className='w-full  h-[90vh] md:w-3/5'>
         <Map
           setCoordinates={setCoordinates}
           eventsList={eventsList}
