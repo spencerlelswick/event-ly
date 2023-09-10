@@ -76,7 +76,7 @@ const Home = () => {
 
   return (
     <div className='flex flex-row'>
-      <div style={{ height: '95vh' }} className='w-full md:w-3/5 h-full'>
+      <div className='w-full  h-[90vh] md:w-3/5'>
         <Map
           setCoordinates={setCoordinates}
           eventsList={eventsList}

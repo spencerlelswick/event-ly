@@ -36,7 +36,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
   }
 
   return (
-    <>
+    <div>
       <button
         onClick={() => handleClick()}
         className='btn btn-active btn-primary'
@@ -53,10 +53,8 @@ export default function EventDetailsModal({ modalId, eventId }) {
               ) : (
                 <div className='w-full'>
                   <div>{event.name}</div>
-                  <img src={event.image} alt={event.name} className="w-1/4"/>
-                  <div>
-                    {new Date(event.date).toLocaleString()}
-                  </div>
+                  <img src={event.image} alt={event.name} className='w-1/4' />
+                  <div>{new Date(event.date).toLocaleString()}</div>
                   <div>{event.address}</div>
                   <div>{event.location}</div>
                   <div>{decodeCat(event.category)}</div>
@@ -100,6 +98,6 @@ export default function EventDetailsModal({ modalId, eventId }) {
           <button onClick={handleCancel}>close</button>
         </form>
       </dialog>
-    </>
+    </div>
   );
 }

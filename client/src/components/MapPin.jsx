@@ -20,6 +20,7 @@ export default function MapPin({ event }) {
         <div>
           {event.name} <br /> {event.address}{' '}
         </div>
+
         <EventDetailsModal modalId={event._id + '2'} eventId={event._id} />
       </Popup>
     </Marker>
