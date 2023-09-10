@@ -3,7 +3,7 @@ import { deleteEvent } from "../utilities/events-service"
 import { useState } from "react"
 import { decodeCat } from "../utilities/category"
 
-export default function UserPanelCreatedItem({ event, currUser, routeId, retrieveEvents, past}) {
+export default function UserPanelCreatedItem({ event, currUser, routeId, retrieveEvents, past }) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [editEvent, setEditEvent] = useState("")
 
@@ -65,28 +65,34 @@ export default function UserPanelCreatedItem({ event, currUser, routeId, retriev
     }
 
     return (
-        <>
-            <div>
-                <img src={event.image} alt={event.name} className=' w-20' />
-                <div>Name: {event.name}</div>
-                <div>Address: {event.address}</div>
-                <div>Location: {event.location}</div>
-                <div>Category: {decodeCat(event.category)}</div>
-                <div>Date: {new Date(event.date).toLocaleString()}</div>
-                <div>Description: {event.description}</div>
-                <div>Partecipants: {event.guests.length}</div>
-                {currUser.ID === routeId ? (
-                    <div hidden={past}>
-                        <button className='btn btn-primary' onClick={handleClick} 
-                        >Update Event
-                        </button>
-                        <button className='btn btn-secondary' onClick={handleDelete} 
-                        >Delete Event
-                        </button>
+        <div>
+            <div className="card md:card-side bg-base-100 shadow-xl">
+                <figure >
+                    <img src={event.image} alt={event.name}  />
+                </figure>
+                <div className="card-body">
+                    <h2 className="card-title">{event.name}</h2>
+                    <p>Address: {event.address}</p>
+                    <p>Location: {event.location}</p>
+                    <p>Category: {decodeCat(event.category)}</p>
+                    <p>Date: {new Date(event.date).toLocaleString()}</p>
+                    <p>Description: {event.description}</p>
+                    <p>Partecipants: {event.guests.length}</p>
+                    <div className="card-actions ">
+                        {currUser.ID === routeId ? (
+                            <div hidden={past}>
+                                <button className='btn btn-primary' onClick={handleClick}
+                                >Update Event
+                                </button>
+                                <button className='btn btn-secondary' onClick={handleDelete}
+                                >Delete Event
+                                </button>
+                            </div>
+                        ) : (
+                            null
+                        )}
                     </div>
-                ) : (
-                    null
-                )}
+                </div>
             </div>
 
             <dialog className='modal' open={isModalOpen} >
@@ -141,7 +147,7 @@ export default function UserPanelCreatedItem({ event, currUser, routeId, retriev
                                     }
                                     return arr
                                 })()}
-                                
+
                             </select>
                         </div>
                         <label className='label label-text' >
@@ -190,6 +196,6 @@ export default function UserPanelCreatedItem({ event, currUser, routeId, retriev
                     <button onClick={handleCancel}>close</button>
                 </form>
             </dialog>
-        </>
+        </div>
     )
 }

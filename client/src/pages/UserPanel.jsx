@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { UserContext } from '../components/App';
 import { getAllEvents } from '../utilities/events-service';
-import { useParams, useNavigate  } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { showUser } from '../utilities/users-service';
 import { useAuth0 } from "@auth0/auth0-react"
 import UserPanelAttendingItem from '../components/UserPanelAttendingItem';
@@ -18,14 +18,14 @@ export default function UserPanel() {
   const [attendingPast, setAttendingPast] = useState(null)
   const [loadingEvents, setLoadingEvents] = useState(true)
   const [loadingUser, setLoadingUser] = useState(true)
-  const [activeTab, setActiveTab] = useState(["created","active"])
+  const [activeTab, setActiveTab] = useState(["created", "active"])
   const navigate = useNavigate();
 
   async function retrieveUser() {
     try {
       setLoadingEvents(true)
       setLoadingUser(true)
-      setActiveTab(["created","active"])
+      setActiveTab(["created", "active"])
       setAttending(null)
       setCreated(null)
       const res = await showUser(routeId)
@@ -52,13 +52,13 @@ export default function UserPanel() {
           allEvents.map((event) => (
             event.createdBy === routeId ? (
               event.date > today ?
-              c.push(event) :
-              cP.push(event)
-            ):( 
+                c.push(event) :
+                cP.push(event)
+            ) : (
               event.date > today ?
-              a.push(event) :
-              aP.push(event)
-              )
+                a.push(event) :
+                aP.push(event)
+            )
           ))
           setCreated(c)
           setCreatedPast(cP)
@@ -83,9 +83,9 @@ export default function UserPanel() {
   function handleClick(e) {
     e.preventDefault()
     let data = [...activeTab]
-    if (e.target.id === "active" || e.target.id === "past" ){
+    if (e.target.id === "active" || e.target.id === "past") {
       data[1] = e.target.id
-    }else{
+    } else {
       data[0] = e.target.id
       data[1] = "active"
     }
@@ -107,28 +107,28 @@ export default function UserPanel() {
                 <div >
                   <p className="text-4xl font-bold">{routeUser.name}</p>
                   <div className="flex flex-row justify-center  ">
-                    <div className="stats shadow-md">
+                    <div className="stats shadow-md mx-1">
                       <div className="avatar">
                         <div className="w-24 rounded-xl m-3">
                           <img src={routeUser.picture} alt={routeUser.name} />
                         </div>
                       </div>
                     </div>
-                    <div className="hidden sm:stats shadow-md">
+                    <div className="hidden sm:stats shadow-md mx-1">
                       <div className="stat place-items-center">
                         <div className="stat-title">Member Since</div>
                         <div className="stat-value">{new Date(routeUser.createdAt).toLocaleDateString()}</div>
                         <div className="stat-desc">description</div>
                       </div>
                     </div>
-                    <div className="hidden md:stats shadow-md">
+                    <div className="hidden md:stats shadow-md mx-1">
                       <div className="stat place-items-center">
                         <div className="stat-title">Hosted Events</div>
                         <div className="stat-value">{createdPast?.length}</div>
                         <div className="stat-desc">description</div>
                       </div>
                     </div>
-                    <div className="hidden md:stats shadow-md">
+                    <div className="hidden md:stats shadow-md mx-1">
                       <div className="stat place-items-center">
                         <div className="stat-title">Attended Events</div>
                         <div className="stat-value">{attendingPast?.length}</div>
@@ -162,16 +162,19 @@ export default function UserPanel() {
               <br />
 
               {loadingEvents ? (
-                <div>Loading Events...</div>
+                <div className="flex flex-col justify-center align-middle items-center w-3/4 lg:w-1/2">
+                  Loading Events...
+                </div>
               ) : (
-                <div>
+                <div className="flex flex-col justify-center align-middle items-center w-3/4 lg:w-1/2">
 
-                  <section hidden={ !(activeTab[0] === "created" && activeTab[1] === "active" )}>
+                  <section 
+                  hidden={!(activeTab[0] === "created" && activeTab[1] === "active")}>
                     {created.length ? (
                       <>
                         {created.map((event) => (
                           <UserPanelCreatedItem key={event._id} event={event} currUser={currUser}
-                          routeId={routeId} retrieveEvents={retrieveEvents} past={false}
+                            routeId={routeId} retrieveEvents={retrieveEvents} past={false}
                           />
                         ))}
                       </>
@@ -180,12 +183,12 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section hidden={ !(activeTab[0] === "created" && activeTab[1] === "past" )}>
+                  <section hidden={!(activeTab[0] === "created" && activeTab[1] === "past")}>
                     {createdPast.length ? (
                       <>
                         {createdPast.map((event) => (
                           <UserPanelCreatedItem key={event._id} event={event} currUser={currUser}
-                          routeId={routeId} retrieveEvents={retrieveEvents} past={true}
+                            routeId={routeId} retrieveEvents={retrieveEvents} past={true}
                           />
                         ))}
                       </>
@@ -194,12 +197,12 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section hidden={ !(activeTab[0] === "attending" && activeTab[1] === "active" )}>
+                  <section hidden={!(activeTab[0] === "attending" && activeTab[1] === "active")}>
                     {attending.length ? (
                       <>
                         {attending.map((event) => (
                           <UserPanelAttendingItem key={event._id} event={event} currUser={currUser}
-                          routeId={routeId} retrieveEvents={retrieveEvents} past={false}
+                            routeId={routeId} retrieveEvents={retrieveEvents} past={false}
                           />
                         ))}
                       </>
@@ -208,12 +211,12 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section hidden={ !(activeTab[0] === "attending" && activeTab[1] === "past" )}>
+                  <section hidden={!(activeTab[0] === "attending" && activeTab[1] === "past")}>
                     {attendingPast.length ? (
                       <>
                         {attendingPast.map((event) => (
                           <UserPanelAttendingItem key={event._id} event={event} currUser={currUser}
-                          routeId={routeId} retrieveEvents={retrieveEvents} past={true}
+                            routeId={routeId} retrieveEvents={retrieveEvents} past={true}
                           />
                         ))}
                       </>
