@@ -104,8 +104,6 @@ export default function UserPanelCreatedItem({
               <span className='font-semibold border-b-[0.1px] border-gray-100 px-2'>
                 Description:
               </span>{' '}
-              {/* word-break: break-all; */}
-              {/* white-space: normal; */}
               <p className='break-words whitespace-normal m-0 border-b-[0.1px] border-gray-100 '>
                 {event.description}
               </p>
@@ -141,7 +139,6 @@ export default function UserPanelCreatedItem({
 
       <dialog className='modal' open={isModalOpen}>
         <div className='modal-box flex flex-col justify-center align-middle items-center'>
-          <img src={event.image} alt={event.name} />
           <form
             method='dialog'
             className='w-full max-w-xs'
@@ -196,7 +193,7 @@ export default function UserPanelCreatedItem({
                 })()}
               </select>
             </div>
-            <label className='label label-text'>Set start time:</label>
+            <label className='label label-text'>Current start time:</label>
             <p className='text-xl'>{new Date(event.date).toLocaleString()}</p>
 
             <div className='form-control w-full max-w-xs'>
@@ -223,8 +220,8 @@ export default function UserPanelCreatedItem({
               ></textarea>
             </div>
 
-            <button className='btn btn-primary' type='submit'>
-              CONFIRM EDIT
+            <button className='btn btn-primary m-2' type='submit'>
+              Edit
             </button>
           </form>
           <form method='dialog'>
