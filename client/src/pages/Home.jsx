@@ -19,6 +19,7 @@ const Home = () => {
   const [loadingEventsList, setLoadingEventList] = useState(true);
   const [eventFilter, setEventFilter] = useState(initFilter());
   const [sorted, setSorted] = useState('date');
+  const [isShowListView, setIsShowListView] = useState(false);
 
   useEffect(() => {
     document.getElementsByClassName(
@@ -41,7 +42,7 @@ const Home = () => {
 
   async function fetchEvents() {
     try {
-      setLoadingEventList(true)
+      setLoadingEventList(true);
       const eventsResponse = await getAllEvents({
         coordinates: coordinates,
         filterBy: 'coord',
@@ -102,8 +103,9 @@ const Home = () => {
           eventFilter={eventFilter}
           setEventFilter={setEventFilter}
           setSorted={setSorted}
+          isShowListView={isShowListView}
         />
-        <EventsListCollapsed />
+        <EventsListCollapsed setIsShowListView={setIsShowListView} />
 
         <ToastContainer transition={Slide} />
       </div>
