@@ -49,6 +49,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                     <input
                         type='checkbox'
                         value={idx + 1}
+                        onChange={handleChange}
                         name={c}
                         id={c}
                         className={`hidden`}
@@ -61,8 +62,8 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
 
     return (
         <div className='flex justify-between m-2'>
-            
-            <form onChange={handleChange}>
+
+            <form >
                 <h2>Filter by categories</h2>
                 <button id="clearCat" onClick={handleClear} className='btn btn-primary btn-xs btn-outline'>
                     clear categories
@@ -72,7 +73,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                 </div>
             </form>
 
-            <form onChange={handleChange}>
+            <form >
                 <h2>Filter by dates</h2>
                 <button id="clearDate" onClick={handleClear} className='btn btn-primary btn-xs btn-outline'>
                     clear dates
@@ -85,6 +86,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                         className='primary label-text input input-bordered w-full max-w-xs input-primary'
                         type='date'
                         value={eventFilter.minDate}
+                        onChange={handleChange}
                         id='date'
                         required
                         name='minDate'
@@ -101,6 +103,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                         className='primary label-text input input-bordered w-full max-w-xs input-primary'
                         type='date'
                         value={eventFilter.maxDate}
+                        onChange={handleChange}
                         id='date'
                         required
                         name='maxDate'
