@@ -6,12 +6,7 @@ import { decodeCat } from '../utilities/category';
 import { FaSearch } from 'react-icons/fa';
 import { getSearchImage } from '../utilities/images-service';
 
-function NewEventModal({
-  point,
-  displayToast,
-  fetchEvents,
-  address,
-}) {
+function NewEventModal({ point, displayToast, fetchEvents, address }) {
   const currUser = useContext(UserContext);
   const initState = {
     name: '',
@@ -35,6 +30,10 @@ function NewEventModal({
 
   const clearSelectedImage = (e) => {
     setNewEvent({ ...newEvent, image: null });
+  };
+
+  const handleImgClick = (image) => {
+    setNewEvent({ ...newEvent, image: image.urls.regular });
   };
 
   const minDate = new Date();
