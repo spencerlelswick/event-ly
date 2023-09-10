@@ -47,6 +47,7 @@ function NewEventModal({
       ...newEvent,
       address: address.name,
       coordinates: point,
+      createdBy: currUser.ID,
       [e.target.name]: e.target.value,
     };
     setNewEvent(updatedData);
@@ -80,7 +81,6 @@ function NewEventModal({
     try {
       const res = await createEvent(newEvent);
       if (res._id) {
-        console.log(res);
         setNewEvent(initState);
         setIsModalOpen(false);
         fetchEvents();

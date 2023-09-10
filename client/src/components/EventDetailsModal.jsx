@@ -52,6 +52,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
                 <div>Loading Events Details</div>
               ) : (
                 <div className='w-full'>
+                  {console.log(event)}
                   <div>{event.name}</div>
                   <img src={event.image} alt={event.name} className="w-1/4"/>
                   <div>
