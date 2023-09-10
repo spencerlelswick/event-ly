@@ -105,7 +105,6 @@ export default function UserPanel() {
                     <div className="hidden sm:stats shadow-md">
                       <div className="stat place-items-center">
                         <div className="stat-title">Member Since</div>
-                        {console.log(routeUser)}
                         <div className="stat-value">{new Date(routeUser.createdAt).toLocaleDateString()}</div>
                         <div className="stat-desc">description</div>
                       </div>
