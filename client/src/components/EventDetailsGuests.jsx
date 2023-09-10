@@ -61,7 +61,7 @@ export default function EventDetailsGuests({event, setEvent}) {
                         Partecipate
                     </button>
                 ) : (
-                    <button onClick={handleRemove} className="btn btn-primary w-full max-w-xs">
+                    <button onClick={handleRemove} className="btn btn-secondary w-full max-w-xs">
                         Remove me
                     </button>
                 )}

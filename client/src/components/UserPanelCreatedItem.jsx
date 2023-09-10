@@ -150,7 +150,7 @@ export default function UserPanelCreatedItem({ event, currUser, routeId, retriev
                             Set start time:
                         </label>
                         <p className='text-xl'>
-                            {new Date(event.date).toLocaleString().slice(0, -3)}
+                            {new Date(event.date).toLocaleString()}
                         </p>
 
                         <div className='form-control w-full max-w-xs'>

@@ -1,6 +1,7 @@
 import EventsListItem from './EventsListItem';
-import { Categories } from '../utilities/category';
 import { isFiltered } from '../utilities/category';
+import EventsListFilter from './EventsListFilter';
+import EventsListSort from './EventsListSort';
 
 export default function EventsList({
   eventsList,
@@ -10,73 +11,16 @@ export default function EventsList({
   setEventFilter,
   setSorted,
 }) {
-  const handleChange = (e) => {
-    const updatedData = { ...eventFilter };
-    updatedData[e.target.name] = e.target.checked;
-    setEventFilter(updatedData);
-  };
-
-  const filterCats = () => {
-    const filterOpts = [];
-    Categories.forEach((c, idx) => {
-      filterOpts.push(
-        <label
-          key={idx}
-          htmlFor={c}
-          className={`h-auto btn btn-square ${
-            eventFilter[c] === true ? 'btn-primary text-white' : ''
-          }`}
-        >
-          <p className='text-xs'>{c}</p>
-          <div className='h-5 w-20 overflow-hidden'>
-            <img
-              src={`/assets/${idx + 1}.svg`}
-              className='relative object-fill'
-            />
-          </div>
-
-          <input
-            type='checkbox'
-            value={idx + 1}
-            name={c}
-            id={c}
-            className={`hidden`}
-          />
-        </label>
-      );
-    });
-
-    return filterOpts;
-  };
 
   return (
     <div
       style={{ height: '95vh' }}
       className='z-10 invisible sm:visible absolute border-b  bg-white right-0 w-2/5 overflow-auto'
     >
-      <div className='flex justify-between m-2'>
-        <form onChange={handleChange}>
-          <h2>Filter by categories</h2>
-          {filterCats(eventFilter)}
-        </form>
-      </div>
 
-      <div className='flex justify-between m-2'>
-        <form>
-          <h2>Sort by</h2>
-          <select
-            defaultValue={'date'}
-            className='select select-bordered select-primary'
-            onChange={(e) => setSorted(e.target.value)}
-          >
-            <option value={'date'}>Upcoming</option>
-            <option value={'dist'}>Proximity</option>
-            <option value={'guests'}>Number of Guests</option>
-            <option value={'name'}>Name</option>
-            <option value={'nameInv'}>Name - inverse</option>
-          </select>
-        </form>
-      </div>
+      <EventsListFilter eventFilter={eventFilter} setEventFilter={setEventFilter}/>
+
+      <EventsListSort setSorted={setSorted}/>
 
       {loadingEventsList ? (
         <div>Loading events...</div>
