@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from 'react';
-import latLngToAddress from '../utilities/geocode';
 import { createEvent } from '../utilities/events-service';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from './App';
@@ -12,7 +11,6 @@ function NewEventModal({
   displayToast,
   fetchEvents,
   address,
-  setAddress,
 }) {
   const currUser = useContext(UserContext);
   const initState = {
@@ -47,6 +45,7 @@ function NewEventModal({
       ...newEvent,
       address: address.name,
       coordinates: point,
+      createdBy: currUser.ID,
       [e.target.name]: e.target.value,
     };
     setNewEvent(updatedData);
@@ -80,7 +79,6 @@ function NewEventModal({
     try {
       const res = await createEvent(newEvent);
       if (res._id) {
-        console.log(res);
         setNewEvent(initState);
         setIsModalOpen(false);
         fetchEvents();
@@ -90,31 +88,9 @@ function NewEventModal({
     }
   }
 
-  async function getAddress() {
-    try {
-      const geocodeLatLon = await latLngToAddress(point[0], point[1]);
-      if (geocodeLatLon) {
-        setAddress(geocodeLatLon);
-      } else {
-        setAddress(false);
-      }
-      // setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  const handleImgClick = (image) => {
-    setNewEvent({ ...newEvent, image: image.urls.regular });
-  };
-
-  useEffect(() => {
-    getAddress();
-  }, [point]);
-
   return (
     <>
-      {address ? (
+      {address && currUser ? (
         <button
           onClick={() => setIsModalOpen(true)}
           className='btn btn-active btn-primary'

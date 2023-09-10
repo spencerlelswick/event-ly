@@ -139,7 +139,7 @@ export default function UserPanelCreatedItem({ event, currUser, routeId, retriev
                                 {(() => {
                                     const arr = []
                                     for (let i = 1; i <= 12; i++) {
-                                        arr.push(<option value={i}>{decodeCat(i)}</option>)
+                                        arr.push(<option key={i} value={i}>{decodeCat(i)}</option>)
                                     }
                                     return arr
                                 })()}

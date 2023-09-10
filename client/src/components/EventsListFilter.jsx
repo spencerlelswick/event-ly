@@ -1,53 +1,32 @@
 import { Categories, initFilter } from '../utilities/category';
-import { useState } from 'react';
-
 
 
 export default function EventsListFilter({ eventFilter, setEventFilter }) {
-
-    const [dateFilter, setDateFilter] = useState({
-        minDate: eventFilter.minDate,
-        maxDate: eventFilter.maxDate
-    })
-
-    function handleDateChange(e){
-        const newDates={...dateFilter}
-        newDates[e.target.name]=e.target.value
-        setDateFilter(newDates)
-        console.log(newDates)
-    }
-
-    function handleDateSubmit(e){
-        e.preventDefault()
-        const data = {
-            ...eventFilter,
-            ...dateFilter
-        }
-        setEventFilter(data)
-    }
-
-    function handleDateClear(e){
-        e.preventDefault()
-        const init = initFilter()
-        const initDate={
-            minDate: init.minDate,
-            maxDate: init.maxDate
-        }
-        setDateFilter(initDate)
-        const data = {...eventFilter, ...initDate}
-        setEventFilter(data)
-    }
-
     function handleChange(e) {
         const updatedData = { ...eventFilter };
-        updatedData[e.target.name] = e.target.checked;
+        if(e.target.type === "date"){
+            updatedData[e.target.name] = e.target.value
+        }else{
+            updatedData[e.target.name] = e.target.checked
+        }
         setEventFilter(updatedData);
     }
-
+    
     function handleClear(e) {
         e.preventDefault()
         const init = initFilter()
-        setEventFilter(init)
+        const old = {...eventFilter}
+        let data={}
+        if(e.target.id === "clearAll"){
+            data = {...init}
+        }
+        if(e.target.id === "clearCat"){
+            data = {...init, minDate: old.minDate, maxDate: old.maxDate}
+        }
+        if(e.target.id === "clearDate"){
+            data = {...old, minDate: init.minDate, maxDate: init.maxDate}
+        }
+        setEventFilter(data)
     }
 
     const filterCats = () => {
@@ -70,6 +49,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                     <input
                         type='checkbox'
                         value={idx + 1}
+                        onChange={handleChange}
                         name={c}
                         id={c}
                         className={`hidden`}
@@ -82,9 +62,10 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
 
     return (
         <div className='flex justify-between m-2'>
-            <form onChange={handleChange}>
+
+            <form >
                 <h2>Filter by categories</h2>
-                <button onClick={handleClear} className='btn btn-primary btn-xs btn-outline'>
+                <button id="clearCat" onClick={handleClear} className='btn btn-primary btn-xs btn-outline'>
                     clear categories
                 </button>
                 <div>
@@ -92,9 +73,9 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                 </div>
             </form>
 
-            <form onChange={handleDateChange} onSubmit={handleDateSubmit}>
+            <form >
                 <h2>Filter by dates</h2>
-                <button onClick={handleDateClear} className='btn btn-primary btn-xs btn-outline'>
+                <button id="clearDate" onClick={handleClear} className='btn btn-primary btn-xs btn-outline'>
                     clear dates
                 </button>
                 <div className='form-control w-full max-w-xs'>
@@ -104,13 +85,13 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                     <input
                         className='primary label-text input input-bordered w-full max-w-xs input-primary'
                         type='date'
-                        value={dateFilter.minDate}
-                        onChange={handleDateChange}
+                        value={eventFilter.minDate}
+                        onChange={handleChange}
                         id='date'
                         required
                         name='minDate'
                         min={new Date().toISOString().slice(0, -14)}
-                        max={dateFilter.maxDate}
+                        max={eventFilter.maxDate}
                     />
                 </div>
 
@@ -121,22 +102,24 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                     <input
                         className='primary label-text input input-bordered w-full max-w-xs input-primary'
                         type='date'
-                        value={dateFilter.maxDate}
-                        onChange={handleDateChange}
+                        value={eventFilter.maxDate}
+                        onChange={handleChange}
                         id='date'
                         required
                         name='maxDate'
-                        min={dateFilter.minDate}
+                        min={eventFilter.minDate}
                     />
                 </div>
 
-                <button className="btn btn-primary btn-sm">
-                    Filter Date
-                </button >
-
             </form>
+
+            <form>
+                <button id="clearAll" onClick={handleClear} className='btn btn-primary btn-xs btn-outline'>
+                        clear all
+                </button>
+            </form>
+
         </div>
     )
-
 };
 
