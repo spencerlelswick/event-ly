@@ -9,7 +9,7 @@ const LogoutButton = () => {
       onClick={() =>
         logout({ logoutParams: { returnTo: window.location.origin } })
       }
-      className='text-white text-5xl w-1/3 flex items-center justify-end'
+      className='text-white text-5xl sm:text-3xl w-1/3 flex items-center justify-end'
     >
       <MdLogout />
     </button>

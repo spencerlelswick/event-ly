@@ -17,9 +17,7 @@ const Map = ({
   eventFilter,
 }) => {
   const [locality, setLocality] = useState(null);
-  const [userLoc, setUserLoc] = useState([
-    38.21363852151677, -83.58345588638122,
-  ]);
+  const [userLoc, setUserLoc] = useState([38, -100]);
   const API_KEY = import.meta.env.VITE_GEOCODE_API;
 
   useEffect(() => {
@@ -126,7 +124,7 @@ const Map = ({
       className='flex justify-center items-center h-full'
       style={{ height: '100%', width: '100%', zIndex: 0 }}
       center={userLoc}
-      zoom={12}
+      zoom={5}
       scrollWheelZoom={true}
     >
       <MapCtrl />
