@@ -59,7 +59,6 @@ function NewEventModal({
 
   const [search, setSearch] = useState(null);
   const [images, setImages] = useState([]);
-  console.log(images);
   useEffect(() => {
     const getData = setTimeout(() => {
       getSearchImage(search)
@@ -70,7 +69,6 @@ function NewEventModal({
           setImages(results);
         });
     }, 1000);
-    console.log(getData);
     return () => clearTimeout(getData);
   }, [search]);
 
@@ -230,7 +228,7 @@ function NewEventModal({
 
                   <div className='h-48 carousel carousel-vertical rounded-box'>
                     {images.map((i, idx) => (
-                      <div className='carousel-item h-48'>
+                      <div className='carousel-item h-48' key={idx}>
                         <img
                           className='w-full'
                           src={i.urls.regular}
