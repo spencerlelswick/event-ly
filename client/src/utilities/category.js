@@ -29,13 +29,17 @@ export function decodeCat(num){
 
 export const isFiltered = (event, eventFilter) => {
     let result = false
+    let hasFilter = false
 
     if (event.date >= eventFilter.minDate && 
         event.date <= eventFilter.maxDate){
             result = true
         }
 
-    const hasFilter = Object.values(eventFilter).find((i) => i === true);
+    if (result){
+        hasFilter = Object.values(eventFilter).find((i) => i === true);
+    }
+
     if (hasFilter && result) {
         const cat = decodeCat(event.category);
         result = eventFilter[cat];
