@@ -48,6 +48,13 @@ const Map = ({
 
   function UserPin() {
     const map = useMap();
+    const eventPin = new L.Icon({
+      iconUrl: `/assets/event-pin.svg`,
+      iconRetinaUrl: `/assets/event-pin.svg`,
+      iconAnchor: [32, 60],
+      popupAnchor: [0, -60],
+      iconSize: [64, 64],
+    });
 
     map.on('click', function (e) {
       const lat = e.latlng.lat;
@@ -64,7 +71,13 @@ const Map = ({
       setPoint(null);
     });
 
-    return <>{point && <Marker id='user-pin' position={point}></Marker>}</>;
+    return (
+      <>
+        {point && (
+          <Marker id='user-pin' icon={eventPin} position={point}></Marker>
+        )}
+      </>
+    );
   }
 
   function MapPanner() {
