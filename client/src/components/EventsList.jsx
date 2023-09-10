@@ -21,7 +21,10 @@ export default function EventsList({
       <EventsListSort setSorted={setSorted} />
 
       {loadingEventsList ? (
+        <>
         <div>Loading events...</div>
+        <img src='/assets/evently-logo.png' />
+      </>
       ) : eventsList.length ? (
         <div>
           {eventsList.map((event) =>

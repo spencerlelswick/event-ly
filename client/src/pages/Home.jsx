@@ -41,17 +41,16 @@ const Home = () => {
 
   async function fetchEvents() {
     try {
+      setLoadingEventList(true)
       const eventsResponse = await getAllEvents({
         coordinates: coordinates,
         filterBy: 'coord',
       });
       if (eventsResponse.length || eventsResponse.length === 0) {
         let newList = eventsResponse;
-
         if (sorted !== 'date') {
           newList = sortEvents(eventsResponse, coordinates, sorted);
         }
-
         setEventsList(newList);
         setLoadingEventList(false);
       } else {
