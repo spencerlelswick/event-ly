@@ -3,7 +3,7 @@ import { deleteEvent } from "../utilities/events-service"
 import { useState } from "react"
 import { decodeCat } from "../utilities/category"
 
-export default function UserPanelCreatedItem({ event, currUser, routeId, retrieveEvents }) {
+export default function UserPanelCreatedItem({ event, currUser, routeId, retrieveEvents, past}) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [editEvent, setEditEvent] = useState("")
 
@@ -76,13 +76,11 @@ export default function UserPanelCreatedItem({ event, currUser, routeId, retriev
                 <div>Description: {event.description}</div>
                 <div>Partecipants: {event.guests.length}</div>
                 {currUser.ID === routeId ? (
-                    <div>
-                        <button className='btn btn-primary'
-                            onClick={handleClick}
+                    <div hidden={past}>
+                        <button className='btn btn-primary' onClick={handleClick} 
                         >Update Event
                         </button>
-                        <button className='btn btn-secondary'
-                            onClick={handleDelete}
+                        <button className='btn btn-secondary' onClick={handleDelete} 
                         >Delete Event
                         </button>
                     </div>
@@ -139,7 +137,7 @@ export default function UserPanelCreatedItem({ event, currUser, routeId, retriev
                                 {(() => {
                                     const arr = []
                                     for (let i = 1; i <= 12; i++) {
-                                        arr.push(<option value={i}>{decodeCat(i)}</option>)
+                                        arr.push(<option key={i} value={i}>{decodeCat(i)}</option>)
                                     }
                                     return arr
                                 })()}

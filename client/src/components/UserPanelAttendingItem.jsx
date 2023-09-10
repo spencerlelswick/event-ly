@@ -2,7 +2,7 @@ import { updateEvent } from "../utilities/events-service"
 import { Link } from "react-router-dom"
 import { decodeCat } from "../utilities/category"
 
-export default function UserPanedlAttendingItem({ event, currUser, routeId, retrieveEvents }) {
+export default function UserPanedlAttendingItem({ event, currUser, routeId, retrieveEvents, past }) {
 
     async function handleRemove(e) {
         try {
@@ -18,7 +18,7 @@ export default function UserPanedlAttendingItem({ event, currUser, routeId, retr
             }
         } catch (err) {
             console.log(err)
-        }
+        }   
     }
 
     return (
@@ -36,10 +36,12 @@ export default function UserPanedlAttendingItem({ event, currUser, routeId, retr
             </div>
             <div>Partecipants: {event.guests.length}</div>
             {currUser.ID === routeId ? (
-                <button className='btn btn-secondary'
-                    onClick={handleRemove}
-                >Remove me
-                </button>
+                <div hidden={past}>
+                    <button className='btn btn-secondary'
+                        onClick={handleRemove}
+                    >Remove me
+                    </button>
+                </div>
             ) : (
                 null
             )}
