@@ -69,72 +69,77 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
   return (
     <div className='flex flex-col m-2'>
       <form>
-        <h2 className='my-2 text-lg'>Filter by category:</h2>
-        <div className='flex flex-wrap gap-2 justify-start items-center'>
-          {filterCats(eventFilter)}
+        <div className='collapse bg-base-200'>
+          <input type='checkbox' />
+          <div className='collapse-title text-xl font-medium'>
+            Filter by category
+          </div>
+          <div className='collapse-content'>
+            <div className='flex flex-wrap gap-2 justify-start items-center'>
+              {filterCats(eventFilter)}
+            </div>
+            <button
+              id='clearCat'
+              onClick={handleClear}
+              className='btn btn-error btn-outline btn-xs absolute right-5 top-5'
+            >
+              clear categories
+            </button>
+          </div>
         </div>
       </form>
 
       <form>
-        <h2 className='mt-5 text-lg'>Filter by date:</h2>
+        <div className='collapse bg-base-200 my-2'>
+          <input type='checkbox' />
+          <div className='collapse-title text-xl font-medium'>
+            Filter by date
+          </div>
+          <div className='collapse-content'>
+            <div className='form-control w-full max-w-xs'>
+              <label className='label' htmlFor='date'>
+                <span className='label-text'>From:</span>
+              </label>
+              <input
+                className='primary label-text input input-bordered w-full max-w-xs input-primary'
+                type='date'
+                value={eventFilter.minDate}
+                onChange={handleChange}
+                id='date'
+                required
+                name='minDate'
+                min={new Date().toISOString().slice(0, -14)}
+                max={eventFilter.maxDate}
+              />
+            </div>
 
-        <div className='form-control w-full max-w-xs'>
-          <label className='label' htmlFor='date'>
-            <span className='label-text'>From:</span>
-          </label>
-          <input
-            className='primary label-text input input-bordered w-full max-w-xs input-primary'
-            type='date'
-            value={eventFilter.minDate}
-            onChange={handleChange}
-            id='date'
-            required
-            name='minDate'
-            min={new Date().toISOString().slice(0, -14)}
-            max={eventFilter.maxDate}
-          />
-        </div>
-
-        <div className='form-control w-full max-w-xs'>
-          <label className='label' htmlFor='date'>
-            <span className='label-text'>To:</span>
-          </label>
-          <input
-            className='primary label-text input input-bordered w-full max-w-xs input-primary'
-            type='date'
-            value={eventFilter.maxDate}
-            onChange={handleChange}
-            id='date'
-            required
-            name='maxDate'
-            min={eventFilter.minDate}
-          />
+            <div className='form-control w-full max-w-xs'>
+              <label className='label' htmlFor='date'>
+                <span className='label-text'>To:</span>
+              </label>
+              <input
+                className='primary label-text input input-bordered w-full max-w-xs input-primary'
+                type='date'
+                value={eventFilter.maxDate}
+                onChange={handleChange}
+                id='date'
+                required
+                name='maxDate'
+                min={eventFilter.minDate}
+              />
+            </div>
+            <button
+              id='clearDate'
+              onClick={handleClear}
+              className='btn btn-error btn-outline btn-xs absolute right-4 top-4'
+            >
+              clear dates
+            </button>
+          </div>
         </div>
       </form>
 
-      <div className='flex flex-wrap gap-2 my-5'>
-        <button
-          id='clearCat'
-          onClick={handleClear}
-          className='btn btn-error btn-outline btn-sm'
-        >
-          clear categories
-        </button>
-        <button
-          id='clearDate'
-          onClick={handleClear}
-          className='btn btn-error btn-outline btn-sm'
-        >
-          clear dates
-        </button>
-        <button
-          id='clearAll'
-          onClick={handleClear}
-          className='btn btn-error btn-outline btn-sm'
-        >
-          clear all
-        </button>
-      </div>
+      <div className='flex flex-wrap gap-2 justify-center'></div>
     </div>
   );
 }
