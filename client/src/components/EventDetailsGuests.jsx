@@ -38,7 +38,6 @@ export default function EventDetailsGuests({ event, setEvent }) {
 
   return (
     <div>
-      Guests
       {event.guests.length ? (
         <div>
           {event.guests.map((g) => (
@@ -52,7 +51,7 @@ export default function EventDetailsGuests({ event, setEvent }) {
           ))}
         </div>
       ) : (
-        <div>No one yet. Be the first!</div>
+        <div className='my-5'>No one yet. Be the first!</div>
       )}
       {currUser ? (
         <>
