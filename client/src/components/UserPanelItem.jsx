@@ -2,13 +2,15 @@ import { updateEvent } from '../utilities/events-service';
 import { deleteEvent } from '../utilities/events-service';
 import { useState } from 'react';
 import { decodeCat } from '../utilities/category';
+import { Link } from 'react-router-dom';
 
-export default function UserPanelCreatedItem({
+export default function UserPanelItem({
   event,
   currUser,
   routeId,
   retrieveEvents,
   past,
+  type,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editEvent, setEditEvent] = useState('');
@@ -21,6 +23,23 @@ export default function UserPanelCreatedItem({
         retrieveEvents();
       } else {
         throw Error('Something went wrong with deleting an event.');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleRemove(e) {
+    try {
+      e.preventDefault();
+      const data = [...event.guests];
+      const idx = data.indexOf(currUser.ID);
+      data.splice(idx, 1);
+      const updatedEvent = await updateEvent(event._id, { guests: data });
+      if (updatedEvent._id) {
+        retrieveEvents();
+      } else {
+        throw Error('Something went wrong with removing a guest.');
       }
     } catch (err) {
       console.log(err);
@@ -80,7 +99,6 @@ export default function UserPanelCreatedItem({
           <h2 className='card-title font-extrabold capitalize text-2xl justify-center'>
             {event.name}
           </h2>
-
           <div className='h-full'>
             <div className='grid grid-cols-[1fr,4fr]'>
               <span className='font-semibold border-b-[0.1px] border-gray-100 px-2'>
@@ -113,6 +131,12 @@ export default function UserPanelCreatedItem({
               <p className='m-0 border-b-[0.1px] border-gray-100'>
                 {event.guests.length}
               </p>
+              <span className='font-semibold border-b-[0.1px] border-gray-100 px-2' hidden={type === 'created'}>
+                Host Profile:
+              </span>{' '}
+              <p className='m-0 border-b-[0.1px] border-gray-100' hidden={type === 'created'}>
+                <Link to={`/user/${event.createdBy}`}> Link </Link>
+              </p>
               <span className='font-semibold block border-b-[0.1px] border-gray-100 px-2'>
                 Address:
               </span>
@@ -125,12 +149,19 @@ export default function UserPanelCreatedItem({
           <div className='card-actions justify-center'>
             {currUser.ID === routeId ? (
               <div hidden={past}>
-                <button className='btn btn-primary mx-2' onClick={handleClick}>
-                  Update Event
-                </button>
-                <button className='btn btn-secondary' onClick={handleDelete}>
-                  Delete Event
-                </button>
+                <div hidden={type === 'attending'}>
+                  <button className='btn btn-primary mx-2' onClick={handleClick}>
+                    Update
+                  </button>
+                  <button className='btn btn-secondary' onClick={handleDelete}>
+                    Delete
+                  </button>
+                </div>
+                <div hidden={type === 'created'}>
+                  <button className='btn btn-secondary' onClick={handleRemove}>
+                    Remove me
+                  </button>
+                </div>
               </div>
             ) : null}
           </div>

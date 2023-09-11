@@ -4,8 +4,7 @@ import { getAllEvents } from '../utilities/events-service';
 import { useParams, useNavigate } from 'react-router-dom';
 import { showUser } from '../utilities/users-service';
 import { useAuth0 } from '@auth0/auth0-react';
-import UserPanelAttendingItem from '../components/UserPanelAttendingItem';
-import UserPanelCreatedItem from '../components/UserPanelCreatedItem';
+import UserPanelItem from '../components/UserPanelItem';
 
 export default function UserPanel() {
   const { isLoading } = useAuth0();
@@ -18,14 +17,14 @@ export default function UserPanel() {
   const [attendingPast, setAttendingPast] = useState(null);
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [loadingUser, setLoadingUser] = useState(true);
-  const [activeTab, setActiveTab] = useState(['created', 'active']);
+  const [activeTab, setActiveTab] = useState("cA");
   const navigate = useNavigate();
 
   async function retrieveUser() {
     try {
       setLoadingEvents(true);
       setLoadingUser(true);
-      setActiveTab(['created', 'active']);
+      setActiveTab("cA");
       setAttending(null);
       setCreated(null);
       const res = await showUser(routeId);
@@ -58,8 +57,8 @@ export default function UserPanel() {
                 ? c.push(event)
                 : cP.push(event)
               : event.date > today
-              ? a.push(event)
-              : aP.push(event)
+                ? a.push(event)
+                : aP.push(event)
           );
           setCreated(c);
           setCreatedPast(cP);
@@ -83,17 +82,10 @@ export default function UserPanel() {
 
   function handleClick(e) {
     e.preventDefault();
-    let data = [...activeTab];
-    if (e.target.id === 'active' || e.target.id === 'past') {
-      data[1] = e.target.id;
-    } else {
-      data[0] = e.target.id;
-      data[1] = 'active';
-    }
-    setActiveTab(data);
+    setActiveTab(e.target.id);
   }
 
-  const active = 'tab tab-lifted tab-xl tab-active';
+  const active = 'tab tab-lg tab-lifted tab-active';
   const inactive = 'tab tab-lifted';
 
   return (
@@ -121,14 +113,12 @@ export default function UserPanel() {
                         <div className='stat-value'>
                           {new Date(routeUser.createdAt).toLocaleDateString()}
                         </div>
-                        <div className='stat-desc'>description</div>
                       </div>
                     </div>
                     <div className='hidden md:stats shadow-md mx-1'>
                       <div className='stat place-items-center'>
                         <div className='stat-title'>Hosted Events</div>
                         <div className='stat-value'>{createdPast?.length}</div>
-                        <div className='stat-desc'>description</div>
                       </div>
                     </div>
                     <div className='hidden md:stats shadow-md mx-1'>
@@ -137,72 +127,62 @@ export default function UserPanel() {
                         <div className='stat-value'>
                           {attendingPast?.length}
                         </div>
-                        <div className='stat-desc'>description</div>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              <br />
-
-              <div className='tabs w-full flex flex-row justify-center'>
+              <div className='tabs w-full flex flex-row justify-center my-10'>
                 <a
-                  id='created'
-                  className={activeTab[0] === 'created' ? active : inactive}
+                  id='cA'
+                  className={activeTab === 'cA' ? active : inactive}
                   onClick={handleClick}
                 >
-                  CREATED EVENTS
+                  HOSTING EVENTS
                 </a>
                 <a
-                  id='attending'
-                  className={activeTab[0] === 'attending' ? active : inactive}
+                  id='cP'
+                  className={activeTab === 'cP' ? active : inactive}
+                  onClick={handleClick}
+                >
+                  HOSTED EVENTS
+                </a>
+                <a
+                  id='aA'
+                  className={activeTab === 'aA' ? active : inactive}
                   onClick={handleClick}
                 >
                   ATTENDING EVENTS
                 </a>
-              </div>
-              <br />
-              <div className='tabs'>
                 <a
-                  id='active'
-                  className={activeTab[1] === 'active' ? active : inactive}
+                  id='aP'
+                  className={activeTab === 'aP' ? active : inactive}
                   onClick={handleClick}
                 >
-                  ACTIVE
-                </a>
-                <a
-                  id='past'
-                  className={activeTab[1] === 'past' ? active : inactive}
-                  onClick={handleClick}
-                >
-                  PAST
+                  ATTENDED EVENTS
                 </a>
               </div>
-
-              <br />
 
               {loadingEvents ? (
                 <div className='flex flex-col justify-center align-middle items-center w-3/4 lg:w-1/2'>
                   Loading Events...
                 </div>
               ) : (
-                <div className='flex flex-col justify-center align-middle items-center  w-3/4'>
+                <div className='flex flex-col justify-center align-middle items-center w-3/4  lg:w-1/2'>
                   <section
-                    hidden={
-                      !(activeTab[0] === 'created' && activeTab[1] === 'active')
-                    }
-                  >
+                    hidden={!(activeTab === 'cA')}>
                     {created.length ? (
                       <>
                         {created.map((event) => (
-                          <UserPanelCreatedItem
+                          <UserPanelItem
                             key={event._id}
                             event={event}
                             currUser={currUser}
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={false}
+                            type="created"
                           />
                         ))}
                       </>
@@ -212,20 +192,18 @@ export default function UserPanel() {
                   </section>
 
                   <section
-                    hidden={
-                      !(activeTab[0] === 'created' && activeTab[1] === 'past')
-                    }
-                  >
+                    hidden={!(activeTab === 'cP')}>
                     {createdPast.length ? (
                       <>
                         {createdPast.map((event) => (
-                          <UserPanelCreatedItem
+                          <UserPanelItem
                             key={event._id}
                             event={event}
                             currUser={currUser}
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={true}
+                            type="created"
                           />
                         ))}
                       </>
@@ -234,24 +212,18 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section
-                    hidden={
-                      !(
-                        activeTab[0] === 'attending' &&
-                        activeTab[1] === 'active'
-                      )
-                    }
-                  >
+                  <section hidden={!(activeTab === 'aA')}>
                     {attending.length ? (
                       <>
                         {attending.map((event) => (
-                          <UserPanelAttendingItem
+                          <UserPanelItem
                             key={event._id}
                             event={event}
                             currUser={currUser}
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={false}
+                            type="attending"
                           />
                         ))}
                       </>
@@ -262,19 +234,20 @@ export default function UserPanel() {
 
                   <section
                     hidden={
-                      !(activeTab[0] === 'attending' && activeTab[1] === 'past')
+                      !(activeTab === 'aP')
                     }
                   >
                     {attendingPast.length ? (
                       <>
                         {attendingPast.map((event) => (
-                          <UserPanelAttendingItem
+                          <UserPanelItem
                             key={event._id}
                             event={event}
                             currUser={currUser}
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={true}
+                            type="attending"
                           />
                         ))}
                       </>
