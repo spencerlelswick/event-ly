@@ -170,7 +170,7 @@ export default function UserPanelItem({
 
           <div className='card-actions'>
             {currUser.ID === routeId ? (
-              <div className={`${type === "past" ? "hidden" : "flex flex-col"}`}>
+              <div className={`${type === "past" ? "hidden" : "flex flex-col w-full"}`}>
 
                 <div >
                   <div className={`${type === "attending" ? "hidden" :
