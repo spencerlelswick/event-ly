@@ -40,7 +40,6 @@ const Home = () => {
 
   async function fetchEvents() {
     try {
-      setLoadingEventList(true);
       const eventsResponse = await getAllEvents({
         coordinates: coordinates,
         filterBy: 'coord',

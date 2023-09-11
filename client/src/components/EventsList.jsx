@@ -37,12 +37,14 @@ export default function EventsList({
 
       <EventsListSort setSorted={setSorted} />
 
-      {loadingEventsList ? (
+      {
+      loadingEventsList ? (
         <>
           <div>Loading events...</div>
           <img src='/assets/evently-logo.png' />
         </>
-      ) : eventsList.length ? (
+       ) :
+      eventsList.length ? (
         <div>
           {eventsList.map((event) =>
             isFiltered(event, eventFilter) ? (
@@ -59,7 +61,8 @@ export default function EventsList({
           <div>No events in the area.</div>
           <img src='/assets/evently-logo.png' />
         </>
-      )}
+      )
+      }
     </div>
   );
 }
