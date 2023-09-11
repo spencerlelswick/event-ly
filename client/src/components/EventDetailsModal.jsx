@@ -9,6 +9,7 @@ import { FaStar } from 'react-icons/fa';
 import { FaRegClock, FaLocationDot } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
+
 export default function EventDetailsModal({ modalId, eventId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadingShow, setLoadingShow] = useState(true);
@@ -107,7 +108,6 @@ export default function EventDetailsModal({ modalId, eventId }) {
                             (Host)
                           </span>
                         </h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
                         <div className='card-actions'>
                           <Link
                             to={`/user/${event.createdBy._id}`}
@@ -117,10 +117,6 @@ export default function EventDetailsModal({ modalId, eventId }) {
                           </Link>
                         </div>
                       </div>
-                    </div>
-
-                    <div className='card-body'>
-                      <h2 className='ml-2 flex gap-1'></h2>
                     </div>
                   </div>
                   <div className='card flex flex-col'>
