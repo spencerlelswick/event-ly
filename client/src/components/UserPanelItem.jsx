@@ -94,7 +94,7 @@ export default function UserPanelItem({
 
   return (
     <div>
-      <div className='card md:card-side bg-base-100 min-h-48 shadow-xl m-5'>
+      <div className='card md:card-side bg-base-100 min-h-48 shadow-xl m-5 w-full'>
         <figure className='w-full relative md:max-h-max md:w-1/3'>
           <img
             src={event.image}
@@ -102,7 +102,7 @@ export default function UserPanelItem({
             className='h-full md:absolute hover:transform hover:scale-105 transition ease-linear'
           />
         </figure>
-        <div className='card-body md:w-2/3 min-h-full'>
+        <div className='card-body  md:w-2/3 min-h-full'>
           <h2 className='card-title font-extrabold capitalize text-2xl justify-center'>
             {event.name}
           </h2>
