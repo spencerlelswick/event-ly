@@ -35,17 +35,22 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
         <label
           key={idx}
           htmlFor={c}
-          className={`h-auto btn btn-square ${
-            eventFilter[c] === true ? 'btn-primary text-white' : ''
+          className={`h-auto btn btn-square w-24 h-8 ${
+            eventFilter[c] === true
+              ? 'btn-primary text-white'
+              : 'btn-secondary border-0 grayscale'
           }`}
         >
-          <p className='text-xs'>{c}</p>
-          <div className='h-5 w-20 overflow-hidden'>
-            <img
-              src={`/assets/${idx + 1}.svg`}
-              className='relative object-fill'
-            />
+          {/* 
+              top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */}
+
+          <div className='h-full w-16 overflow-hidden relative '>
+            <p className='text-xs absolute top-0 z-10 text-white'>{c}</p>
+            <img src={`/assets/${idx + 1}.svg`} className='absolute top-0' />
           </div>
+
           <input
             type='checkbox'
             value={idx + 1}
