@@ -13,6 +13,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
   const currUser = useContext(UserContext);
 
   async function handleClick() {
+    document.getElementById(modalId).showModal();
     setIsModalOpen(true);
     retrieveData();
   }
@@ -44,7 +45,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
         Event Details
       </button>
 
-      <dialog id={modalId} className='modal' open={isModalOpen}>
+      <dialog id={modalId} className='modal w-full' >
         <div className='modal-box flex flex-col justify-center align-middle items-center w-full max-w-5xl'>
           {isModalOpen ? (
             <>
