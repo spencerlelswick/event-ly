@@ -20,7 +20,12 @@ export default function EventsList({
       } w-full z-10 h-[90vh] sm:visible absolute border-b bg-white right-0 sm:w-2/5 overflow-auto`}
     >
       <div>
-        <button className='btn btn-sm btn-circle btn-secondary absolute right-2 top-2'>
+        <button
+          onClick={() => {
+            setIsShowListView(!isShowListView);
+          }}
+          className='btn btn-sm btn-circle btn-secondary absolute right-2 top-2'
+        >
           ✕
         </button>
       </div>
