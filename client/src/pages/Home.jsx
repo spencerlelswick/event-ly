@@ -25,7 +25,7 @@ const Home = ({pannedEvent,setPannedEvent}) => {
   }, []);
 
   function displayToast(msg) {
-    toast.success(`${msg} was added successfully!`, {
+    toast.success(`${msg} `, {
       position: 'top-left',
       autoClose: 2000,
       hideProgressBar: false,

@@ -74,14 +74,17 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    let newData = {...newEvent}
+    let newData = { ...newEvent }
+    console.log(newData)
     newData.date = new Date(newData.date).toISOString()
-    displayToast(`${newEvent.name} has been added!`);
     try {
       const res = await createEvent(newData);
       if (res._id) {
+        displayToast(`${newEvent.name} was added successfully!`);
         handleCancel()
         fetchEvents();
+      }else{
+        displayToast(`Something went wrong. ${newEvent.name} has not been created.`);
       }
     } catch (err) {
       console.log(err);
@@ -106,128 +109,138 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
       <dialog id='new_event_modal' className='modal' >
         {isModalOpen ? (
           <form
-            onSubmit={handleSubmit}
             method='dialog'
             className=' z-30 modal-box flex flex-col justify-center align-middle items-center'
+            onChange={handleChange}
+            onSubmit={handleSubmit}
           >
-            <div className='form-control w-full max-w-xs'>
-              <p className='text-sm'>Confirm address:</p>
-              <p className='text-2xl'>{`${address.name}`}</p>
-              <div className='form-control w-full max-w-xs'>
-                <label className='label' htmlFor='name'>
-                  <span className='label-text'>Name your event:</span>
-                </label>
-                <input
-                  type='text'
-                  required
-                  name='name'
-                  value={newEvent.name}
-                  onChange={handleChange}
-                  className='input input-bordered w-full max-w-xs input-primary'
-                />
-              </div>
-              <div className='form-control w-full max-w-xs'>
-                <label className='label' htmlFor='location'>
-                  <span className='label-text'>Location description</span>
-                </label>
-                <input
-                  type='text'
-                  name='location'
-                  required
-                  placeholder='Room 5, near the swingset, etc.'
-                  value={newEvent.location}
-                  onChange={handleChange}
-                  className='input input-bordered w-full max-w-xs input-primary'
-                />
-              </div>
-              <div className='form-control w-full max-w-xs'>
-                <label className='label'>
-                  <span className='label-text'>Pick a category:</span>
-                </label>
-                <select
-                  name='category'
-                  onChange={handleChange}
-                  defaultValue={'1'}
-                  className='select select-bordered select-primary'
-                >
-                  {(() => {
-                    const arr = [];
-                    for (let i = 1; i <= 12; i++) {
-                      arr.push(
-                        <option key={i} value={i}>
-                          {decodeCat(i)}
-                        </option>
-                      );
-                    }
-                    return arr;
-                  })()}
-                </select>
-              </div>
+            <div className="w-full max-w-xs">
+              {console.log(newEvent)}
+              <div className='form-control w-full max-w-xs mt-10'>
+                <p className='text-sm'>Selected address:</p>
+                <p className='text-xl'>{`${address.name}`}</p>
 
-              <div className='form-control w-full max-w-xs'>
-                <label className='label' htmlFor='date'>
-                  <span className='label-text'>Event start time:</span>
-                </label>
+                <div className='form-control w-full max-w-xs'>
+                  <label className='label' htmlFor='name'>
+                    <span className='label-text'>Name your event:</span>
+                  </label>
+                  <input
+                    type='text'
+                    required
+                    name='name'
+                    value={newEvent.name}
+                    onChange={handleChange}
+                    className='input input-bordered w-full max-w-xs input-primary'
+                  />
+                </div>
 
-                <input
-                  className='primary label-text input input-bordered w-full max-w-xs input-primary'
-                  type='datetime-local'
-                  value={newEvent.date}
-                  onChange={handleChange}
-                  id='date'
-                  required
-                  name='date'
-                  min={dateTimePickerToday()}
-                />
-              </div>
-              <div className='form-control'>
-                <label className='label'>
-                  <span className='label-text'>Event description:</span>
-                </label>
-                <textarea
-                  name='description'
-                  value={newEvent.description}
-                  onChange={handleChange}
-                  className='textarea textarea-bordered h-24 border-primary'
-                  placeholder='Description'
-                  required
-                ></textarea>
+                <div className='form-control w-full max-w-xs'>
+                  <label className='label' htmlFor='location'>
+                    <span className='label-text'>Location description</span>
+                  </label>
+                  <input
+                    type='text'
+                    name='location'
+                    required
+                    placeholder='Room 5, near the swingset, etc.'
+                    value={newEvent.location}
+                    onChange={handleChange}
+                    className='input input-sm input-bordered w-full max-w-xs input-primary'
+                  />
+                </div>
+
+                <div className='form-control w-full max-w-xs'>
+                  <label className='label'>
+                    <span className='label-text'>Pick a category:</span>
+                  </label>
+                  <select
+                    name='category'
+                    onChange={handleChange}
+                    defaultValue={'1'}
+                    className='select select-sm select-bordered select-primary'
+                  >
+                    {(() => {
+                      const arr = [];
+                      for (let i = 1; i <= 12; i++) {
+                        arr.push(
+                          <option key={i} value={i}>
+                            {decodeCat(i)}
+                          </option>
+                        );
+                      }
+                      return arr;
+                    })()}
+                  </select>
+                </div>
+
+                <div className='form-control w-full max-w-xs'>
+                  <label className='label' htmlFor='date'>
+                    <span className='label-text'>Event start time:</span>
+                  </label>
+                  <input
+                    className='input-sm primary label-text input input-bordered w-full max-w-xs input-primary'
+                    type='datetime-local'
+                    value={newEvent.date}
+                    onChange={handleChange}
+                    id='date'
+                    required
+                    name='date'
+                    min={dateTimePickerToday()}
+                  />
+                </div>
+
+                <div className='form-control'>
+                  <label className='label'>
+                    <span className='label-text'>Event description:</span>
+                  </label>
+                  <textarea
+                    name='description'
+                    value={newEvent.description}
+                    onChange={handleChange}
+                    className='textarea textarea-sm textarea-bordered h-24 border-primary'
+                    placeholder='Description'
+                    required
+                  ></textarea>
+                </div>
               </div>
               <div className='form-control w-full max-w-xs'>
                 {!newEvent.image ? (
                   <div>
-                    <label className='label' htmlFor='image'>
-                      <span className='label-text'>Search for an image:</span>
-                    </label>
-                    <input
-                      hidden
-                      type='text'
-                      name='image'
-                      placeholder={newEvent.image}
-                      value={newEvent.image}
-                      onChange={handleChange}
-                      className='input input-bordered w-full max-w-xs input-primary'
-                    />
+                    <form onChange={handleChange}>
+                      <label className='label' htmlFor='image'>
+                        <span className='label-text'>Enter a keyword to search, click to select:</span>
+                      </label>
+                      <input
+                        hidden
+                        type='text'
+                        name='image'
+                        placeholder={newEvent.image}
+                        value={newEvent.image}
+                        onChange={handleChange}
+                        required
+                        className='input input-bordered w-full max-w-xs input-primary'
+                      />
+                      <div className='h-48 carousel carousel-vertical rounded-box'>
+                        {images.map((i, idx) => (
+                          <div className='carousel-item h-48' key={idx}>
+                            <img
+                              className='w-full'
+                              src={i.urls.regular}
+                              onClick={() => handleImgClick(i)}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </form>
 
-                    <div className='h-48 carousel carousel-vertical rounded-box'>
-                      {images.map((i, idx) => (
-                        <div className='carousel-item h-48' key={idx}>
-                          <img
-                            className='w-full'
-                            src={i.urls.regular}
-                            onClick={() => handleImgClick(i)}
-                          />
-                        </div>
-                      ))}
-                    </div>
                     <div className='input-group '>
                       <input
                         type='text'
                         placeholder='Click an image to select'
                         onChange={(e) => setSearch(e.target.value)}
-                        className='input input-primary w-full max-w-xs'
+                        className='input input-sm input-primary w-full max-w-xs'
                       />
-                      <button className='btn btn-square btn-primary'>
+                      <button className='btn btn-sm btn-square btn-primary' onClick={(e) => e.preventDefault()}>
                         <FaSearch />
                       </button>
                     </div>
@@ -241,10 +254,14 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                   </div>
                 )}
               </div>
-              <input type='submit' className='btn btn-primary mt-5' />
+              <button className='btn btn-sm btn-primary w-full mt-5' type='submit'
+              disabled={!newEvent.image}>
+                Submit
+              </button>
             </div>
           </form>
-        ) : (null)}
+        ) : (null)
+        }
         <form method='dialog'>
           <button
             className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'
@@ -256,8 +273,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
         <form method='dialog' className='modal-backdrop'>
           <button onClick={handleCancel}>close</button>
         </form>
-      </dialog>
-
+      </dialog >
     </>
   );
 }
