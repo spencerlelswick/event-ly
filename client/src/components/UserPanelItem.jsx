@@ -170,9 +170,9 @@ export default function UserPanelItem({
 
           <div className='card-actions'>
             {currUser.ID === routeId ? (
-              <div className={`${type === "past" ? "hidden" : "flex flex-col w-full"}`}>
+              <div className= "flex flex-col w-full">
 
-                <div >
+                <div hidden={past} >
                   <div className={`${type === "attending" ? "hidden" :
                     "flex flex-row justify-center gap-x-5 flex-wrap"}`}>
                     <button className='btn md:btn-sm btn-secondary m-2' onClick={handleMove}>
@@ -190,7 +190,7 @@ export default function UserPanelItem({
                   </div>
                 </div>
 
-                <div >
+                <div hidden={past}>
                   <div className={`${type === "created" ? "hidden" :
                     "flex flex-row justify-center gap-10"}`} >
                     <button className='btn md:btn-sm btn-secondary m-2' onClick={handleMove}>
