@@ -1,36 +1,64 @@
-import { useState, useEffect } from "react"
-import { getAllEvents } from "../utilities/events-service"
-import EventsListItem from "./EventsListItem"
+import EventsListItem from './EventsListItem';
+import { isFiltered } from '../utilities/category';
+import EventsListFilter from './EventsListFilter';
+import EventsListSort from './EventsListSort';
 
-export default function EventsList({coordinates,eventsList,setEventsList}) {
+export default function EventsList({
+  eventsList,
+  setPannedEvent,
+  loadingEventsList,
+  eventFilter,
+  setEventFilter,
+  setSorted,
+  isShowListView,
+  setIsShowListView,
+}) {
+  return (
+    <div
+      hidden={!isShowListView}
+      className={`w-full h-[95vh] sm:visible absolute border-b bg-white right-0 sm:w-2/5 sm:block overflow-y-scroll`}
+    >
+      <div>
+        <button
+          onClick={() => {
+            setIsShowListView(!isShowListView);
+          }}
+          className='sm:hidden z-10 btn btn-sm btn-circle btn-secondary fixed right-8 top-28'
+        >
+          ✕
+        </button>
+      </div>
 
-    const [loading, setLoading] = useState(true)
+      <EventsListFilter
+        eventFilter={eventFilter}
+        setEventFilter={setEventFilter}
+      />
 
-    async function fetchEvents() {
+      <EventsListSort setSorted={setSorted} />
 
-        const eventsResponse = await getAllEvents(coordinates)
-
-        if (eventsResponse.length || eventsResponse.length === 0) {
-            setEventsList(eventsResponse)
-            setLoading(false)
-        } else {
-            console.log(eventsResponse)
-        }
-    }
-
-    useEffect(() => {
-        fetchEvents()
-    }, [coordinates])
-
-    return (loading ? (
-        <div>loading Events</div>
-    ) : (eventsList.length ? (
+      {loadingEventsList ? (
+        <>
+          <div>Loading events...</div>
+          <img src='/assets/evently-logo.png' />
+        </>
+      ) : eventsList.length ? (
         <div>
-            {eventsList.map((event) => (
-               <EventsListItem event={event} key={event._id}/>
-            ))}
+          {eventsList.map((event) =>
+            isFiltered(event, eventFilter) ? (
+              <EventsListItem
+                event={event}
+                key={event._id}
+                setPannedEvent={setPannedEvent}
+              />
+            ) : null
+          )}
         </div>
-    ) : (
-        <div>no events in the area</div>
-    )))
+      ) : (
+        <div className='flex flex-col justify-center items-center align-middle h-1/2'>
+          <p className='text-error text-xl'>No events found in this area</p>
+          <img src='/assets/evently-logo.png' className='' />
+        </div>
+      )}
+    </div>
+  );
 }

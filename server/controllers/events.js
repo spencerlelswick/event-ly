@@ -9,25 +9,37 @@ module.exports = {
 }
 
 async function index(req, res) {
-
-    const lat = req.body.coordinates[0]
-    const lng = req.body.coordinates[1]
-    const delta = 0.15
-
     try {
-      res.status(200).json(await Event.find({
-        "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
-        "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
-    }));
+        const today = new Date()
+        if (req.body.filterBy === "coord"){
+            const lat = req.body.coordinates[0]
+            const lng = req.body.coordinates[1]
+            const delta = 0.2
+            res.status(200).json(await Event.find({
+                "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
+                "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
+                "date":{$gte: today}
+            }).sort({date:1}))
+        }else if (req.body.filterBy === "user"){
+            const userId = req.body.userId
+            const events = await Event.find({
+                $or:[{"createdBy": userId},{"guests": userId}]
+            }).sort({date:1})
+            res.status(200).json(events)
+        }
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
 }
 
-async function create(req,res){
+async function create(req, res) {
+    const lat = req.body.coordinates[0]
+    const lng = req.body.coordinates[1]
     try {
-        const userId = "64f397b1dc1e188f1c659f95" //placeholder
-        const data = {...req.body, createdBy : userId}
+        const data = {
+            ...req.body,
+            coordinates: {latitude: lat, longitude: lng}
+        }
         res.status(201).json(await Event.create(data));
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -40,6 +52,10 @@ async function show(req,res){
         .populate("guests")
         .populate("createdBy")
         .populate("comments")
+        .populate({
+            path: "comments",
+            populate: "createdBy"
+        })
         res.status(200).json(foundEvent)
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -51,6 +67,11 @@ async function update(req,res){
         const foundEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true })
         .populate("guests")
         .populate("createdBy")
+        .populate("comments")
+        .populate({
+            path: "comments",
+            populate: "createdBy"
+        })
         res.status(200).json(foundEvent);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -64,4 +85,5 @@ async function destroy(req,res){
         res.status(400).json({ error: error.message });
     }
 }
+
 

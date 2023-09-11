@@ -23,7 +23,7 @@ app.use("/events", eventsRouter)
 app.use("/users", usersRouter)
 
 app.get('/', (req, res) => {
-  res.send('hello world')
+  res.send('hello world, server up!')
 })
 
-app.listen(PORT, () => {console.log(`Server started on ${PORT}`)})
+app.listen(PORT, () => {console.log(`Server started on PORT: ${PORT}`)})

@@ -26,3 +26,12 @@ export async function updateUser(id, data){
         return err
     }
 }
+
+export async function createUser(data){
+    try{
+       const resp = await usersAPI.create(data)
+       return resp
+    }catch(err){
+        return err
+    }
+}

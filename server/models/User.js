@@ -6,16 +6,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: "User name"
     },
-    googleId: {
+    picture: {
         type: String,
-        default: ""
-    },
-    avatar: {
-        type: String,
-        default:""
+        required: true,
+        default:"https://placekitten.com/100/100"
     },
     email: {
         type: String,
+        required: true,
         default:"email@email.com"
     },
     geodata: {
@@ -24,6 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     favCategory: {
         type: [Number],
+        required: true,
         default: []
     },
 },{

@@ -19,11 +19,18 @@ const eventSchema = new mongoose.Schema({
     },
     location:  {
         type: String,
-        default:"location name"
+        required: true,
+        default:"Location name"
     },
     address: {
         type: String,
-        default:"address info"
+        required: true,
+        default:""
+    },
+    description: {
+        type: String,
+        required: true,
+        default:"Event description"
     },
     status: {
         type: Boolean,
@@ -31,9 +38,17 @@ const eventSchema = new mongoose.Schema({
         required: true,
     },
     category: {
-        type: [Number]
+        type: Number,
+        min: 1,
+        max: 12,
+        
+
     },
-    image: String,
+    image: {
+        type: String,
+        required: true,
+        default:"https://picsum.photos/400/200"
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
