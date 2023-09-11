@@ -94,11 +94,15 @@ export default function UserPanelItem({
 
   return (
     <div>
-      <div className='card md:card-side bg-base-100 shadow-xl m-5'>
-        <figure className=' w-full max-h-48 md:max-h-max md:w-1/3'>
-          <img src={event.image} alt={event.name} className='h-full' />
+      <div className='card md:card-side bg-base-100 min-h-48 shadow-xl m-5'>
+        <figure className='w-full relative md:max-h-max md:w-1/3'>
+          <img
+            src={event.image}
+            alt={event.name}
+            className='h-full md:absolute hover:transform hover:scale-105 transition ease-linear'
+          />
         </figure>
-        <div className='card-body md:w-2/4 min-h-full'>
+        <div className='card-body md:w-2/3 min-h-full'>
           <h2 className='card-title font-extrabold capitalize text-2xl justify-center'>
             {event.name}
           </h2>
@@ -134,10 +138,16 @@ export default function UserPanelItem({
               <p className='m-0 border-b-[0.1px] border-gray-100'>
                 {event.guests.length}
               </p>
-              <span className='font-semibold border-b-[0.1px] border-gray-100 px-2' hidden={type === 'created'}>
+              <span
+                className='font-semibold border-b-[0.1px] border-gray-100 px-2'
+                hidden={type === 'created'}
+              >
                 Host Profile:
               </span>{' '}
-              <p className='m-0 border-b-[0.1px] border-gray-100' hidden={type === 'created'}>
+              <p
+                className='m-0 border-b-[0.1px] border-gray-100'
+                hidden={type === 'created'}
+              >
                 <Link to={`/user/${event.createdBy}`}> Link </Link>
               </p>
               <span className='font-semibold block border-b-[0.1px] border-gray-100 px-2'>
@@ -153,7 +163,10 @@ export default function UserPanelItem({
             {currUser.ID === routeId ? (
               <div hidden={past}>
                 <div hidden={type === 'attending'}>
-                  <button className='btn btn-primary mx-2' onClick={handleClick}>
+                  <button
+                    className='btn btn-primary mx-2'
+                    onClick={handleClick}
+                  >
                     Update
                   </button>
                   <button className='btn btn-secondary' onClick={handleDelete}>

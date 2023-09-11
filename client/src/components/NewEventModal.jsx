@@ -110,7 +110,6 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
             <div className='form-control w-full max-w-xs'>
               <p className='text-sm'>Confirm address:</p>
               <p className='text-2xl'>{`${address.name}`}</p>
-
               <div className='form-control w-full max-w-xs'>
                 <label className='label' htmlFor='name'>
                   <span className='label-text'>Name your event:</span>

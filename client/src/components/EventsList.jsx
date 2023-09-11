@@ -17,14 +17,14 @@ export default function EventsList({
     <div
       className={`${
         isShowListView ? 'visible' : 'invisible'
-      } w-full h-[90vh] sm:visible absolute border-b bg-white right-0 sm:w-2/5 overflow-auto`}
+      } w-full h-[90vh] sm:visible absolute border-b bg-white right-0 sm:w-2/5 overflow-y-scroll`}
     >
       <div>
         <button
           onClick={() => {
             setIsShowListView(!isShowListView);
           }}
-          className='sm:hidden btn btn-sm btn-circle btn-secondary absolute right-2 top-2'
+          className='sm:hidden z-10 btn btn-sm btn-circle btn-secondary fixed right-14 top-32'
         >
           ✕
         </button>
@@ -37,14 +37,12 @@ export default function EventsList({
 
       <EventsListSort setSorted={setSorted} />
 
-      {
-      loadingEventsList ? (
+      {loadingEventsList ? (
         <>
           <div>Loading events...</div>
           <img src='/assets/evently-logo.png' />
         </>
-       ) :
-      eventsList.length ? (
+      ) : eventsList.length ? (
         <div>
           {eventsList.map((event) =>
             isFiltered(event, eventFilter) ? (
@@ -61,8 +59,7 @@ export default function EventsList({
           <div>No events in the area.</div>
           <img src='/assets/evently-logo.png' />
         </>
-      )
-      }
+      )}
     </div>
   );
 }
