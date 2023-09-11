@@ -9,7 +9,6 @@ import { FaStar } from 'react-icons/fa';
 import { FaRegClock, FaLocationDot } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
-
 export default function EventDetailsModal({ modalId, eventId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadingShow, setLoadingShow] = useState(true);
@@ -113,7 +112,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
                             to={`/user/${event.createdBy._id}`}
                             className='btn btn-primary'
                           >
-                            Profile
+                            <span className='text-white'>Profile</span>
                           </Link>
                         </div>
                       </div>
