@@ -35,19 +35,16 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
         <label
           key={idx}
           htmlFor={c}
-          className={`h-auto btn btn-square w-24 ${
+          className={`h-auto btn btn-square w-16 ${
             eventFilter[c] === true
               ? 'btn-primary text-white border-0'
               : 'hover:grayscale-0 btn-secondary border-0 grayscale  '
           }`}
         >
-          {/* 
-              top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */}
-
-          <div className='h-16 w-20 overflow-hidden relative'>
-            <p className='text-xs absolute top-0 z-10 text-white'>{c}</p>
+          <div className='h-12 w-20 overflow-hidden relative'>
+            <p className='text-xs absolute top-[2px] left-[1] z-10 text-white'>
+              {c}
+            </p>
             <img
               src={`/assets/${idx + 1}.svg`}
               draggable={false}
@@ -71,14 +68,9 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
 
   return (
     <div className='flex flex-col m-2'>
-      {console.log(eventFilter)}
       <form>
-        {/* <div className='flex justify-evenly items-center my-10'>
-          
-        </div> */}
         <h2 className='my-2 text-lg'>Filter by category:</h2>
-
-        <div className='flex flex-wrap gap-2 justify-center items-center'>
+        <div className='flex flex-wrap gap-2 justify-start items-center'>
           {filterCats(eventFilter)}
         </div>
       </form>
