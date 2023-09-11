@@ -98,8 +98,7 @@ export default function UserPanelItem({
     e.preventDefault()
     const coord=[event.coordinates.latitude,event.coordinates.longitude]
     console.log(coord)
-    setPannedEvent([[0,0],18])
-    setPannedEvent([coord,18])
+    setPannedEvent([coord,17,1])
     navigate("/")
   }
 

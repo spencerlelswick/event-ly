@@ -106,7 +106,7 @@ const Home = ({pannedEvent,setPannedEvent}) => {
           setIsShowListView={setIsShowListView}
           isShowListView={isShowListView}
         />
-
+{console.log(coordinates)}
         <ToastContainer transition={Slide} />
       </div>
     </div>
