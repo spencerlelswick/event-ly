@@ -1,6 +1,7 @@
 import { Categories, initFilter } from '../utilities/category';
 
 export default function EventsListFilter({ eventFilter, setEventFilter }) {
+  
   function handleChange(e) {
     const updatedData = { ...eventFilter };
     if (e.target.type === 'date') {
@@ -57,8 +58,8 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
 
           <input
             type='checkbox'
-            value={idx + 1}
-            onChange={handleChange}
+            checked={eventFilter[c]}
+            onClick={handleChange}
             name={c}
             id={c}
             className={`hidden`}
@@ -71,6 +72,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
 
   return (
     <div className='flex flex-col m-2'>
+      {console.log(eventFilter)}
       <form>
         {/* <div className='flex justify-evenly items-center my-10'>
           
