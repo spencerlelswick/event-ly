@@ -1,7 +1,6 @@
 import { Categories, initFilter } from '../utilities/category';
 
 export default function EventsListFilter({ eventFilter, setEventFilter }) {
-  
   function handleChange(e) {
     const updatedData = { ...eventFilter };
     if (e.target.type === 'date') {
@@ -36,7 +35,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
         <label
           key={idx}
           htmlFor={c}
-          className={`h-auto btn btn-square w-24 h-8 ${
+          className={`h-auto btn btn-square w-24 ${
             eventFilter[c] === true
               ? 'btn-primary text-white border-0'
               : 'btn-secondary border-0 grayscale'
@@ -47,7 +46,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
   left: 50%;
   transform: translate(-50%, -50%); */}
 
-          <div className='h-16 w-20 overflow-hidden relative '>
+          <div className='h-16 w-20 overflow-hidden relative'>
             <p className='text-xs absolute top-0 z-10 text-white'>{c}</p>
             <img
               src={`/assets/${idx + 1}.svg`}
