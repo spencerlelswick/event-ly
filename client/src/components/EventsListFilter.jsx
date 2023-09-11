@@ -63,31 +63,18 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
   return (
     <div className='flex flex-col m-2'>
       <form>
-        <div className='flex justify-evenly items-center my-10'>
-          <button
-            id='clearCat'
-            onClick={handleClear}
-            className='btn btn-primary btn-xs btn-outline'
-          >
-            clear categories
-          </button>
-          <button
-            id='clearDate'
-            onClick={handleClear}
-            className='btn btn-primary btn-xs btn-outline'
-          >
-            clear dates
-          </button>
-        </div>
-        <h2 className='text-2xl text-center my-2'>Filter by category</h2>
+        {/* <div className='flex justify-evenly items-center my-10'>
+          
+        </div> */}
+        <h2 className='my-2 text-lg'>Filter by category:</h2>
 
-        <div className='flex flex-wrap gap-2 justify-center items-center'>
+        <div className='flex flex-wrap gap-2 justify-center items-center  w-5/6'>
           {filterCats(eventFilter)}
         </div>
       </form>
 
       <form>
-        <h2>Filter by dates</h2>
+        <h2 className='mt-5 text-lg'>Filter by date:</h2>
 
         <div className='form-control w-full max-w-xs'>
           <label className='label' htmlFor='date'>
@@ -123,15 +110,29 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
         </div>
       </form>
 
-      <form>
+      <div className='flex flex-wrap gap-2 my-5'>
+        <button
+          id='clearCat'
+          onClick={handleClear}
+          className='btn btn-error btn-outline btn-sm'
+        >
+          clear categories
+        </button>
+        <button
+          id='clearDate'
+          onClick={handleClear}
+          className='btn btn-error btn-outline btn-sm'
+        >
+          clear dates
+        </button>
         <button
           id='clearAll'
           onClick={handleClear}
-          className='btn btn-primary btn-xs btn-outline'
+          className='btn btn-error btn-outline btn-sm'
         >
           clear all
         </button>
-      </form>
+      </div>
     </div>
   );
 }
