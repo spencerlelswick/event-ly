@@ -1,5 +1,6 @@
 import EventDetailsModal from './EventDetailsModal';
 import { decodeCat } from '../utilities/category';
+import { timeDisplay, dateDisplay } from '../utilities/dates';
 
 export default function EventsListItem({ event, setPannedEvent }) {
   const handleClick = (e) => {
@@ -11,8 +12,6 @@ export default function EventsListItem({ event, setPannedEvent }) {
 
     return null;
   };
-
-  const dateSplit = new Date(event.date).toLocaleString().split(',');
 
   return (
     <div
@@ -31,9 +30,9 @@ export default function EventsListItem({ event, setPannedEvent }) {
           <h2 className='card-title text-2xl'>{event.name}</h2>
           <span className=''>
             Starting at
-            <span className='text-primary font-semibold'>{dateSplit[1]} </span>
+            <span className='text-primary font-semibold'> {timeDisplay(event.date)} </span>
             on
-            <span className='text-primary font-semibold'> {dateSplit[0]}</span>
+            <span className='text-primary font-semibold'> {dateDisplay(event.date)}</span>
           </span>
           <div>{decodeCat(event.category)}</div>
         </div>

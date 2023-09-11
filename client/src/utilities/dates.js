@@ -19,7 +19,7 @@ export function dateDisplay(date){
     return new Date(date).toLocaleDateString()
 }
 
-export function datePicker(date){
+export function dateTimePicker(date){
     const y = new Date(date).getFullYear()
 
     let m = new Date(date).getMonth()
@@ -36,4 +36,25 @@ export function datePicker(date){
     mi.toString().length === 1 ? mi = "0"+mi : null
 
     return `${y}-${m}-${d}T${h}:${mi}`
+}
+
+export function dateTimePickerToday(){
+    return dateTimePicker(new Date())
+}
+
+export function datePickerAddMonth(date,num){
+    const y = new Date(date).getFullYear()
+
+    let m = new Date(date).getMonth()
+    m = m + 1 + num
+    m.toString().length === 1 ? m = "0"+m : null
+
+    let d = new Date(date).getDate()
+    d.toString().length === 1 ? d = "0"+d : null
+
+    return `${y}-${m}-${d}`
+}
+
+export function datePickerToday(){
+    return datePickerAddMonth(new Date(),0)
 }
