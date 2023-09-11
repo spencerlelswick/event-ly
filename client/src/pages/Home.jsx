@@ -11,9 +11,7 @@ import { sortEvents } from '../utilities/sortEvents';
 
 const Home = () => {
   const [eventsList, setEventsList] = useState(null);
-  const [coordinates, setCoordinates] = useState([
-    38.21363852151677, -85.58345588638122,
-  ]);
+  const [coordinates, setCoordinates] = useState([0,0]);
   const [point, setPoint] = useState(null);
   const [pannedEvent, setPannedEvent] = useState(null);
   const [loadingEventsList, setLoadingEventList] = useState(true);
