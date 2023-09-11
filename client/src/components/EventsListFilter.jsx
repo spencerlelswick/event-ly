@@ -37,7 +37,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
           htmlFor={c}
           className={`h-auto btn btn-square w-24 h-8 ${
             eventFilter[c] === true
-              ? 'btn-primary text-white'
+              ? 'btn-primary text-white border-0'
               : 'btn-secondary border-0 grayscale'
           }`}
         >
@@ -46,9 +46,13 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
   left: 50%;
   transform: translate(-50%, -50%); */}
 
-          <div className='h-full w-16 overflow-hidden relative '>
+          <div className='h-16 w-20 overflow-hidden relative '>
             <p className='text-xs absolute top-0 z-10 text-white'>{c}</p>
-            <img src={`/assets/${idx + 1}.svg`} className='absolute top-0' />
+            <img
+              src={`/assets/${idx + 1}.svg`}
+              draggable={false}
+              className='absolute top-0'
+            />
           </div>
 
           <input
@@ -73,7 +77,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
         </div> */}
         <h2 className='my-2 text-lg'>Filter by category:</h2>
 
-        <div className='flex flex-wrap gap-2 justify-center items-center  w-5/6'>
+        <div className='flex flex-wrap gap-2 justify-center items-center'>
           {filterCats(eventFilter)}
         </div>
       </form>

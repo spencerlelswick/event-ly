@@ -104,6 +104,7 @@ const Home = () => {
           setEventFilter={setEventFilter}
           setSorted={setSorted}
           isShowListView={isShowListView}
+          setIsShowListView={setIsShowListView}
         />
         <EventsListCollapsed setIsShowListView={setIsShowListView} />
 

@@ -11,6 +11,7 @@ export default function EventsList({
   setEventFilter,
   setSorted,
   isShowListView,
+  setIsShowListView,
 }) {
   return (
     <div

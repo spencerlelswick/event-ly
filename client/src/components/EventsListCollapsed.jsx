@@ -10,7 +10,7 @@ export default function EventsListCollapsed({
 
   return (
     <div
-      className='z-[1] sm:invisible absolute btn btn-secondary text-white text-4xl right-10 top-28 h-20 w-20 rounded-full flex justify-center items-center'
+      className='z-[1] sm:invisible absolute btn btn-secondary text-white text-3xl right-10 top-24 h-16 w-16 rounded-full flex justify-center items-center'
       onClick={toggleList}
     >
       <FaListOl />
