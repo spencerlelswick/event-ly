@@ -42,7 +42,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
           }`}
         >
           <div className='h-12 w-20 overflow-hidden relative'>
-            <p className='text-xs absolute top-[2px] left-[1] z-10 text-white'>
+            <p className='text-[11px] absolute top-[2px] left-[3px] z-10 text-white'>
               {c}
             </p>
             <img
