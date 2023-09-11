@@ -3,6 +3,7 @@ import { deleteEvent } from '../utilities/events-service';
 import { useState } from 'react';
 import { decodeCat } from '../utilities/category';
 import { Link } from 'react-router-dom';
+import { dateTimePicker, dateTimePickerToday, fullDateDisplay } from '../utilities/dates';
 
 export default function UserPanelItem({
   event,
@@ -55,7 +56,7 @@ export default function UserPanelItem({
       location: event.location,
       description: event.description,
       category: event.category,
-      date: undefined,
+      date: dateTimePicker(event.date),
     };
     setEditEvent(data);
   }
@@ -112,7 +113,7 @@ export default function UserPanelItem({
                 Date:
               </span>{' '}
               <p className='m-0 border-b-[0.1px] border-gray-100 '>
-                {new Date(event.date).toLocaleString()}
+                {fullDateDisplay(event.date)}
               </p>
               <span className='font-semibold block border-b-[0.1px] border-gray-100 px-2'>
                 Location:
@@ -241,9 +242,7 @@ export default function UserPanelItem({
                 })()}
               </select>
             </div>
-            <label className='label label-text'>Current start time:</label>
-            <p className='text-xl'>{new Date(event.date).toLocaleString()}</p>
-
+            
             <div className='form-control w-full max-w-xs'>
               <label className='label label-text'>Edit start time:</label>
               <input
@@ -253,7 +252,7 @@ export default function UserPanelItem({
                 onChange={handleChange}
                 id='date'
                 name='date'
-                min={new Date().toISOString().slice(0, -8)}
+                min={dateTimePickerToday()}
               />
             </div>
 

@@ -1,4 +1,5 @@
 import { Categories, initFilter } from '../utilities/category';
+import { datePickerToday } from '../utilities/dates';
 
 export default function EventsListFilter({ eventFilter, setEventFilter }) {
   function handleChange(e) {
@@ -122,7 +123,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                 id='date'
                 required
                 name='minDate'
-                min={new Date().toISOString().slice(0, -14)}
+                min={datePickerToday()}
                 max={eventFilter.maxDate}
               />
             </div>

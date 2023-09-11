@@ -1,3 +1,5 @@
+import { datePickerToday, datePickerAddMonth } from "./dates"
+
 export const Categories = [
     "Art",
     "Business",
@@ -18,8 +20,8 @@ export function initFilter() {
     Categories.forEach(c => {
         filter[c] = false
     })
-    filter.minDate = new Date().toISOString().slice(0, -14)
-    filter.maxDate =new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString().slice(0, -14)
+    filter.minDate = datePickerToday()
+    filter.maxDate = datePickerAddMonth( new Date(),2)
     return filter
 }
 

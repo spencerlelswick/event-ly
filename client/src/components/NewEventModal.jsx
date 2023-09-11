@@ -5,6 +5,7 @@ import { UserContext } from './App';
 import { decodeCat } from '../utilities/category';
 import { FaSearch } from 'react-icons/fa';
 import { getSearchImage } from '../utilities/images-service';
+import { dateTimePickerToday } from '../utilities/dates';
 
 function NewEventModal({ point, displayToast, fetchEvents, address }) {
   const currUser = useContext(UserContext);
@@ -174,7 +175,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                   id='date'
                   required
                   name='date'
-                  min={new Date().toISOString().slice(0, -8)}
+                  min={dateTimePickerToday()}
                 />
               </div>
               <div className='form-control'>
