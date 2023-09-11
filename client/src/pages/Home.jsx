@@ -9,11 +9,10 @@ import { getAllEvents } from '../utilities/events-service';
 import { initFilter } from '../utilities/category';
 import { sortEvents } from '../utilities/sortEvents';
 
-const Home = () => {
+const Home = ({pannedEvent,setPannedEvent}) => {
   const [eventsList, setEventsList] = useState(null);
   const [coordinates, setCoordinates] = useState([0, 0]);
   const [point, setPoint] = useState(null);
-  const [pannedEvent, setPannedEvent] = useState(null);
   const [loadingEventsList, setLoadingEventList] = useState(true);
   const [eventFilter, setEventFilter] = useState(initFilter());
   const [sorted, setSorted] = useState('date');

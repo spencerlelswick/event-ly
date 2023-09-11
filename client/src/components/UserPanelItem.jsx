@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { decodeCat } from '../utilities/category';
 import { Link } from 'react-router-dom';
 import { dateTimePicker, dateTimePickerToday, fullDateDisplay } from '../utilities/dates';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserPanelItem({
   event,
@@ -12,10 +13,12 @@ export default function UserPanelItem({
   retrieveEvents,
   past,
   type,
+  setPannedEvent,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editEvent, setEditEvent] = useState('');
   const modalId = event._id + "_edit"
+  const navigate = useNavigate()
 
   async function handleDelete(e) {
     try {
@@ -90,6 +93,17 @@ export default function UserPanelItem({
       console.log(err);
     }
   }
+
+  function handleMove(e){
+    e.preventDefault()
+    const coord=[event.coordinates.latitude,event.coordinates.longitude]
+    console.log(coord)
+    setPannedEvent([[0,0],18])
+    setPannedEvent([coord,18])
+    navigate("/")
+  }
+
+
 
   return (
     <div>
@@ -175,6 +189,11 @@ export default function UserPanelItem({
                 <div hidden={type === 'created'}>
                   <button className='btn btn-secondary' onClick={handleRemove}>
                     Remove me
+                  </button>
+                </div>
+                <div >
+                  <button className='btn btn-secondary' onClick={handleMove}>
+                    MAP
                   </button>
                 </div>
               </div>

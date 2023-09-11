@@ -6,7 +6,7 @@ import { showUser } from '../utilities/users-service';
 import { useAuth0 } from '@auth0/auth0-react';
 import UserPanelItem from '../components/UserPanelItem';
 
-export default function UserPanel() {
+export default function UserPanel({setPannedEvent}) {
   const { isLoading } = useAuth0();
   const currUser = useContext(UserContext);
   const routeId = useParams().id;
@@ -142,18 +142,18 @@ export default function UserPanel() {
                   HOSTING EVENTS
                 </a>
                 <a
-                  id='cP'
-                  className={activeTab === 'cP' ? active : inactive}
-                  onClick={handleClick}
-                >
-                  HOSTED EVENTS
-                </a>
-                <a
                   id='aA'
                   className={activeTab === 'aA' ? active : inactive}
                   onClick={handleClick}
                 >
                   ATTENDING EVENTS
+                </a>
+                <a
+                  id='cP'
+                  className={activeTab === 'cP' ? active : inactive}
+                  onClick={handleClick}
+                >
+                  HOSTED EVENTS
                 </a>
                 <a
                   id='aP'
@@ -185,6 +185,7 @@ export default function UserPanel() {
                             retrieveEvents={retrieveEvents}
                             past={false}
                             type="created"
+                            setPannedEvent={setPannedEvent}
                           />
                         ))}
                       </>
@@ -206,6 +207,7 @@ export default function UserPanel() {
                             retrieveEvents={retrieveEvents}
                             past={true}
                             type="created"
+                            setPannedEvent={setPannedEvent}
                           />
                         ))}
                       </>
@@ -227,6 +229,7 @@ export default function UserPanel() {
                             retrieveEvents={retrieveEvents}
                             past={false}
                             type="attending"
+                            setPannedEvent={setPannedEvent}
                           />
                         ))}
                       </>
@@ -249,6 +252,7 @@ export default function UserPanel() {
                             retrieveEvents={retrieveEvents}
                             past={true}
                             type="attending"
+                            setPannedEvent={setPannedEvent}
                           />
                         ))}
                       </>
