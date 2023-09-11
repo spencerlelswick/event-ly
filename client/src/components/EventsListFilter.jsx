@@ -69,7 +69,10 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
   return (
     <div className='flex flex-col m-2'>
       <form>
-        <div className='collapse bg-base-200'>
+        <div
+          style={{ visibility: 'unset' }}
+          className='sm:visible collapse bg-base-200'
+        >
           <input type='checkbox' />
           <div className='collapse-title text-xl font-medium'>
             Filter by category
@@ -90,7 +93,10 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
       </form>
 
       <form>
-        <div className='collapse bg-base-200 my-2'>
+        <div
+          style={{ visibility: 'unset' }}
+          className='collapse bg-base-200 my-2'
+        >
           <input type='checkbox' />
           <div className='collapse-title text-xl font-medium'>
             Filter by date

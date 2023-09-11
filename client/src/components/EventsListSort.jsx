@@ -2,7 +2,6 @@ export default function EventsListSort({setSorted}) {
     return(
         <div className='flex justify-between m-2'>
         <form >
-          <h2>Sort by</h2>
           <select
           defaultValue={"date"}
           className='select select-bordered select-primary'
