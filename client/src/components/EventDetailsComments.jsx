@@ -58,7 +58,7 @@ export default function EventDetailsComments({ event, setEvent }) {
           {event.comments.map((c) => (
             <div
               key={c._id}
-              className='flex flex-row align-middle items-center'
+              className='flex flex-row align-middle justify-between'
             >
               <img
                 src={c.createdBy.picture}
