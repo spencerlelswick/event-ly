@@ -79,9 +79,7 @@ export default function UserPanelItem({
       e.preventDefault();
       handleCancel()
       const data = { ...editEvent };
-      if (data.date === undefined) {
-        delete data.date;
-      }
+      data.date = new Date(data.date).toISOString()
       const res = await updateEvent(event._id, data);
       if (res._id) {
         retrieveEvents();
