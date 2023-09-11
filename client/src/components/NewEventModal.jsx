@@ -181,7 +181,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                 name='description'
                 value={newEvent.description}
                 onChange={handleChange}
-                className='textarea textarea-bordered h-24 border-primary'
+                className='textarea textarea-bordered h-24 border-primary textarea-primary'
                 placeholder='Description'
                 required
               ></textarea>

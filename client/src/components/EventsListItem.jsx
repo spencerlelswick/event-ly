@@ -14,7 +14,7 @@ export default function EventsListItem({ event, setPannedEvent }) {
 
   return (
     <div
-      className='card card-side bg-base-100 min-h-48 mx-1 my-2 shadow flex flex-row'
+      className='card card-side bg-base-100 min-h-48 m-2 shadow flex flex-row'
       onClick={handleClick}
     >
       <figure className='w-1/3 relative'>
