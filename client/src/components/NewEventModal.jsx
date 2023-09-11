@@ -43,7 +43,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
   };
 
   function handleChange(e) {
-    const updatedData = {
+    let updatedData = {
       ...newEvent,
       address: address.name,
       coordinates: point,
@@ -74,9 +74,11 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    let newData = {...newEvent}
+    newData.date = new Date(newData.date).toISOString()
     displayToast(`${newEvent.name} has been added!`);
     try {
-      const res = await createEvent(newEvent);
+      const res = await createEvent(newData);
       if (res._id) {
         handleCancel()
         fetchEvents();
