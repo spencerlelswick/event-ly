@@ -11,7 +11,7 @@ import { sortEvents } from '../utilities/sortEvents';
 
 const Home = () => {
   const [eventsList, setEventsList] = useState(null);
-  const [coordinates, setCoordinates] = useState([0,0]);
+  const [coordinates, setCoordinates] = useState([0, 0]);
   const [point, setPoint] = useState(null);
   const [pannedEvent, setPannedEvent] = useState(null);
   const [loadingEventsList, setLoadingEventList] = useState(true);
@@ -73,7 +73,7 @@ const Home = () => {
 
   return (
     <div className='flex flex-row'>
-      <div className='w-full  h-[90vh] md:w-3/5 border-r-[1px] border-secondary'>
+      <div className='w-full  h-[95vh] md:w-3/5 border-r-[1px] border-secondary'>
         <Map
           setCoordinates={setCoordinates}
           eventsList={eventsList}

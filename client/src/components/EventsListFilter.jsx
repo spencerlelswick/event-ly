@@ -67,7 +67,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
   };
 
   return (
-    <div className='flex flex-col mt-16 sm:mt-2'>
+    <div className='flex flex-col mt-16 sm:mt-2 mx-2'>
       <form>
         <div
           style={{ visibility: 'unset' }}
