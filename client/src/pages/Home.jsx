@@ -76,7 +76,7 @@ const Home = () => {
 
   return (
     <div className='flex flex-row'>
-      <div className='w-full  h-[90vh] md:w-3/5'>
+      <div className='w-full  h-[90vh] md:w-3/5 border-r-[1px] border-secondary'>
         <Map
           setCoordinates={setCoordinates}
           eventsList={eventsList}
@@ -106,7 +106,10 @@ const Home = () => {
           isShowListView={isShowListView}
           setIsShowListView={setIsShowListView}
         />
-        <EventsListCollapsed setIsShowListView={setIsShowListView} />
+        <EventsListCollapsed
+          setIsShowListView={setIsShowListView}
+          isShowListView={isShowListView}
+        />
 
         <ToastContainer transition={Slide} />
       </div>

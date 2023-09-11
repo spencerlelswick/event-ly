@@ -90,7 +90,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
       {address && currUser ? (
         <button
           onClick={() => setIsModalOpen(true)}
-          className='w-full md:w-6/12 btn btn-active btn-primary '
+          className='w-full md:w-6/12 btn btn-primary'
         >
           Add Event
         </button>
