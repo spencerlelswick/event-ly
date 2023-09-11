@@ -18,7 +18,11 @@ export default function EventsListItem({ event, setPannedEvent }) {
       onClick={handleClick}
     >
       <figure className='w-1/3 relative'>
-        <img className='h-full absolute' src={event.image} alt={event.name} />
+        <img
+          className='h-full absolute hover:transform hover:scale-105 transition ease-linear'
+          src={event.image}
+          alt={event.name}
+        />
       </figure>
       <div className='w-2/3 h-full card-body flex flex-col justify-center align-middle items-start'>
         <div>

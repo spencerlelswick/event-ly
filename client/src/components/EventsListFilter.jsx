@@ -38,7 +38,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
           className={`h-auto btn btn-square w-24 ${
             eventFilter[c] === true
               ? 'btn-primary text-white border-0'
-              : 'btn-secondary border-0 grayscale'
+              : 'hover:grayscale-0 btn-secondary border-0 grayscale  '
           }`}
         >
           {/* 
@@ -51,7 +51,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
             <img
               src={`/assets/${idx + 1}.svg`}
               draggable={false}
-              className='absolute top-0'
+              className='absolute top-0  hover:transform hover:scale-105 transition ease-linear'
             />
           </div>
 
