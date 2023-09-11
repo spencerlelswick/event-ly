@@ -24,7 +24,7 @@ export default function EventsList({
           onClick={() => {
             setIsShowListView(!isShowListView);
           }}
-          className='btn btn-sm btn-circle btn-secondary absolute right-2 top-2'
+          className='sm:hidden btn btn-sm btn-circle btn-secondary absolute right-2 top-2'
         >
           ✕
         </button>
