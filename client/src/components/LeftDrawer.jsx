@@ -64,29 +64,40 @@ export default function LeftDrawer({
               </div>
               <div className='m-5 flex justify-center'>
                 {currUser ? (
-                  <NewEventModal
-                    point={point}
-                    displayToast={displayToast}
-                    fetchEvents={fetchEvents}
-                    address={address}
-                    setAddress={setAddress}
-                    className=''
-                  />
-                ) : (
                   <>
-                    <h2>Log in to create an event</h2>
-                    <LoginButton />
+                    <NewEventModal
+                      point={point}
+                      displayToast={displayToast}
+                      fetchEvents={fetchEvents}
+                      address={address}
+                      setAddress={setAddress}
+                      className=''
+                    />
+                    <button
+                      onClick={() => {
+                        setPoint(null);
+                      }}
+                      className='btn btn-secondary ml-2'
+                    >
+                      cancel
+                    </button>
                   </>
+                ) : (
+                  <div className='flex flex-col'>
+                    <h2>Log in to create an event</h2>
+                    <div className='flex flex-row'>
+                      <LoginButton />
+                      <button
+                        onClick={() => {
+                          setPoint(null);
+                        }}
+                        className='btn btn-secondary ml-2'
+                      >
+                        cancel
+                      </button>
+                    </div>
+                  </div>
                 )}
-
-                <button
-                  onClick={() => {
-                    setPoint(null);
-                  }}
-                  className='w-32 btn btn-secondary ml-2'
-                >
-                  cancel
-                </button>
               </div>
             </div>
           </div>

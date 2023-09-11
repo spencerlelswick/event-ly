@@ -5,13 +5,14 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../components/App';
 import { FiUser } from 'react-icons/fi';
+import HeaderLogin from './HeaderLogin';
 
 const Header = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const currUser = useContext(UserContext);
 
   return (
-    <header className='bg-primary h-[10vh] text-white'>
+    <header className='bg-primary h-[5vh] text-white'>
       <div
         id='mobile-menu'
         className='sm:hidden h-full flex justify-between mx-5'
@@ -31,7 +32,7 @@ const Header = () => {
                     to={`/user/${currUser.ID}`}
                     className='w-full flex justify-center align-middle items-center'
                   >
-                    <FiUser className='inline text-5xl md:text-2xl' />
+                    <FiUser className='inline text-3xl md:text-2xl' />
                   </Link>
                 </div>
                 <LogoutButton />
@@ -64,7 +65,7 @@ const Header = () => {
                 <LogoutButton />
               </>
             ) : (
-              <LoginButton />
+              <HeaderLogin />
             )}
           </>
         ) : null}

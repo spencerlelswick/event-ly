@@ -67,7 +67,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
   };
 
   return (
-    <div className='flex flex-col m-2'>
+    <div className='flex flex-col mt-16 sm:mt-2 mx-2'>
       <form>
         <div
           style={{ visibility: 'unset' }}
@@ -77,17 +77,18 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
           <div className='collapse-title text-xl font-medium'>
             Filter by category
           </div>
+
           <div className='collapse-content'>
-            <div className='flex flex-wrap gap-2 justify-start items-center'>
-              {filterCats(eventFilter)}
-            </div>
             <button
               id='clearCat'
               onClick={handleClear}
-              className='btn btn-error btn-outline btn-xs absolute right-5 top-5'
+              className='btn btn-error btn-outline btn-xs mb-2'
             >
-              clear categories
+              clear
             </button>
+            <div className='flex flex-wrap gap-2 justify-start  items-center'>
+              {filterCats(eventFilter)}
+            </div>
           </div>
         </div>
       </form>
@@ -102,6 +103,13 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
             Filter by date
           </div>
           <div className='collapse-content'>
+            <button
+              id='clearDate'
+              onClick={handleClear}
+              className='btn btn-error btn-outline btn-xs'
+            >
+              clear dates
+            </button>
             <div className='form-control w-full max-w-xs'>
               <label className='label' htmlFor='date'>
                 <span className='label-text'>From:</span>
@@ -134,13 +142,6 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
                 min={eventFilter.minDate}
               />
             </div>
-            <button
-              id='clearDate'
-              onClick={handleClear}
-              className='btn btn-error btn-outline btn-xs absolute right-4 top-4'
-            >
-              clear dates
-            </button>
           </div>
         </div>
       </form>
