@@ -29,7 +29,7 @@ export default function EventsListItem({ event, setPannedEvent }) {
           </span>
           <div>{decodeCat(event.category)}</div>
         </div>
-        <EventDetailsModal modalId={event._id + '1'} eventId={event._id} />
+        <EventDetailsModal modalId={event._id + '_list'} eventId={event._id} />
       </div>
     </div>
   );
