@@ -12,6 +12,8 @@ export default function EventsListItem({ event, setPannedEvent }) {
     return null;
   };
 
+  const dateSplit = new Date(event.date).toLocaleString().split(',');
+
   return (
     <div
       className='card card-side bg-base-100 min-h-48 m-2 shadow flex flex-row'
@@ -27,9 +29,11 @@ export default function EventsListItem({ event, setPannedEvent }) {
       <div className='w-2/3 h-full card-body flex flex-col justify-center align-middle items-start'>
         <div>
           <h2 className='card-title text-2xl'>{event.name}</h2>
-          <span>Starting at </span>
-          <span className='text-primary font-semibold'>
-            {new Date(event.date).toLocaleString()}
+          <span className=''>
+            Starting at
+            <span className='text-primary font-semibold'>{dateSplit[1]} </span>
+            on
+            <span className='text-primary font-semibold'> {dateSplit[0]}</span>
           </span>
           <div>{decodeCat(event.category)}</div>
         </div>
