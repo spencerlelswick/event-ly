@@ -121,7 +121,7 @@ export default function UserPanel() {
                         <div className='stat-value'>{createdPast?.length}</div>
                       </div>
                     </div>
-                    <div className='hidden md:stats shadow-md mx-1'>
+                    <div className='hidden lg:stats shadow-md mx-1'>
                       <div className='stat place-items-center'>
                         <div className='stat-title'>Attended Events</div>
                         <div className='stat-value'>
@@ -165,12 +165,14 @@ export default function UserPanel() {
               </div>
 
               {loadingEvents ? (
-                <div className='flex flex-col justify-center align-middle items-center w-3/4 lg:w-1/2'>
+                <div className='flex flex-col justify-center align-middle items-center w-4/5 lg:w-3/5'>
                   Loading Events...
                 </div>
               ) : (
-                <div className='flex flex-col justify-center align-middle items-center w-3/4  lg:w-1/2'>
-                  <section
+                <div className='flex flex-col justify-center align-middle items-center
+                w-11/12 md:9/12 lg:w-6/12 lg:min-w-[925px]'>
+
+                  <section className="w-full"
                     hidden={!(activeTab === 'cA')}>
                     {created.length ? (
                       <>
@@ -191,7 +193,7 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section
+                  <section className="w-full"
                     hidden={!(activeTab === 'cP')}>
                     {createdPast.length ? (
                       <>
@@ -212,7 +214,8 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section hidden={!(activeTab === 'aA')}>
+                  <section className="w-full"
+                  hidden={!(activeTab === 'aA')}>
                     {attending.length ? (
                       <>
                         {attending.map((event) => (
@@ -232,10 +235,8 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section
-                    hidden={
-                      !(activeTab === 'aP')
-                    }
+                  <section className="w-full"
+                    hidden={!(activeTab === 'aP')}
                   >
                     {attendingPast.length ? (
                       <>
@@ -255,6 +256,7 @@ export default function UserPanel() {
                       <div>Not attended any event yet.</div>
                     )}
                   </section>
+
                 </div>
               )}
             </>
