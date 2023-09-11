@@ -61,8 +61,8 @@ export default function UserPanelItem({
   }
 
   function handleCancel() {
-    setIsModalOpen(false);
     document.getElementById(modalId).close();
+    setIsModalOpen(false);
   }
 
   function handleChange(e) {
