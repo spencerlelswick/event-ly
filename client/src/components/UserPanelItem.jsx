@@ -14,6 +14,7 @@ export default function UserPanelItem({
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editEvent, setEditEvent] = useState('');
+  const modalId = event._id + "_edit"
 
   async function handleDelete(e) {
     try {
@@ -48,6 +49,7 @@ export default function UserPanelItem({
 
   function handleClick() {
     setIsModalOpen(true);
+    document.getElementById(modalId).showModal();
     const data = {
       name: event.name,
       location: event.location,
@@ -60,6 +62,7 @@ export default function UserPanelItem({
 
   function handleCancel() {
     setIsModalOpen(false);
+    document.getElementById(modalId).close();
   }
 
   function handleChange(e) {
@@ -73,13 +76,13 @@ export default function UserPanelItem({
   async function handleSubmit(e) {
     try {
       e.preventDefault();
+      handleCancel()
       const data = { ...editEvent };
       if (data.date === undefined) {
         delete data.date;
       }
       const res = await updateEvent(event._id, data);
       if (res._id) {
-        setIsModalOpen(false);
         retrieveEvents();
       } else {
         throw Error('Something went wrong retrieving the events.');
@@ -168,8 +171,9 @@ export default function UserPanelItem({
         </div>
       </div>
 
-      <dialog className='modal' open={isModalOpen}>
+      <dialog className='modal' id={modalId} hidden={type === 'attending' || past}>
         <div className='modal-box flex flex-col justify-center align-middle items-center'>
+          {isModalOpen ? (
           <form
             method='dialog'
             className='w-full max-w-xs'
@@ -255,6 +259,8 @@ export default function UserPanelItem({
               Edit
             </button>
           </form>
+        ) : null}
+
           <form method='dialog'>
             <button
               className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'

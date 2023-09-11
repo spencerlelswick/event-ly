@@ -19,6 +19,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
   }
 
   function handleCancel() {
+    document.getElementById(modalId).close();
     setIsModalOpen(false);
   }
 

@@ -53,6 +53,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
   }
 
   function handleCancel() {
+    document.getElementById("new_event_modal").close();
     setNewEvent(initState);
     setIsModalOpen(false);
   }
@@ -76,8 +77,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
     try {
       const res = await createEvent(newEvent);
       if (res._id) {
-        setNewEvent(initState);
-        setIsModalOpen(false);
+        handleCancel()
         fetchEvents();
       }
     } catch (err) {
@@ -86,8 +86,8 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
   }
 
   function handleClick() {
-    document.getElementById("new_event_modal").showModal();
     setIsModalOpen(true)
+    document.getElementById("new_event_modal").showModal();
   }
 
   return (
