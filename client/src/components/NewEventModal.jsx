@@ -17,6 +17,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
     image: null,
     title: '',
     description: '',
+    search: '',
     createdBy: currUser.ID,
   };
   const [newEvent, setNewEvent] = useState(initState);
