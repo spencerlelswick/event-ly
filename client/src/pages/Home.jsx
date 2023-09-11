@@ -19,6 +19,7 @@ const Home = () => {
   const [loadingEventsList, setLoadingEventList] = useState(true);
   const [eventFilter, setEventFilter] = useState(initFilter());
   const [sorted, setSorted] = useState('date');
+  const [isShowListView, setIsShowListView] = useState(false);
 
   useEffect(() => {
     document.getElementsByClassName(
@@ -41,7 +42,7 @@ const Home = () => {
 
   async function fetchEvents() {
     try {
-      setLoadingEventList(true)
+      setLoadingEventList(true);
       const eventsResponse = await getAllEvents({
         coordinates: coordinates,
         filterBy: 'coord',
@@ -75,7 +76,7 @@ const Home = () => {
 
   return (
     <div className='flex flex-row'>
-      <div className='w-full  h-[90vh] md:w-3/5'>
+      <div className='w-full  h-[90vh] md:w-3/5 border-r-[1px] border-secondary'>
         <Map
           setCoordinates={setCoordinates}
           eventsList={eventsList}
@@ -102,8 +103,13 @@ const Home = () => {
           eventFilter={eventFilter}
           setEventFilter={setEventFilter}
           setSorted={setSorted}
+          isShowListView={isShowListView}
+          setIsShowListView={setIsShowListView}
         />
-        <EventsListCollapsed />
+        <EventsListCollapsed
+          setIsShowListView={setIsShowListView}
+          isShowListView={isShowListView}
+        />
 
         <ToastContainer transition={Slide} />
       </div>

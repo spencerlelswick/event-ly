@@ -31,7 +31,7 @@ export default function LeftDrawer({
   }, [point]);
 
   return (
-    <div className='w-full sm:w-3/5 flex flex-col justify-center items-center z-10 bg-white absolute bottom-0 border-t-1 border-primary left-auto  border-t-2 border-secondary'>
+    <div className='w-full sm:w-3/5 flex flex-col justify-center items-center z-10 bg-white absolute bottom-0 left-auto   border-t-[1px] border-secondary'>
       {
         <>
           <div className='flex h-1/5 w-3/5 justify-between '>

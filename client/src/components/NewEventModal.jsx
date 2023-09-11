@@ -17,6 +17,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
     image: null,
     title: '',
     description: '',
+    search: '',
     createdBy: currUser.ID,
   };
   const [newEvent, setNewEvent] = useState(initState);
@@ -90,7 +91,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
       {address && currUser ? (
         <button
           onClick={() => setIsModalOpen(true)}
-          className='w-full md:w-6/12 btn btn-active btn-primary '
+          className='w-full md:w-6/12 btn btn-primary'
         >
           Add Event
         </button>

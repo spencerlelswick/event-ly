@@ -10,9 +10,26 @@ export default function EventsList({
   eventFilter,
   setEventFilter,
   setSorted,
+  isShowListView,
+  setIsShowListView,
 }) {
   return (
-    <div className='z-10 h-[90vh] invisible sm:visible absolute border-b  bg-white right-0 w-2/5 overflow-auto'>
+    <div
+      className={`${
+        isShowListView ? 'visible' : 'invisible'
+      } w-full h-[90vh] sm:visible absolute border-b bg-white right-0 sm:w-2/5 overflow-auto`}
+    >
+      <div>
+        <button
+          onClick={() => {
+            setIsShowListView(!isShowListView);
+          }}
+          className='sm:hidden btn btn-sm btn-circle btn-secondary absolute right-2 top-2'
+        >
+          ✕
+        </button>
+      </div>
+
       <EventsListFilter
         eventFilter={eventFilter}
         setEventFilter={setEventFilter}
@@ -22,9 +39,9 @@ export default function EventsList({
 
       {loadingEventsList ? (
         <>
-        <div>Loading events...</div>
-        <img src='/assets/evently-logo.png' />
-      </>
+          <div>Loading events...</div>
+          <img src='/assets/evently-logo.png' />
+        </>
       ) : eventsList.length ? (
         <div>
           {eventsList.map((event) =>
