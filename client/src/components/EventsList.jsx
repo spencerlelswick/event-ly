@@ -16,7 +16,7 @@ export default function EventsList({
   return (
     <div
       hidden={!isShowListView}
-      className={`w-full h-[90vh] sm:visible absolute border-b bg-white right-0 sm:w-2/5 overflow-y-scroll`}
+      className={`w-full h-[90vh] sm:visible absolute border-b bg-white right-0 sm:w-2/5 sm:block overflow-y-scroll`}
     >
       <div>
         <button
