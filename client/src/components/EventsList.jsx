@@ -54,10 +54,10 @@ export default function EventsList({
           )}
         </div>
       ) : (
-        <>
-          <div>No events in the area.</div>
-          <img src='/assets/evently-logo.png' />
-        </>
+        <div className='flex flex-col justify-center items-center align-middle h-1/2'>
+          <p className='text-error text-xl'>No events found in this area</p>
+          <img src='/assets/evently-logo.png' className='' />
+        </div>
       )}
     </div>
   );
