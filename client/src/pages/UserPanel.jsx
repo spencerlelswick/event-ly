@@ -170,9 +170,9 @@ export default function UserPanel() {
                 </div>
               ) : (
                 <div className='flex flex-col justify-center align-middle items-center
-                w-11/12 md:9/12 lg:w-6/12 lg:min-w-[900px]'>
+                w-11/12 md:9/12 lg:w-6/12 lg:min-w-[925px]'>
 
-                  <section
+                  <section className="w-full"
                     hidden={!(activeTab === 'cA')}>
                     {created.length ? (
                       <>
@@ -193,7 +193,7 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section
+                  <section className="w-full"
                     hidden={!(activeTab === 'cP')}>
                     {createdPast.length ? (
                       <>
@@ -214,7 +214,8 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section hidden={!(activeTab === 'aA')}>
+                  <section className="w-full"
+                  hidden={!(activeTab === 'aA')}>
                     {attending.length ? (
                       <>
                         {attending.map((event) => (
@@ -234,10 +235,8 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section
-                    hidden={
-                      !(activeTab === 'aP')
-                    }
+                  <section className="w-full"
+                    hidden={!(activeTab === 'aP')}
                   >
                     {attendingPast.length ? (
                       <>
@@ -257,6 +256,7 @@ export default function UserPanel() {
                       <div>Not attended any event yet.</div>
                     )}
                   </section>
+
                 </div>
               )}
             </>
