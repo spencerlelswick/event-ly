@@ -37,10 +37,12 @@ export default function EventsList({
       <EventsListSort setSorted={setSorted} />
 
       {loadingEventsList ? (
-        <>
-          <div>Loading events...</div>
-          <img src='/assets/evently-logo.png' />
-        </>
+        
+        <div className='flex flex-col justify-center items-center align-middle h-1/2'>
+          <p className='text-error text-xl'>Loading events...</p>
+          <img src='/assets/evently-logo.png' className='w-[200px]' />
+        </div>
+        
       ) : eventsList.length ? (
         <div>
           {eventsList.map((event) =>
@@ -56,7 +58,7 @@ export default function EventsList({
       ) : (
         <div className='flex flex-col justify-center items-center align-middle h-1/2'>
           <p className='text-error text-xl'>No events found in this area</p>
-          <img src='/assets/evently-logo.png' className='' />
+          <img src='/assets/evently-logo.png' className='w-[200px]' />
         </div>
       )}
     </div>
