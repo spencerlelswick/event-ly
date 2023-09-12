@@ -40,6 +40,7 @@ export default function EventsList({
         
         <div className='flex flex-col justify-center items-center align-middle h-1/2'>
           <p className='text-error text-xl'>Loading events...</p>
+          <img src='/assets/evently-logo.png' className='w-[200px]' />
         </div>
         
       ) : eventsList.length ? (
