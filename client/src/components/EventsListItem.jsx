@@ -7,7 +7,7 @@ export default function EventsListItem({ event, setPannedEvent }) {
     setTimeout(() => {
       const lat = event.coordinates.latitude;
       const lng = event.coordinates.longitude;
-      setPannedEvent([[lat, lng], 14,1]);
+      setPannedEvent([[lat, lng], 14, 1]);
     }, 100);
 
     return null;
@@ -25,14 +25,20 @@ export default function EventsListItem({ event, setPannedEvent }) {
           alt={event.name}
         />
       </figure>
-      <div className='w-2/3 h-full card-body flex flex-col justify-center align-middle items-start'>
+      <div className='w-2/3 h-full card-body bg-base-200 flex flex-col justify-center align-middle items-start rounded-lg shadow'>
         <div>
           <h2 className='card-title text-2xl'>{event.name}</h2>
           <span className=''>
             Starting at
-            <span className='text-primary font-semibold'> {timeDisplay(event.date)} </span>
+            <span className='text-primary font-semibold'>
+              {' '}
+              {timeDisplay(event.date)}{' '}
+            </span>
             on
-            <span className='text-primary font-semibold'> {dateDisplay(event.date)}</span>
+            <span className='text-primary font-semibold'>
+              {' '}
+              {dateDisplay(event.date)}
+            </span>
           </span>
           <div>{decodeCat(event.category)}</div>
         </div>

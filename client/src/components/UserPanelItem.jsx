@@ -103,7 +103,7 @@ export default function UserPanelItem({
 
   return (
     <div>
-      <div className='card md:card-side bg-base-100 min-h-48 shadow-xl m-5'>
+      <div className='card md:card-side bg-base-200 min-h-48 shadow-xl m-5'>
         <figure className=' relative md:max-h-max md:w-1/3'>
           <img
             src={event.image}
