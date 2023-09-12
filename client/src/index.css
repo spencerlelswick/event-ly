@@ -3,3 +3,8 @@
 @tailwind utilities;
 
 
+@layer base {
+  #logo {
+    font-family: 'Dancing Script', cursive, system-ui, sans-serif;
+  }
+}

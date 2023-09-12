@@ -6,7 +6,7 @@ import { showUser } from '../utilities/users-service';
 import { useAuth0 } from '@auth0/auth0-react';
 import UserPanelItem from '../components/UserPanelItem';
 
-export default function UserPanel({setPannedEvent}) {
+export default function UserPanel({ setPannedEvent }) {
   const { isLoading } = useAuth0();
   const currUser = useContext(UserContext);
   const routeId = useParams().id;
@@ -17,14 +17,14 @@ export default function UserPanel({setPannedEvent}) {
   const [attendingPast, setAttendingPast] = useState(null);
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [loadingUser, setLoadingUser] = useState(true);
-  const [activeTab, setActiveTab] = useState("cA");
+  const [activeTab, setActiveTab] = useState('cA');
   const navigate = useNavigate();
 
   async function retrieveUser() {
     try {
       setLoadingEvents(true);
       setLoadingUser(true);
-      setActiveTab("cA");
+      setActiveTab('cA');
       setAttending(null);
       setCreated(null);
       const res = await showUser(routeId);
@@ -57,8 +57,8 @@ export default function UserPanel({setPannedEvent}) {
                 ? c.push(event)
                 : cP.push(event)
               : event.date > today
-                ? a.push(event)
-                : aP.push(event)
+              ? a.push(event)
+              : aP.push(event)
           );
           setCreated(c);
           setCreatedPast(cP);
@@ -85,7 +85,7 @@ export default function UserPanel({setPannedEvent}) {
     setActiveTab(e.target.id);
   }
 
-  const active = 'tab tab-lg tab-lifted tab-active';
+  const active = 'tab tab-lg tab-lifted tab-active active:bg-base-200';
   const inactive = 'tab tab-lifted';
 
   return (
@@ -169,11 +169,11 @@ export default function UserPanel({setPannedEvent}) {
                   Loading Events...
                 </div>
               ) : (
-                <div className='flex flex-col justify-center align-middle items-center
-                w-11/12 md:9/12 lg:w-6/12 lg:min-w-[925px]'>
-
-                  <section className="w-full"
-                    hidden={!(activeTab === 'cA')}>
+                <div
+                  className='flex flex-col justify-center align-middle items-center
+                w-11/12 md:9/12 lg:w-6/12 lg:min-w-[925px]'
+                >
+                  <section className='w-full' hidden={!(activeTab === 'cA')}>
                     {created.length ? (
                       <>
                         {created.map((event) => (
@@ -184,7 +184,7 @@ export default function UserPanel({setPannedEvent}) {
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={false}
-                            type="created"
+                            type='created'
                             setPannedEvent={setPannedEvent}
                           />
                         ))}
@@ -194,8 +194,7 @@ export default function UserPanel({setPannedEvent}) {
                     )}
                   </section>
 
-                  <section className="w-full"
-                    hidden={!(activeTab === 'cP')}>
+                  <section className='w-full' hidden={!(activeTab === 'cP')}>
                     {createdPast.length ? (
                       <>
                         {createdPast.map((event) => (
@@ -206,7 +205,7 @@ export default function UserPanel({setPannedEvent}) {
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={true}
-                            type="created"
+                            type='created'
                             setPannedEvent={setPannedEvent}
                           />
                         ))}
@@ -216,8 +215,7 @@ export default function UserPanel({setPannedEvent}) {
                     )}
                   </section>
 
-                  <section className="w-full"
-                  hidden={!(activeTab === 'aA')}>
+                  <section className='w-full' hidden={!(activeTab === 'aA')}>
                     {attending.length ? (
                       <>
                         {attending.map((event) => (
@@ -228,7 +226,7 @@ export default function UserPanel({setPannedEvent}) {
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={false}
-                            type="attending"
+                            type='attending'
                             setPannedEvent={setPannedEvent}
                           />
                         ))}
@@ -238,9 +236,7 @@ export default function UserPanel({setPannedEvent}) {
                     )}
                   </section>
 
-                  <section className="w-full"
-                    hidden={!(activeTab === 'aP')}
-                  >
+                  <section className='w-full' hidden={!(activeTab === 'aP')}>
                     {attendingPast.length ? (
                       <>
                         {attendingPast.map((event) => (
@@ -251,7 +247,7 @@ export default function UserPanel({setPannedEvent}) {
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={true}
-                            type="attending"
+                            type='attending'
                             setPannedEvent={setPannedEvent}
                           />
                         ))}
@@ -260,7 +256,6 @@ export default function UserPanel({setPannedEvent}) {
                       <div>Not attended any event yet.</div>
                     )}
                   </section>
-
                 </div>
               )}
             </>

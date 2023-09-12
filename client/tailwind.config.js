@@ -5,7 +5,17 @@ export default {
     "./node_modules/tailwind-datepicker-react/dist/**/*.js",
   ],
   theme: {
-    extend: {},
+ 
+    extend: {
+      
+    },
+  },
+  daisyui: {
+    themes: ["light",
+    //fantasy
+    //cmyk
+    //autumn
+    "winter",]
   },
   plugins: [require("daisyui")],
 
