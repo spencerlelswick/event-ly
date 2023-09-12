@@ -40,15 +40,31 @@ export default function EventDetailsGuests({ event, setEvent }) {
     <div>
       {event.guests.length ? (
         <div>
-          {event.guests.map((g) => (
-            <div
-              key={g._id}
-              className='flex flex-row align-middle items-center'
-            >
-              <img src={g.picture} alt={g.name} className='rounded-full w-10' />
-              {g.name}
-            </div>
-          ))}
+          <div className='avatar-group -space-x-6'>
+            {event.guests.map((g, idx) => (
+              <>
+                {idx <= 2 ? (
+                  <div className='avatar'>
+                    <div className='w-12'>
+                      <img
+                        src={g.picture}
+                        alt={g.name}
+                        className='rounded-full w-10'
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className='avatar placeholder'>
+                    <div className='w-12 bg-primary'>
+                      <span className=' text-base-100 text-2xl'>
+                        +{event.guests.length - 3}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </>
+            ))}
+          </div>
         </div>
       ) : (
         <div className='my-5'>No one yet. Be the first!</div>

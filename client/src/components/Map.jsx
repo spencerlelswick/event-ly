@@ -82,7 +82,6 @@ const Map = ({
   }
 
   function MapPanner() {
-    console.log(pannedEvent);
     const map = useMap();
     if (pannedEvent && pannedEvent[2]) {
       if (pannedEvent[2] === 1) {

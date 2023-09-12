@@ -94,7 +94,6 @@ export default function EventDetailsModal({ modalId, eventId }) {
                     <div className='card'>
                       <div className='card-body items-center text-center'>
                         <h2 className='card-title'>
-                          <FaStar className='text-yellow-300 inline' />
                           {event.createdBy.name}
                           <span className='text-xs italic ml-1 text-gray-400'>
                             (Host)
