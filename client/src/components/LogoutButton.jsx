@@ -1,7 +1,8 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import { useEffect } from 'react';
 import { MdLogout } from 'react-icons/md';
 
-const LogoutButton = () => {
+const LogoutButton = ({ currUser }) => {
   const { logout } = useAuth0();
 
   return (
@@ -11,7 +12,14 @@ const LogoutButton = () => {
       }
       className='text-white text-3xl sm:text-2xl w-1/3 flex items-center justify-end'
     >
-      <MdLogout />
+      {currUser?.PIC ? (
+        <div className='flex justify-center items-center'>
+          <span className='mr-2 text-sm'>{currUser.NAME.split(' ')[0]}</span>
+          <img src={currUser.PIC} alt='avatar' className='btn-circle p-1' />
+        </div>
+      ) : (
+        <MdLogout />
+      )}
     </button>
   );
 };

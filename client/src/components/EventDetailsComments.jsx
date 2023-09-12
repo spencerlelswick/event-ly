@@ -114,7 +114,9 @@ export default function EventDetailsComments({ event, setEvent }) {
                     </div>
                   </div>
                 </div>
-                <p className='text-lg'>{c.body}</p>
+                <p className='text-lg text-ellipsis overflow-hidden ...'>
+                  {c.body}
+                </p>
               </div>
             </div>
           ))}
