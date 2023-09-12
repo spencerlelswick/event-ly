@@ -8,6 +8,7 @@ import { decodeCat } from '../utilities/category';
 import { FaStar } from 'react-icons/fa';
 import { FaRegClock, FaLocationDot } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import { fullDateDisplay } from '../utilities/dates';
 
 export default function EventDetailsModal({ modalId, eventId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +45,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
     <div>
       <button
         onClick={() => handleClick()}
-        className='btn btn-active btn-primary'
+        className='btn btn-sm btn-active btn-primary'
       >
         Event Details
       </button>
@@ -67,7 +68,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
                         <span>
                           <FaRegClock className='text-primary' />
                         </span>
-                        {new Date(event.date).toLocaleString()}
+                        {fullDateDisplay(event.date)}
                       </h2>
                       <h2 className='card-title '>
                         <span>

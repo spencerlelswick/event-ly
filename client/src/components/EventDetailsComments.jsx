@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { createComment, deleteComment } from '../utilities/comments-service';
 import { UserContext } from './App';
 import { FaTrash } from 'react-icons/fa';
+import { fullDateDisplay } from '../utilities/dates';
 
 export default function EventDetailsComments({ event, setEvent }) {
   const currUser = useContext(UserContext);
@@ -94,8 +95,7 @@ export default function EventDetailsComments({ event, setEvent }) {
                         {c.createdBy.name}
                       </p>
                       <span className='text-gray-300 text-sm'>
-                        {c.createdAt.substring(0, 10)}{' '}
-                        {c.createdAt.substring(11, 16)}
+                        {fullDateDisplay(c.createdAt)}
                       </span>
                       {currUser ? (
                         <span
