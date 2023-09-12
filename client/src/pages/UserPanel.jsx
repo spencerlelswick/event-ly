@@ -85,7 +85,7 @@ export default function UserPanel({ setPannedEvent }) {
     setActiveTab(e.target.id);
   }
 
-  const active = 'tab tab-lg tab-lifted tab-active active:bg-base-200';
+  const active = 'tab tab-lg tab-lifted tab-active ';
   const inactive = 'tab tab-lifted';
 
   return (
@@ -98,31 +98,31 @@ export default function UserPanel({ setPannedEvent }) {
                 <div>Loading User Info...</div>
               ) : (
                 <div>
-                  <p className='text-4xl font-bold'>{routeUser.name}</p>
+                  <p className='ml-1 text-4xl font-bold'>{routeUser.name}</p>
                   <div className='flex flex-row justify-center  '>
-                    <div className='stats shadow-md mx-1'>
+                    <div className='stats bg-base-200 shadow-md mx-1'>
                       <div className='avatar'>
                         <div className='w-24 rounded-xl m-3'>
                           <img src={routeUser.picture} alt={routeUser.name} />
                         </div>
                       </div>
                     </div>
-                    <div className='hidden sm:stats shadow-md mx-1'>
-                      <div className='stat place-items-center'>
+                    <div className=' hidden  sm:stats shadow-md mx-1'>
+                      <div className=' bg-base-200 stat place-items-center'>
                         <div className='stat-title'>Member Since</div>
                         <div className='stat-value'>
                           {new Date(routeUser.createdAt).toLocaleDateString()}
                         </div>
                       </div>
                     </div>
-                    <div className='hidden md:stats shadow-md mx-1'>
-                      <div className='stat place-items-center'>
+                    <div className='hidden  md:stats shadow-md mx-1'>
+                      <div className='bg-base-200 stat place-items-center'>
                         <div className='stat-title'>Hosted Events</div>
                         <div className='stat-value'>{createdPast?.length}</div>
                       </div>
                     </div>
-                    <div className='hidden lg:stats shadow-md mx-1'>
-                      <div className='stat place-items-center'>
+                    <div className='hidden  lg:stats shadow-md mx-1'>
+                      <div className='bg-base-200 stat place-items-center'>
                         <div className='stat-title'>Attended Events</div>
                         <div className='stat-value'>
                           {attendingPast?.length}
@@ -171,7 +171,7 @@ export default function UserPanel({ setPannedEvent }) {
               ) : (
                 <div
                   className='flex flex-col justify-center align-middle items-center
-                w-11/12 md:9/12 lg:w-6/12 lg:min-w-[925px]'
+                w-11/12 md:9/12 md:max-w-[925px]lg:w-6/12 lg:min-w-[925px]'
                 >
                   <section className='w-full' hidden={!(activeTab === 'cA')}>
                     {created.length ? (
