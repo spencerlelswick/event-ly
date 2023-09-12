@@ -13,6 +13,7 @@ const App = () => {
 
   const { user, isAuthenticated, isLoading } = useAuth0() 
   const [currUser, setCurrUser] = useState(false)
+  const [pannedEvent, setPannedEvent] = useState(null);
 
   async function handleAuthUser(){
     if (isAuthenticated){
@@ -35,8 +36,13 @@ const App = () => {
         <UserContext.Provider value={currUser}>
           <Header/>
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/user/:id' element={<UserPanel />} />
+            <Route path='/' element={<Home
+              pannedEvent={pannedEvent}
+              setPannedEvent={setPannedEvent}
+              />} />
+            <Route path='/user/:id' element={<UserPanel
+              setPannedEvent={setPannedEvent}
+              />} />
             <Route path='/*' element={<PageNotFound />} />
           </Routes>
         </UserContext.Provider>

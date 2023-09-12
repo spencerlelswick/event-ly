@@ -25,7 +25,7 @@ const Map = ({
       setUserLoc([position.coords.latitude, position.coords.longitude]);
       setPannedEvent([
         [position.coords.latitude, position.coords.longitude],
-        10,
+        10, 1
       ]);
     });
   }, []);
@@ -80,15 +80,26 @@ const Map = ({
 
   function MapPanner() {
     const map = useMap();
-    if (pannedEvent && pannedEvent[0][0] !== lastPan[0][0]) {
-      lastPan = [[...pannedEvent[0]], 18];
+    if (pannedEvent && pannedEvent[2]) {
 
-      map.flyTo(pannedEvent[0], pannedEvent[1], {
-        animate: true,
-        duration: 2,
-      });
+      if (pannedEvent[2] === 1) {
+        map.flyTo(pannedEvent[0], pannedEvent[1], {
+          animate: true,
+          duration: 2,
+        })
+      } else {
+        map.flyTo(pannedEvent[0], 14, {
+          animate: false,
+        })
+        map.flyTo(pannedEvent[0], pannedEvent[1], {
+          animate: true,
+          duration: 1,
+        })
+      }
+      let last = [...pannedEvent]
+      last[2] = 0
+      setPannedEvent(last)
     }
-
     return null;
   }
 

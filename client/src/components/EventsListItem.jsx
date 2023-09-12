@@ -7,7 +7,7 @@ export default function EventsListItem({ event, setPannedEvent }) {
     setTimeout(() => {
       const lat = event.coordinates.latitude;
       const lng = event.coordinates.longitude;
-      setPannedEvent([[lat, lng], 14]);
+      setPannedEvent([[lat, lng], 14,1]);
     }, 100);
 
     return null;

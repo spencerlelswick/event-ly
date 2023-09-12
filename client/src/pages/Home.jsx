@@ -9,11 +9,10 @@ import { getAllEvents } from '../utilities/events-service';
 import { initFilter } from '../utilities/category';
 import { sortEvents } from '../utilities/sortEvents';
 
-const Home = () => {
+const Home = ({pannedEvent,setPannedEvent}) => {
   const [eventsList, setEventsList] = useState(null);
   const [coordinates, setCoordinates] = useState([0, 0]);
   const [point, setPoint] = useState(null);
-  const [pannedEvent, setPannedEvent] = useState(null);
   const [loadingEventsList, setLoadingEventList] = useState(true);
   const [eventFilter, setEventFilter] = useState(initFilter());
   const [sorted, setSorted] = useState('date');
@@ -26,7 +25,7 @@ const Home = () => {
   }, []);
 
   function displayToast(msg) {
-    toast.success(`${msg} was added successfully!`, {
+    toast.success(`${msg} `, {
       position: 'top-left',
       autoClose: 2000,
       hideProgressBar: false,
@@ -107,7 +106,6 @@ const Home = () => {
           setIsShowListView={setIsShowListView}
           isShowListView={isShowListView}
         />
-
         <ToastContainer transition={Slide} />
       </div>
     </div>

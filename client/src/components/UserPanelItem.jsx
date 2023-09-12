@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { decodeCat } from '../utilities/category';
 import { Link } from 'react-router-dom';
 import { dateTimePicker, dateTimePickerToday, fullDateDisplay } from '../utilities/dates';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserPanelItem({
   event,
@@ -12,10 +13,12 @@ export default function UserPanelItem({
   retrieveEvents,
   past,
   type,
+  setPannedEvent,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editEvent, setEditEvent] = useState('');
   const modalId = event._id + "_edit"
+  const navigate = useNavigate()
 
   async function handleDelete(e) {
     try {
@@ -91,6 +94,13 @@ export default function UserPanelItem({
     }
   }
 
+  function handleMove(e) {
+    e.preventDefault()
+    const coord = [event.coordinates.latitude, event.coordinates.longitude]
+    setPannedEvent([coord, 15, 2])
+    navigate("/")
+  }
+
   return (
     <div>
       <div className='card md:card-side bg-base-100 min-h-48 shadow-xl m-5'>
@@ -158,25 +168,40 @@ export default function UserPanelItem({
             </div>
           </div>
 
-          <div className='card-actions justify-center'>
+          <div className='card-actions'>
             {currUser.ID === routeId ? (
-              <div hidden={past}>
-                <div hidden={type === 'attending'}>
-                  <button
-                    className='btn btn-primary mx-2'
-                    onClick={handleClick}
-                  >
-                    Update
-                  </button>
-                  <button className='btn btn-secondary' onClick={handleDelete}>
-                    Delete
-                  </button>
+              <div className= "flex flex-col w-full">
+
+                <div hidden={past} >
+                  <div className={`${type === "attending" ? "hidden" :
+                    "flex flex-row justify-center gap-x-5 flex-wrap"}`}>
+                    <button className='btn md:btn-sm btn-secondary m-2' onClick={handleMove}>
+                      show on map
+                    </button>
+                    <button
+                      className='btn md:btn-sm btn-primary m-2'
+                      onClick={handleClick}
+                    >
+                      Update event
+                    </button>
+                    <button className='btn md:btn-sm btn-outline btn-error m-2' onClick={handleDelete}>
+                      Delete event
+                    </button>
+                  </div>
                 </div>
-                <div hidden={type === 'created'}>
-                  <button className='btn btn-secondary' onClick={handleRemove}>
-                    Remove me
-                  </button>
+
+                <div hidden={past}>
+                  <div className={`${type === "created" ? "hidden" :
+                    "flex flex-row justify-center gap-10"}`} >
+                    <button className='btn md:btn-sm btn-secondary m-2' onClick={handleMove}>
+                      show on map
+                    </button>
+                    <button className='btn md:btn-sm btn-error btn-outline m-2' onClick={handleRemove}>
+                      Remove me
+                    </button>
+                  </div>
                 </div>
+
               </div>
             ) : null}
           </div>
@@ -186,90 +211,90 @@ export default function UserPanelItem({
       <dialog className='modal' id={modalId} hidden={type === 'attending' || past}>
         <div className='modal-box flex flex-col justify-center align-middle items-center'>
           {isModalOpen ? (
-          <form
-            method='dialog'
-            className='w-full max-w-xs'
-            onSubmit={handleSubmit}
-          >
-            <div className='form-control w-full max-w-xs'>
-              <label className='label label-text'>Edit name:</label>
-              <input
-                type='text'
-                name='name'
-                required
-                defaultValue={event.value}
-                value={editEvent.name}
-                onChange={handleChange}
-                className='input input-bordered w-full max-w-xs input-primary'
-              />
-            </div>
+            <form
+              method='dialog'
+              className='w-full max-w-xs'
+              onSubmit={handleSubmit}
+            >
+              <div className='form-control w-full max-w-xs'>
+                <label className='label label-text'>Edit name:</label>
+                <input
+                  type='text'
+                  name='name'
+                  required
+                  defaultValue={event.value}
+                  value={editEvent.name}
+                  onChange={handleChange}
+                  className='input input-bordered w-full max-w-xs input-primary'
+                />
+              </div>
 
-            <div className='form-control w-full max-w-xs'>
-              <label className='label label-text'>
-                Edit location description
-              </label>
-              <input
-                type='text'
-                name='location'
-                required
-                value={editEvent.location}
-                onChange={handleChange}
-                className='input input-bordered w-full max-w-xs input-primary'
-              />
-            </div>
+              <div className='form-control w-full max-w-xs'>
+                <label className='label label-text'>
+                  Edit location description
+                </label>
+                <input
+                  type='text'
+                  name='location'
+                  required
+                  value={editEvent.location}
+                  onChange={handleChange}
+                  className='input input-bordered w-full max-w-xs input-primary'
+                />
+              </div>
 
-            <div className='form-control w-full max-w-xs'>
-              <label className='label label-text'>Edit category:</label>
-              <select
-                name='category'
-                required
-                onChange={handleChange}
-                value={editEvent.category}
-                className='select select-bordered select-primary'
-              >
-                {(() => {
-                  const arr = [];
-                  for (let i = 1; i <= 12; i++) {
-                    arr.push(
-                      <option key={i} value={i}>
-                        {decodeCat(i)}
-                      </option>
-                    );
-                  }
-                  return arr;
-                })()}
-              </select>
-            </div>
-            
-            <div className='form-control w-full max-w-xs'>
-              <label className='label label-text'>Edit start time:</label>
-              <input
-                className='primary label-text input input-bordered w-full max-w-xs input-primary'
-                type='datetime-local'
-                value={editEvent.date}
-                onChange={handleChange}
-                id='date'
-                name='date'
-                min={dateTimePickerToday()}
-              />
-            </div>
+              <div className='form-control w-full max-w-xs'>
+                <label className='label label-text'>Edit category:</label>
+                <select
+                  name='category'
+                  required
+                  onChange={handleChange}
+                  value={editEvent.category}
+                  className='select select-bordered select-primary'
+                >
+                  {(() => {
+                    const arr = [];
+                    for (let i = 1; i <= 12; i++) {
+                      arr.push(
+                        <option key={i} value={i}>
+                          {decodeCat(i)}
+                        </option>
+                      );
+                    }
+                    return arr;
+                  })()}
+                </select>
+              </div>
 
-            <div className='form-control'>
-              <label className='label label-text'>Edit description:</label>
-              <textarea
-                name='description'
-                value={editEvent.description}
-                onChange={handleChange}
-                className='textarea textarea-bordered h-24 border-primary'
-                required
-              ></textarea>
-            </div>
+              <div className='form-control w-full max-w-xs'>
+                <label className='label label-text'>Edit start time:</label>
+                <input
+                  className='primary label-text input input-bordered w-full max-w-xs input-primary'
+                  type='datetime-local'
+                  value={editEvent.date}
+                  onChange={handleChange}
+                  id='date'
+                  name='date'
+                  min={dateTimePickerToday()}
+                />
+              </div>
 
-            <button className='btn btn-primary m-2' type='submit'>
-              Edit
-            </button>
-          </form>
-        ) : null}
+              <div className='form-control'>
+                <label className='label label-text'>Edit description:</label>
+                <textarea
+                  name='description'
+                  value={editEvent.description}
+                  onChange={handleChange}
+                  className='textarea textarea-bordered h-24 border-primary'
+                  required
+                ></textarea>
+              </div>
+
+              <button className='btn btn-primary m-2' type='submit'>
+                Edit
+              </button>
+            </form>
+          ) : null}
 
           <form method='dialog'>
             <button

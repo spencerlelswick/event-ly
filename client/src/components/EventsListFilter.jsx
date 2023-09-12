@@ -17,9 +17,6 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
     const init = initFilter();
     const old = { ...eventFilter };
     let data = {};
-    if (e.target.id === 'clearAll') {
-      data = { ...init };
-    }
     if (e.target.id === 'clearCat') {
       data = { ...init, minDate: old.minDate, maxDate: old.maxDate };
     }
@@ -56,7 +53,7 @@ export default function EventsListFilter({ eventFilter, setEventFilter }) {
           <input
             type='checkbox'
             checked={eventFilter[c]}
-            onClick={handleChange}
+            onChange={handleChange}
             name={c}
             id={c}
             className={`hidden`}
