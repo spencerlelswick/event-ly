@@ -5,6 +5,8 @@
 
 event.ly is a map-based web application for finding and creating events to connect with people in your local community.
 
+[Live app](https://event-ly.netlify.app/)
+
 ## Features
 
 ### Front-end
