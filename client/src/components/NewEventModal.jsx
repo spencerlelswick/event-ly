@@ -111,7 +111,6 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
       <dialog id='new_event_modal' className='modal'>
         {isModalOpen ? (
           <form
-
             className='w-10/12 sm:w-9/12 sm:px-10 md:w-8/12 md:max-w-[630px] lg:w-1/3 lg:min-w-[630px]
             modal-box flex flex-col  align-middle items-center max-w-none max-h-1/2 no-scrollbar'
             onChange={handleChange}
@@ -195,7 +194,9 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
 
                 <div className='form-control'>
                   <label className='label'>
-                    <span className='label-text'>Add some info for your guests:</span>
+                    <span className='label-text'>
+                      Add some info for your guests:
+                    </span>
                   </label>
                   <textarea
                     name='description'
@@ -211,29 +212,41 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
               <div className='form-control '>
                 {!newEvent.image ? (
                   <div>
-                    <form onChange={handleChange} className="flex flex-col items-center" >
-                      <label className='label' htmlFor='image'>
-                        <span className='label-text align-left'>
-                          <span className="text-primary">Enter</span> a keyword in the searchbar,
-                          <span className="text-primary"> scroll</span> through the images,
-                          <span className="text-primary"> click</span> to select one:
-                        </span>
-                      </label>
-                      <div className='input-group mb-5'>
-                      <input
-                        type='text'
-                        maxLength={50}
-                        placeholder='Enter a keyword'
-                        onChange={(e) => setSearch(e.target.value)}
-                        className='input input-md md:input-sm input-primary w-full'
-                      />
-                      <button
-                        className='btn btn-md md:btn-sm btn-square btn-primary'
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <FaSearch />
-                      </button>
-                    </div>
+                    <form
+                      onChange={handleChange}
+                      className='flex flex-col items-center'
+                    >
+                      <div className='bg-base-200 mt-5'>
+                        <div>
+                          <label className='label' htmlFor='image'>
+                            <span className='label-text align-left'>
+                              <span className='text-primary'>Enter</span> a
+                              keyword in the searchbar,
+                              <span className='text-primary'> scroll</span>{' '}
+                              through the images,
+                              <span className='text-primary'> click</span> to
+                              select one:
+                            </span>
+                          </label>
+                        </div>
+                        <div className='input-group mb-5'>
+                          <input
+                            type='text'
+                            maxLength={50}
+                            placeholder='Enter a keyword'
+                            onChange={(e) => setSearch(e.target.value)}
+                            className='input input-md md:input-sm input-primary w-full'
+                          />
+                          <button
+                            id='Placebo'
+                            className='btn btn-md md:btn-sm btn-square btn-primary'
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            <FaSearch />
+                          </button>
+                        </div>
+                      </div>
+
                       <input
                         hidden
                         type='text'
@@ -260,10 +273,15 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                 ) : (
                   <div>
                     <label className='label' htmlFor='image'>
-                      <span className='label-text'>You have selected the image below.</span>
+                      <span className='label-text'>
+                        You have selected the image below.
+                      </span>
                     </label>
-                    <label className='label' >
-                      <span className='label-text'> Click again to deselect.</span>
+                    <label className='label'>
+                      <span className='label-text'>
+                        {' '}
+                        Click again to deselect.
+                      </span>
                     </label>
                     <img onClick={clearSelectedImage} src={newEvent.image} />
                   </div>
@@ -279,8 +297,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
             </div>
           </form>
         ) : null}
-        <form method='dialog'>
-        </form>
+        <form method='dialog'></form>
         <form method='dialog' className='modal-backdrop'>
           <button onClick={handleCancel}>close</button>
         </form>

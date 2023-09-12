@@ -20,7 +20,7 @@ const Header = () => {
         <div className='flex items-center justify-start w-1/3'>
           <Link to='/'>
             {/* <img src='/assets/evently-logo.png' className='h-20' /> */}
-            <div id='logo' className='h-full'>
+            <div id='logo' className='flex justify-center items-center'>
               <h1 className='text-2xl max-h-full'>event.ly</h1>
             </div>
           </Link>
@@ -53,8 +53,8 @@ const Header = () => {
       >
         <Link to='/' className='w-1/3 flex justify-start items-center'>
           {/* <img src='/assets/evently-logo.png' className='h-16' /> */}
-          <div id='logo' className='h-full'>
-            <h1 className='text-2xl max-h-full'>event.ly</h1>
+          <div id='logo' className='flex justify-center items-center'>
+            <h1 className='text-4xl max-h-full'>event.ly</h1>
           </div>
         </Link>
         {!isLoading ? (
@@ -68,7 +68,7 @@ const Header = () => {
                   <FiUser className='inline text-3xl md:text-3xl' />
                   <span className='sm:text-2xl ml-2'>My Events</span>
                 </Link>
-                <LogoutButton  currUser={currUser}/>
+                <LogoutButton currUser={currUser} />
               </>
             ) : (
               <HeaderLogin />
