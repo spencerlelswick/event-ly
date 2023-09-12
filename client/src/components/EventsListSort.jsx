@@ -1,11 +1,11 @@
 export default function EventsListSort({ setSorted }) {
   return (
     <form>
-      <div className='flex m-2 justify-between align-middle items-center'>
-        <h2 className=' text-xl font-medium m-2'>Events In Your Area:</h2>
+      <div>
+        <h2 className=' text-xl font-medium mx-6 mt-3'>Events In Your Area:</h2>
         <select
           defaultValue={'date'}
-          className='select select-ghost text-primary w-1/3'
+          className='select select-sm select-ghost text-primary mx-3'
           onChange={(e) => setSorted(e.target.value)}
         >
           <option value={'date'}>Upcoming</option>
