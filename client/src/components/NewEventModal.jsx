@@ -54,7 +54,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
   }
 
   function handleCancel() {
-    document.getElementById("new_event_modal").close();
+    document.getElementById('new_event_modal').close();
     setNewEvent(initState);
     setIsModalOpen(false);
   }
@@ -74,14 +74,19 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    let newData = {...newEvent}
-    newData.date = new Date(newData.date).toISOString()
-    displayToast(`${newEvent.name} has been added!`);
+    let newData = { ...newEvent };
+    console.log(newData);
+    newData.date = new Date(newData.date).toISOString();
     try {
       const res = await createEvent(newData);
       if (res._id) {
-        handleCancel()
+        displayToast(`${newEvent.name} was added successfully!`);
+        handleCancel();
         fetchEvents();
+      } else {
+        displayToast(
+          `Something went wrong. ${newEvent.name} has not been created.`
+        );
       }
     } catch (err) {
       console.log(err);
@@ -89,8 +94,8 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
   }
 
   function handleClick() {
-    setIsModalOpen(true)
-    document.getElementById("new_event_modal").showModal();
+    setIsModalOpen(true);
+    document.getElementById('new_event_modal').showModal();
   }
 
   return (
@@ -103,161 +108,183 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
           Add Event
         </button>
       ) : null}
-      <dialog id='new_event_modal' className='modal' >
+      <dialog id='new_event_modal' className='modal'>
         {isModalOpen ? (
           <form
+
+            className='w-10/12 sm:w-9/12 sm:px-10 md:w-8/12 md:max-w-[630px] lg:w-1/3 lg:min-w-[630px]
+            modal-box flex flex-col  align-middle items-center max-w-none max-h-1/2 no-scrollbar'
+            onChange={handleChange}
             onSubmit={handleSubmit}
-            method='dialog'
-            className=' z-30 modal-box flex flex-col justify-center align-middle items-center'
           >
-            <div className='form-control w-full max-w-xs'>
-              <p className='text-sm'>Confirm address:</p>
-              <p className='text-2xl'>{`${address.name}`}</p>
-              <div className='form-control w-full max-w-xs'>
-                <label className='label' htmlFor='name'>
-                  <span className='label-text'>Name your event:</span>
-                </label>
-                <input
-                  type='text'
-                  required
-                  name='name'
-                  value={newEvent.name}
-                  onChange={handleChange}
-                  className='input input-bordered w-full max-w-xs input-primary'
-                />
-              </div>
-              <div className='form-control w-full max-w-xs'>
-                <label className='label' htmlFor='location'>
-                  <span className='label-text'>Location description</span>
-                </label>
-                <input
-                  type='text'
-                  name='location'
-                  required
-                  placeholder='Room 5, near the swingset, etc.'
-                  value={newEvent.location}
-                  onChange={handleChange}
-                  className='input input-bordered w-full max-w-xs input-primary'
-                />
-              </div>
-              <div className='form-control w-full max-w-xs'>
-                <label className='label'>
-                  <span className='label-text'>Pick a category:</span>
-                </label>
-                <select
-                  name='category'
-                  onChange={handleChange}
-                  defaultValue={'1'}
-                  className='select select-bordered select-primary'
-                >
-                  {(() => {
-                    const arr = [];
-                    for (let i = 1; i <= 12; i++) {
-                      arr.push(
-                        <option key={i} value={i}>
-                          {decodeCat(i)}
-                        </option>
-                      );
-                    }
-                    return arr;
-                  })()}
-                </select>
-              </div>
+            <div className='w-full max-w-sm max-h-full'>
+              <div className='form-control mt-5'>
+                <p className='text-sm '>Selected address:</p>
+                <p className='text-xl'>{`${address.name}`}</p>
 
-              <div className='form-control w-full max-w-xs'>
-                <label className='label' htmlFor='date'>
-                  <span className='label-text'>Event start time:</span>
-                </label>
+                <div className='form-control'>
+                  <label className='label' htmlFor='name'>
+                    <span className='label-text'>Name your event:</span>
+                  </label>
+                  <input
+                    type='text'
+                    required
+                    name='name'
+                    maxLength={50}
+                    value={newEvent.name}
+                    onChange={handleChange}
+                    className='input input-md md:input-sm first-line:input-bordered input-primary'
+                  />
+                </div>
 
-                <input
-                  className='primary label-text input input-bordered w-full max-w-xs input-primary'
-                  type='datetime-local'
-                  value={newEvent.date}
-                  onChange={handleChange}
-                  id='date'
-                  required
-                  name='date'
-                  min={dateTimePickerToday()}
-                />
+                <div className='form-control '>
+                  <label className='label' htmlFor='location'>
+                    <span className='label-text'>Describe the location:</span>
+                  </label>
+                  <input
+                    type='text'
+                    name='location'
+                    required
+                    placeholder='Room 5, near the swingset, etc.'
+                    maxLength={99}
+                    value={newEvent.location}
+                    onChange={handleChange}
+                    className='input input-md md:input-sm input-bordered input-primary'
+                  />
+                </div>
+
+                <div className='form-control'>
+                  <label className='label'>
+                    <span className='label-text'>Pick a category:</span>
+                  </label>
+                  <select
+                    name='category'
+                    onChange={handleChange}
+                    defaultValue={'1'}
+                    className='select select-md md:select-sm select-bordered select-primary'
+                  >
+                    {(() => {
+                      const arr = [];
+                      for (let i = 1; i <= 12; i++) {
+                        arr.push(
+                          <option key={i} value={i}>
+                            {decodeCat(i)}
+                          </option>
+                        );
+                      }
+                      return arr;
+                    })()}
+                  </select>
+                </div>
+
+                <div className='form-control '>
+                  <label className='label' htmlFor='date'>
+                    <span className='label-text'>Set the start time:</span>
+                  </label>
+                  <input
+                    className='input-md md:input-sm primary label-text input input-bordered input-primary'
+                    type='datetime-local'
+                    value={newEvent.date}
+                    onChange={handleChange}
+                    id='date'
+                    required
+                    name='date'
+                    min={dateTimePickerToday()}
+                  />
+                </div>
+
+                <div className='form-control'>
+                  <label className='label'>
+                    <span className='label-text'>Add some info for your guests:</span>
+                  </label>
+                  <textarea
+                    name='description'
+                    value={newEvent.description}
+                    onChange={handleChange}
+                    maxLength={500}
+                    className='textarea textarea-sm textarea-bordered h-24 border-primary'
+                    placeholder='Description'
+                    required
+                  ></textarea>
+                </div>
               </div>
-              <div className='form-control'>
-                <label className='label'>
-                  <span className='label-text'>Event description:</span>
-                </label>
-                <textarea
-                  name='description'
-                  value={newEvent.description}
-                  onChange={handleChange}
-                  className='textarea textarea-bordered h-24 border-primary'
-                  placeholder='Description'
-                  required
-                ></textarea>
-              </div>
-              <div className='form-control w-full max-w-xs'>
+              <div className='form-control '>
                 {!newEvent.image ? (
                   <div>
-                    <label className='label' htmlFor='image'>
-                      <span className='label-text'>Search for an image:</span>
-                    </label>
-                    <input
-                      hidden
-                      type='text'
-                      name='image'
-                      placeholder={newEvent.image}
-                      value={newEvent.image}
-                      onChange={handleChange}
-                      className='input input-bordered w-full max-w-xs input-primary'
-                    />
-
-                    <div className='h-48 carousel carousel-vertical rounded-box'>
-                      {images.map((i, idx) => (
-                        <div className='carousel-item h-48' key={idx}>
-                          <img
-                            className='w-full'
-                            src={i.urls.regular}
-                            onClick={() => handleImgClick(i)}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                    <div className='input-group '>
+                    <form onChange={handleChange} className="flex flex-col items-center" >
+                      <label className='label' htmlFor='image'>
+                        <span className='label-text align-left'>
+                          <span className="text-primary">Enter</span> a keyword in the searchbar,
+                          <span className="text-primary"> scroll</span> through the images,
+                          <span className="text-primary"> click</span> to select one:
+                        </span>
+                      </label>
+                      <div className='input-group mb-5'>
                       <input
                         type='text'
-                        placeholder='Click an image to select'
+                        maxLength={50}
+                        placeholder='Enter a keyword'
                         onChange={(e) => setSearch(e.target.value)}
-                        className='input input-primary w-full max-w-xs'
+                        className='input input-md md:input-sm input-primary w-full'
                       />
-                      <button className='btn btn-square btn-primary'>
+                      <button
+                        className='btn btn-md md:btn-sm btn-square btn-primary'
+                        onClick={(e) => e.preventDefault()}
+                      >
                         <FaSearch />
                       </button>
                     </div>
+                      <input
+                        hidden
+                        type='text'
+                        name='image'
+                        placeholder={newEvent.image}
+                        value={newEvent.image}
+                        onChange={handleChange}
+                        required
+                        className='input-md md:input-sm input-bordered  input-primary'
+                      />
+                      <div className='h-48 carousel carousel-vertical rounded-box w-full max-w-xs'>
+                        {images.map((i, idx) => (
+                          <div className='carousel-item h-48 ' key={idx}>
+                            <img
+                              className='w-full '
+                              src={i.urls.regular}
+                              onClick={() => handleImgClick(i)}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </form>
                   </div>
                 ) : (
                   <div>
                     <label className='label' htmlFor='image'>
-                      <span className='label-text'>You have selected:</span>
+                      <span className='label-text'>You have selected the image below.</span>
+                    </label>
+                    <label className='label' >
+                      <span className='label-text'> Click again to deselect.</span>
                     </label>
                     <img onClick={clearSelectedImage} src={newEvent.image} />
                   </div>
                 )}
               </div>
-              <input type='submit' className='btn btn-primary mt-5' />
+              <button
+                className='btn btn-primary w-full mt-5'
+                type='submit'
+                disabled={!newEvent.image}
+              >
+                Submit
+              </button>
             </div>
           </form>
-        ) : (null)}
+        ) : null}
         <form method='dialog'>
-          <button
-            className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'
-            onClick={handleCancel}
-          >
-            ✕
-          </button>
         </form>
         <form method='dialog' className='modal-backdrop'>
           <button onClick={handleCancel}>close</button>
         </form>
       </dialog>
-
     </>
   );
 }

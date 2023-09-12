@@ -7,7 +7,7 @@ export default function EventsListItem({ event, setPannedEvent }) {
     setTimeout(() => {
       const lat = event.coordinates.latitude;
       const lng = event.coordinates.longitude;
-      setPannedEvent([[lat, lng], 14]);
+      setPannedEvent([[lat, lng], 14, 1]);
     }, 100);
 
     return null;
@@ -25,16 +25,24 @@ export default function EventsListItem({ event, setPannedEvent }) {
           alt={event.name}
         />
       </figure>
-      <div className='w-2/3 h-full card-body flex flex-col justify-center align-middle items-start'>
+      <div className='w-2/3 h-full card-body bg-base-200 flex flex-col justify-center align-middle items-start rounded-lg shadow'>
         <div>
           <h2 className='card-title text-2xl'>{event.name}</h2>
-          <span className=''>
-            Starting at
-            <span className='text-primary font-semibold'> {timeDisplay(event.date)} </span>
-            on
-            <span className='text-primary font-semibold'> {dateDisplay(event.date)}</span>
-          </span>
-          <div>{decodeCat(event.category)}</div>
+          <p>
+            Starts at{' '}
+            <span className='text-primary font-semibold'>
+              {timeDisplay(event.date)}
+            </span>
+          </p>
+          <p>
+            on{' '}
+            <span className='text-primary font-semibold'>
+              {dateDisplay(event.date)}
+            </span>
+          </p>
+          <div className='absolute top-2 right-2 badge badge-secondary'>
+            {decodeCat(event.category)}
+          </div>
         </div>
         <EventDetailsModal modalId={event._id + '_list'} eventId={event._id} />
       </div>

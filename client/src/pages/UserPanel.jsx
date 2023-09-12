@@ -6,7 +6,7 @@ import { showUser } from '../utilities/users-service';
 import { useAuth0 } from '@auth0/auth0-react';
 import UserPanelItem from '../components/UserPanelItem';
 
-export default function UserPanel() {
+export default function UserPanel({ setPannedEvent }) {
   const { isLoading } = useAuth0();
   const currUser = useContext(UserContext);
   const routeId = useParams().id;
@@ -17,14 +17,14 @@ export default function UserPanel() {
   const [attendingPast, setAttendingPast] = useState(null);
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [loadingUser, setLoadingUser] = useState(true);
-  const [activeTab, setActiveTab] = useState("cA");
+  const [activeTab, setActiveTab] = useState('cA');
   const navigate = useNavigate();
 
   async function retrieveUser() {
     try {
       setLoadingEvents(true);
       setLoadingUser(true);
-      setActiveTab("cA");
+      setActiveTab('cA');
       setAttending(null);
       setCreated(null);
       const res = await showUser(routeId);
@@ -57,8 +57,8 @@ export default function UserPanel() {
                 ? c.push(event)
                 : cP.push(event)
               : event.date > today
-                ? a.push(event)
-                : aP.push(event)
+              ? a.push(event)
+              : aP.push(event)
           );
           setCreated(c);
           setCreatedPast(cP);
@@ -85,7 +85,7 @@ export default function UserPanel() {
     setActiveTab(e.target.id);
   }
 
-  const active = 'tab tab-lg tab-lifted tab-active';
+  const active = 'tab tab-lg tab-lifted tab-active ';
   const inactive = 'tab tab-lifted';
 
   return (
@@ -98,31 +98,31 @@ export default function UserPanel() {
                 <div>Loading User Info...</div>
               ) : (
                 <div>
-                  <p className='text-4xl font-bold'>{routeUser.name}</p>
+                  <p className='ml-1 text-4xl font-bold mb-2'>{routeUser.name}</p>
                   <div className='flex flex-row justify-center  '>
-                    <div className='stats shadow-md mx-1'>
+                    <div className='stats bg-base-200 shadow-md mx-1'>
                       <div className='avatar'>
                         <div className='w-24 rounded-xl m-3'>
                           <img src={routeUser.picture} alt={routeUser.name} />
                         </div>
                       </div>
                     </div>
-                    <div className='hidden sm:stats shadow-md mx-1'>
-                      <div className='stat place-items-center'>
+                    <div className=' hidden  sm:stats shadow-md mx-1'>
+                      <div className=' bg-base-200 stat place-items-center'>
                         <div className='stat-title'>Member Since</div>
                         <div className='stat-value'>
                           {new Date(routeUser.createdAt).toLocaleDateString()}
                         </div>
                       </div>
                     </div>
-                    <div className='hidden md:stats shadow-md mx-1'>
-                      <div className='stat place-items-center'>
+                    <div className='hidden  md:stats shadow-md mx-1'>
+                      <div className='bg-base-200 stat place-items-center'>
                         <div className='stat-title'>Hosted Events</div>
                         <div className='stat-value'>{createdPast?.length}</div>
                       </div>
                     </div>
-                    <div className='hidden lg:stats shadow-md mx-1'>
-                      <div className='stat place-items-center'>
+                    <div className='hidden  lg:stats shadow-md mx-1'>
+                      <div className='bg-base-200 stat place-items-center'>
                         <div className='stat-title'>Attended Events</div>
                         <div className='stat-value'>
                           {attendingPast?.length}
@@ -142,18 +142,18 @@ export default function UserPanel() {
                   HOSTING EVENTS
                 </a>
                 <a
-                  id='cP'
-                  className={activeTab === 'cP' ? active : inactive}
-                  onClick={handleClick}
-                >
-                  HOSTED EVENTS
-                </a>
-                <a
                   id='aA'
                   className={activeTab === 'aA' ? active : inactive}
                   onClick={handleClick}
                 >
                   ATTENDING EVENTS
+                </a>
+                <a
+                  id='cP'
+                  className={activeTab === 'cP' ? active : inactive}
+                  onClick={handleClick}
+                >
+                  HOSTED EVENTS
                 </a>
                 <a
                   id='aP'
@@ -169,11 +169,9 @@ export default function UserPanel() {
                   Loading Events...
                 </div>
               ) : (
-                <div className='flex flex-col justify-center align-middle items-center
-                w-11/12 md:9/12 lg:w-6/12 lg:min-w-[925px]'>
-
-                  <section className="w-full"
-                    hidden={!(activeTab === 'cA')}>
+                <div
+                  className='flex flex-col justify-center align-middle items-center w-11/12 md:9/12 md:max-w-[925px] lg:w-6/12 lg:min-w-[925px]'>
+                  <section className='w-full' hidden={!(activeTab === 'cA')}>
                     {created.length ? (
                       <>
                         {created.map((event) => (
@@ -184,7 +182,8 @@ export default function UserPanel() {
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={false}
-                            type="created"
+                            type='created'
+                            setPannedEvent={setPannedEvent}
                           />
                         ))}
                       </>
@@ -193,8 +192,7 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section className="w-full"
-                    hidden={!(activeTab === 'cP')}>
+                  <section className='w-full' hidden={!(activeTab === 'cP')}>
                     {createdPast.length ? (
                       <>
                         {createdPast.map((event) => (
@@ -205,7 +203,8 @@ export default function UserPanel() {
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={true}
-                            type="created"
+                            type='created'
+                            setPannedEvent={setPannedEvent}
                           />
                         ))}
                       </>
@@ -214,8 +213,7 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section className="w-full"
-                  hidden={!(activeTab === 'aA')}>
+                  <section className='w-full' hidden={!(activeTab === 'aA')}>
                     {attending.length ? (
                       <>
                         {attending.map((event) => (
@@ -226,7 +224,8 @@ export default function UserPanel() {
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={false}
-                            type="attending"
+                            type='attending'
+                            setPannedEvent={setPannedEvent}
                           />
                         ))}
                       </>
@@ -235,9 +234,7 @@ export default function UserPanel() {
                     )}
                   </section>
 
-                  <section className="w-full"
-                    hidden={!(activeTab === 'aP')}
-                  >
+                  <section className='w-full' hidden={!(activeTab === 'aP')}>
                     {attendingPast.length ? (
                       <>
                         {attendingPast.map((event) => (
@@ -248,7 +245,8 @@ export default function UserPanel() {
                             routeId={routeId}
                             retrieveEvents={retrieveEvents}
                             past={true}
-                            type="attending"
+                            type='attending'
+                            setPannedEvent={setPannedEvent}
                           />
                         ))}
                       </>
@@ -256,7 +254,6 @@ export default function UserPanel() {
                       <div>Not attended any event yet.</div>
                     )}
                   </section>
-
                 </div>
               )}
             </>
