@@ -98,7 +98,7 @@ export default function UserPanel({ setPannedEvent }) {
                 <div>Loading User Info...</div>
               ) : (
                 <div>
-                  <p className='ml-1 text-4xl font-bold'>{routeUser.name}</p>
+                  <p className='ml-1 text-4xl font-bold mb-2'>{routeUser.name}</p>
                   <div className='flex flex-row justify-center  '>
                     <div className='stats bg-base-200 shadow-md mx-1'>
                       <div className='avatar'>
@@ -170,9 +170,7 @@ export default function UserPanel({ setPannedEvent }) {
                 </div>
               ) : (
                 <div
-                  className='flex flex-col justify-center align-middle items-center
-                w-11/12 md:9/12 md:max-w-[925px]lg:w-6/12 lg:min-w-[925px]'
-                >
+                  className='flex flex-col justify-center align-middle items-center w-11/12 md:9/12 md:max-w-[925px] lg:w-6/12 lg:min-w-[925px]'>
                   <section className='w-full' hidden={!(activeTab === 'cA')}>
                     {created.length ? (
                       <>

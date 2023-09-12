@@ -130,7 +130,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     type='text'
                     required
                     name='name'
-                    maxLength={25}
+                    maxLength={50}
                     value={newEvent.name}
                     onChange={handleChange}
                     className='input input-md md:input-sm first-line:input-bordered input-primary'
@@ -146,7 +146,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     name='location'
                     required
                     placeholder='Room 5, near the swingset, etc.'
-                    maxLength={50}
+                    maxLength={99}
                     value={newEvent.location}
                     onChange={handleChange}
                     className='input input-md md:input-sm input-bordered input-primary'
@@ -201,7 +201,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     name='description'
                     value={newEvent.description}
                     onChange={handleChange}
-                    maxLength={200}
+                    maxLength={500}
                     className='textarea textarea-sm textarea-bordered h-24 border-primary'
                     placeholder='Description'
                     required
@@ -222,7 +222,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                       <div className='input-group mb-5'>
                       <input
                         type='text'
-                        maxLength={25}
+                        maxLength={50}
                         placeholder='Enter a keyword'
                         onChange={(e) => setSearch(e.target.value)}
                         className='input input-md md:input-sm input-primary w-full'
