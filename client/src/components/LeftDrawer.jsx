@@ -57,8 +57,10 @@ export default function LeftDrawer({
                     )}
                   </div>
                 ) : (
-                  <div className='h-1/6 w-3/5'>
-                    <h2>Looking for an address...</h2>
+                   <div>
+                      <div className='text-center w-full text-xl '>
+                        <h2>Looking for an address...</h2>
+                      </div>
                   </div>
                 )}
               </div>
