@@ -38,7 +38,7 @@ const Header = () => {
                 <LogoutButton />
               </>
             ) : (
-              <LoginButton />
+              <HeaderLogin />
             )}
           </>
         ) : null}
