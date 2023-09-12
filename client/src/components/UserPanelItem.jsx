@@ -3,7 +3,11 @@ import { deleteEvent } from '../utilities/events-service';
 import { useState } from 'react';
 import { decodeCat } from '../utilities/category';
 import { Link } from 'react-router-dom';
-import { dateTimePicker, dateTimePickerToday, fullDateDisplay } from '../utilities/dates';
+import {
+  dateTimePicker,
+  dateTimePickerToday,
+  fullDateDisplay,
+} from '../utilities/dates';
 import { useNavigate } from 'react-router-dom';
 
 export default function UserPanelItem({
@@ -17,8 +21,8 @@ export default function UserPanelItem({
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editEvent, setEditEvent] = useState('');
-  const modalId = event._id + "_edit"
-  const navigate = useNavigate()
+  const modalId = event._id + '_edit';
+  const navigate = useNavigate();
 
   async function handleDelete(e) {
     try {
@@ -80,9 +84,9 @@ export default function UserPanelItem({
   async function handleSubmit(e) {
     try {
       e.preventDefault();
-      handleCancel()
+      handleCancel();
       const data = { ...editEvent };
-      data.date = new Date(data.date).toISOString()
+      data.date = new Date(data.date).toISOString();
       const res = await updateEvent(event._id, data);
       if (res._id) {
         retrieveEvents();
@@ -95,10 +99,10 @@ export default function UserPanelItem({
   }
 
   function handleMove(e) {
-    e.preventDefault()
-    const coord = [event.coordinates.latitude, event.coordinates.longitude]
-    setPannedEvent([coord, 15, 2])
-    navigate("/")
+    e.preventDefault();
+    const coord = [event.coordinates.latitude, event.coordinates.longitude];
+    setPannedEvent([coord, 15, 2]);
+    navigate('/');
   }
 
   return (
@@ -170,12 +174,19 @@ export default function UserPanelItem({
 
           <div className='card-actions'>
             {currUser.ID === routeId ? (
-              <div className= "flex flex-col w-full">
-
-                <div hidden={past} >
-                  <div className={`${type === "attending" ? "hidden" :
-                    "flex flex-row justify-center gap-x-5 flex-wrap"}`}>
-                    <button className='btn md:btn-sm btn-secondary m-2' onClick={handleMove}>
+              <div className='flex flex-col w-full'>
+                <div hidden={past}>
+                  <div
+                    className={`${
+                      type === 'attending'
+                        ? 'hidden'
+                        : 'flex flex-row justify-center gap-x-5 flex-wrap'
+                    }`}
+                  >
+                    <button
+                      className='btn md:btn-sm btn-secondary m-2'
+                      onClick={handleMove}
+                    >
                       show on map
                     </button>
                     <button
@@ -184,32 +195,49 @@ export default function UserPanelItem({
                     >
                       Update event
                     </button>
-                    <button className='btn md:btn-sm btn-outline btn-error m-2' onClick={handleDelete}>
+                    <button
+                      className='btn md:btn-sm btn-outline btn-error m-2'
+                      onClick={handleDelete}
+                    >
                       Delete event
                     </button>
                   </div>
                 </div>
 
                 <div hidden={past}>
-                  <div className={`${type === "created" ? "hidden" :
-                    "flex flex-row justify-center gap-10"}`} >
-                    <button className='btn md:btn-sm btn-secondary m-2' onClick={handleMove}>
+                  <div
+                    className={`${
+                      type === 'created'
+                        ? 'hidden'
+                        : 'flex flex-row justify-center gap-10'
+                    }`}
+                  >
+                    <button
+                      className='btn md:btn-sm btn-secondary m-2'
+                      onClick={handleMove}
+                    >
                       show on map
                     </button>
-                    <button className='btn md:btn-sm btn-error btn-outline m-2' onClick={handleRemove}>
+                    <button
+                      className='btn md:btn-sm btn-error btn-outline m-2'
+                      onClick={handleRemove}
+                    >
                       Remove me
                     </button>
                   </div>
                 </div>
-
               </div>
             ) : null}
           </div>
         </div>
       </div>
 
-      <dialog className='modal' id={modalId} hidden={type === 'attending' || past}>
-        <div className='modal-box flex flex-col justify-center align-middle items-center'>
+      <dialog
+        className='modal'
+        id={modalId}
+        hidden={type === 'attending' || past}
+      >
+        <div className='modal-box flex flex-col justify-center align-middle items-center  no-scrollbar'>
           {isModalOpen ? (
             <form
               method='dialog'

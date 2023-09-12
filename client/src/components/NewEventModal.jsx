@@ -111,8 +111,9 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
       <dialog id='new_event_modal' className='modal'>
         {isModalOpen ? (
           <form
+
             className='w-10/12 sm:w-9/12 sm:px-10 md:w-8/12 md:max-w-[630px] lg:w-1/3 lg:min-w-[630px]
-            modal-box flex flex-col  align-middle items-center max-w-none max-h-1/2'
+            modal-box flex flex-col  align-middle items-center max-w-none max-h-1/2 no-scrollbar'
             onChange={handleChange}
             onSubmit={handleSubmit}
           >

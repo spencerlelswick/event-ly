@@ -50,7 +50,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
       </button>
 
       <dialog id={modalId} className='modal w-screen'>
-        <div className='modal-box flex w-screen h-screen'>
+        <div className='modal-box flex  no-scrollbar'>
           {isModalOpen ? (
             <>
               {loadingShow ? (
@@ -92,13 +92,6 @@ export default function EventDetailsModal({ modalId, eventId }) {
                     <div className='card-title'>Host</div>
 
                     <div className='card'>
-                      <figure className='px-10 pt-10'>
-                        <img
-                          src={event.createdBy.picture}
-                          alt={event.createdBy.name}
-                          className='rounded-xl'
-                        />
-                      </figure>
                       <div className='card-body items-center text-center'>
                         <h2 className='card-title'>
                           <FaStar className='text-yellow-300 inline' />
@@ -107,6 +100,15 @@ export default function EventDetailsModal({ modalId, eventId }) {
                             (Host)
                           </span>
                         </h2>
+
+                        <figure className='px-10 pt-10'>
+                          <img
+                            src={event.createdBy.picture}
+                            alt={event.createdBy.name}
+                            className='rounded-xl max-w-sm'
+                          />
+                        </figure>
+
                         <div className='card-actions'>
                           <Link
                             to={`/user/${event.createdBy._id}`}
