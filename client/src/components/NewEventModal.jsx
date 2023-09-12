@@ -117,7 +117,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
             onSubmit={handleSubmit}
           >
             <div className='w-full max-w-sm max-h-full'>
-              <div className='form-control w- fullmax-w-xs mt-10'>
+              <div className='form-control w-fullmax-w-xs mt-10'>
                 <p className='text-sm '>Selected address:</p>
                 <p className='text-xl'>{`${address.name}`}</p>
 
