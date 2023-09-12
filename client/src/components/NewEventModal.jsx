@@ -112,13 +112,13 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
         {isModalOpen ? (
           <form
             className='w-10/12 sm:w-9/12 sm:px-10 md:w-8/12 md:max-w-[630px] lg:w-1/3 lg:min-w-[630px]
-            modal-box flex flex-col  align-middle items-center max-w-none max-h-1/2 '
+            modal-box flex flex-col  align-middle items-center max-w-none max-h-1/2'
             onChange={handleChange}
             onSubmit={handleSubmit}
           >
             <div className='w-full max-w-sm max-h-full'>
               <div className='form-control w- fullmax-w-xs mt-10'>
-                <p className='text-sm'>Selected address:</p>
+                <p className='text-sm '>Selected address:</p>
                 <p className='text-xl'>{`${address.name}`}</p>
 
                 <div className='form-control'>
@@ -129,9 +129,10 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     type='text'
                     required
                     name='name'
+                    maxLength={25}
                     value={newEvent.name}
                     onChange={handleChange}
-                    className='input input-bordered input-primary'
+                    className='input input-md md:input-sm first-line:input-bordered input-primary'
                   />
                 </div>
 
@@ -144,9 +145,10 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     name='location'
                     required
                     placeholder='Room 5, near the swingset, etc.'
+                    maxLength={50}
                     value={newEvent.location}
                     onChange={handleChange}
-                    className='input input-sm input-bordered input-primary'
+                    className='input input-md md:input-sm input-bordered input-primary'
                   />
                 </div>
 
@@ -158,7 +160,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     name='category'
                     onChange={handleChange}
                     defaultValue={'1'}
-                    className='select select-sm select-bordered select-primary'
+                    className='select select-md md:select-sm select-bordered select-primary'
                   >
                     {(() => {
                       const arr = [];
@@ -179,7 +181,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     <span className='label-text'>Set the start time:</span>
                   </label>
                   <input
-                    className='input-sm primary label-text input input-bordered input-primary'
+                    className='input-md md:input-sm primary label-text input input-bordered input-primary'
                     type='datetime-local'
                     value={newEvent.date}
                     onChange={handleChange}
@@ -198,6 +200,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     name='description'
                     value={newEvent.description}
                     onChange={handleChange}
+                    maxLength={200}
                     className='textarea textarea-sm textarea-bordered h-24 border-primary'
                     placeholder='Description'
                     required
@@ -218,12 +221,13 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                       <div className='input-group mb-5'>
                       <input
                         type='text'
+                        maxLength={25}
                         placeholder='Enter a keyword'
                         onChange={(e) => setSearch(e.target.value)}
-                        className='input input-sm input-primary w-full'
+                        className='input input-md md:input-sm input-primary w-full'
                       />
                       <button
-                        className='btn btn-sm btn-square btn-primary'
+                        className='btn btn-md md:btn-sm btn-square btn-primary'
                         onClick={(e) => e.preventDefault()}
                       >
                         <FaSearch />
@@ -237,7 +241,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                         value={newEvent.image}
                         onChange={handleChange}
                         required
-                        className='input input-bordered  input-primary'
+                        className='input-md md:input-sm input-bordered  input-primary'
                       />
                       <div className='h-48 carousel carousel-vertical rounded-box w-full max-w-xs'>
                         {images.map((i, idx) => (
