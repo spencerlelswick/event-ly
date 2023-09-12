@@ -39,7 +39,7 @@ export default function EventDetailsGuests({ event, setEvent }) {
   return (
     <div>
       {event.guests.length ? (
-        <div>
+        <div className='flex flex-row justify-between'>
           <div className='avatar-group -space-x-6'>
             {event.guests.map((g, idx) => (
               <>
@@ -65,31 +65,31 @@ export default function EventDetailsGuests({ event, setEvent }) {
               </>
             ))}
           </div>
+          <div>
+            {currUser ? (
+              <>
+                {event.guests.find((g) => g._id === currUser.ID) ===
+                undefined ? (
+                  <button
+                    onClick={handleParticipate}
+                    className='btn btn-primary w-24'
+                    disabled={currUser.ID === event.createdBy._id}
+                  >
+                    Join
+                  </button>
+                ) : (
+                  <button onClick={handleRemove} className='btn btn-secondary'>
+                    Remove me
+                  </button>
+                )}
+              </>
+            ) : (
+              <p>LOG IN TO PARTICIPATE</p>
+            )}
+          </div>
         </div>
       ) : (
         <div className='my-5'>No one yet. Be the first!</div>
-      )}
-      {currUser ? (
-        <>
-          {event.guests.find((g) => g._id === currUser.ID) === undefined ? (
-            <button
-              onClick={handleParticipate}
-              className='btn btn-primary w-full max-w-xs'
-              disabled={currUser.ID === event.createdBy._id}
-            >
-              Participate
-            </button>
-          ) : (
-            <button
-              onClick={handleRemove}
-              className='btn btn-secondary w-full max-w-xs'
-            >
-              Remove me
-            </button>
-          )}
-        </>
-      ) : (
-        <p>LOG IN TO PARTICIPATE</p>
       )}
     </div>
   );

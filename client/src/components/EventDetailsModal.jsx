@@ -78,57 +78,53 @@ export default function EventDetailsModal({ modalId, eventId }) {
                     </div>
                   </div>
                   <div className='card flex flex-col'>
-                    <h2 className='card-title'>Details</h2>
-
-                    <p>
-                      Location: <span>{event.location}</span>
-                    </p>
-
-                    <div className='mx-5'>
-                      <p>{event.description}</p>
+                    <div className='card-body text-lg'>
+                      <h2 className='card-title'>Details</h2>
+                      <div className='mx-3'>
+                        <span>
+                          Location: <span>{event.location}</span>
+                        </span>
+                        <span>{event.description}</span>
+                      </div>
                     </div>
                   </div>
                   <div className='card flex flex-col'>
-                    <div className='card-title'>Host</div>
-
                     <div className='card'>
-                      <div className='card-body items-center text-center'>
-                        <h2 className='card-title'>
-                          {event.createdBy.name}
-                          <span className='text-xs italic ml-1 text-gray-400'>
-                            (Host)
-                          </span>
-                        </h2>
-
-                        <figure className='px-10 pt-10'>
-                          <img
-                            src={event.createdBy.picture}
-                            alt={event.createdBy.name}
-                            className='rounded-xl max-w-sm'
-                          />
-                        </figure>
-
-                        <div className='card-actions'>
-                          <Link
-                            to={`/user/${event.createdBy._id}`}
-                            className='btn btn-primary'
-                          >
-                            <span className='text-white'>Profile</span>
-                          </Link>
+                      <div className='card-body'>
+                        <div className='card-title'>Host</div>
+                        <div className='flex justify-between'>
+                          <figure className='flex flex-col justify-start'>
+                            <img
+                              src={event.createdBy.picture}
+                              alt={event.createdBy.name}
+                              className='rounded-xl'
+                            />
+                            <h2 className='text-lg'>{event.createdBy.name}</h2>
+                          </figure>
+                          <div className='flex justify-center items-center'>
+                            <div className='card-actions'>
+                              <Link
+                                to={`/user/${event.createdBy._id}`}
+                                className='btn btn-primary'
+                              >
+                                <span className='text-white'>Profile</span>
+                              </Link>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className='card flex flex-col'>
-                    <div className='card-title'>Guests</div>
                     <div className='card-body'>
+                      <div className='card-title'>Guests</div>
                       <EventDetailsGuests event={event} setEvent={setEvent} />
                     </div>
                   </div>
 
                   <div className='card flex flex-col '>
-                    <h2 className='card-title'>Comments</h2>
                     <div className='card-body'>
+                      <h2 className='card-title'>Comments</h2>
                       <EventDetailsComments event={event} setEvent={setEvent} />
                       {!currUser ? <LoginButton /> : null}
                     </div>
