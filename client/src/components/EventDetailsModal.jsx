@@ -50,7 +50,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
       </button>
 
       <dialog id={modalId} className='modal w-screen'>
-        <div className='modal-box flex  no-scrollbar'>
+        <div className='modal-box flex no-scrollbar'>
           {isModalOpen ? (
             <>
               {loadingShow ? (
@@ -65,13 +65,13 @@ export default function EventDetailsModal({ modalId, eventId }) {
                     <div className='card-body'>
                       <h2 className='card-title'>
                         <span>
-                          <FaRegClock />
+                          <FaRegClock className='text-primary' />
                         </span>
                         {new Date(event.date).toLocaleString()}
                       </h2>
-                      <h2 className='card-title'>
+                      <h2 className='card-title '>
                         <span>
-                          <FaLocationDot />
+                          <FaLocationDot className='text-primary' />
                         </span>
                         {event.address}
                       </h2>
@@ -79,19 +79,23 @@ export default function EventDetailsModal({ modalId, eventId }) {
                   </div>
                   <div className='card flex flex-col'>
                     <div className='card-body text-lg'>
-                      <h2 className='card-title'>Details</h2>
+                      <h2 className='card-title text-primary'>Details</h2>
                       <div className='mx-3'>
-                        <span>
-                          Location: <span>{event.location}</span>
-                        </span>
-                        <span>{event.description}</span>
+                        <h3>
+                          <span className='font-bold'>Location:</span>{' '}
+                          {event.location}
+                        </h3>
+                        <h3>
+                          <span className='font-bold'>Description:</span>{' '}
+                          {event.description}
+                        </h3>
                       </div>
                     </div>
                   </div>
                   <div className='card flex flex-col'>
                     <div className='card'>
                       <div className='card-body'>
-                        <div className='card-title'>Host</div>
+                        <div className='card-title text-primary'>Host</div>
                         <div className='flex justify-between'>
                           <figure className='flex flex-col justify-start'>
                             <img
@@ -117,14 +121,14 @@ export default function EventDetailsModal({ modalId, eventId }) {
                   </div>
                   <div className='card flex flex-col'>
                     <div className='card-body'>
-                      <div className='card-title'>Guests</div>
+                      <div className='card-title text-primary'>Guests</div>
                       <EventDetailsGuests event={event} setEvent={setEvent} />
                     </div>
                   </div>
 
                   <div className='card flex flex-col '>
                     <div className='card-body'>
-                      <h2 className='card-title'>Comments</h2>
+                      <h2 className='card-title text-primary'>Comments</h2>
                       <EventDetailsComments event={event} setEvent={setEvent} />
                       {!currUser ? <LoginButton /> : null}
                     </div>
