@@ -68,7 +68,7 @@ const Header = () => {
                   <FiUser className='inline text-3xl md:text-3xl' />
                   <span className='sm:text-2xl ml-2'>My Events</span>
                 </Link>
-                <LogoutButton />
+                <LogoutButton  currUser={currUser}/>
               </>
             ) : (
               <HeaderLogin />
