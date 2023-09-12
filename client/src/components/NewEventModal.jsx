@@ -112,7 +112,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
         {isModalOpen ? (
           <form
             method='dialog'
-            className=' z-30 modal-box flex flex-col justify-center align-middle items-center'
+            className=' z-30 modal-box flex flex-col justify-center align-middle items-center no-scrollbar'
             onChange={handleChange}
             onSubmit={handleSubmit}
           >
