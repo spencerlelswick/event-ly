@@ -82,15 +82,15 @@ export default function EventDetailsComments({ event, setEvent }) {
           {event.comments.map((c) => (
             <div className='flex flex-col justify-center relative top-1/3'>
               <div className='relative grid grid-cols-1 gap-4 p-4 mb-4 border rounded-lg bg-white shadow'>
-                <div className='relative flex gap-4'>
+                <div className='flex gap-4 justify-center items-center'>
                   <img
                     src={c.createdBy.picture}
-                    className='relative rounded-lg top-0 -mb-4 bg-white border h-20 w-20'
+                    className='relative rounded-lg top-0 -mb-4 bg-white border h-16 w-16'
                     alt={c.createdBy.name}
                   />
                   <div className='flex flex-col w-full'>
-                    <div className='flex flex-col justify-between'>
-                      <p className='relative text-xl whitespace-normal truncate overflow-hidden'>
+                    <div className='flex flex-col'>
+                      <p className='relative text-xl whitespace-normal p-0 m-0 truncate overflow-hidden'>
                         {c.createdBy.name}
                       </p>
                       <span className='text-gray-300 text-sm'>
@@ -114,7 +114,7 @@ export default function EventDetailsComments({ event, setEvent }) {
                     </div>
                   </div>
                 </div>
-                <p>{c.body}</p>
+                <p className='text-lg'>{c.body}</p>
               </div>
             </div>
           ))}
