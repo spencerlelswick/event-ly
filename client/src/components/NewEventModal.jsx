@@ -111,14 +111,14 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
       <dialog id='new_event_modal' className='modal'>
         {isModalOpen ? (
           <form
-            method='dialog'
-            className=' z-30 modal-box flex flex-col justify-center align-middle items-center'
+            className='w-10/12 sm:w-9/12 sm:px-10 md:w-8/12 md:max-w-[630px] lg:w-1/3 lg:min-w-[630px]
+            modal-box flex flex-col  align-middle items-center max-w-none max-h-1/2'
             onChange={handleChange}
             onSubmit={handleSubmit}
           >
-            <div className='w-full'>
-              <div className='form-control mt-10'>
-                <p className='text-sm'>Selected address:</p>
+            <div className='w-full max-w-sm max-h-full'>
+              <div className='form-control w-fullmax-w-xs mt-10'>
+                <p className='text-sm '>Selected address:</p>
                 <p className='text-xl'>{`${address.name}`}</p>
 
                 <div className='form-control'>
@@ -129,24 +129,26 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     type='text'
                     required
                     name='name'
+                    maxLength={25}
                     value={newEvent.name}
                     onChange={handleChange}
-                    className='input input-bordered input-primary'
+                    className='input input-md md:input-sm first-line:input-bordered input-primary'
                   />
                 </div>
 
                 <div className='form-control '>
                   <label className='label' htmlFor='location'>
-                    <span className='label-text'>Location description</span>
+                    <span className='label-text'>Describe the location:</span>
                   </label>
                   <input
                     type='text'
                     name='location'
                     required
                     placeholder='Room 5, near the swingset, etc.'
+                    maxLength={50}
                     value={newEvent.location}
                     onChange={handleChange}
-                    className='input input-sm input-bordered input-primary'
+                    className='input input-md md:input-sm input-bordered input-primary'
                   />
                 </div>
 
@@ -158,7 +160,7 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                     name='category'
                     onChange={handleChange}
                     defaultValue={'1'}
-                    className='select select-sm select-bordered select-primary'
+                    className='select select-md md:select-sm select-bordered select-primary'
                   >
                     {(() => {
                       const arr = [];
@@ -176,10 +178,10 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
 
                 <div className='form-control '>
                   <label className='label' htmlFor='date'>
-                    <span className='label-text'>Event start time:</span>
+                    <span className='label-text'>Set the start time:</span>
                   </label>
                   <input
-                    className='input-sm primary label-text input input-bordered input-primary'
+                    className='input-md md:input-sm primary label-text input input-bordered input-primary'
                     type='datetime-local'
                     value={newEvent.date}
                     onChange={handleChange}
@@ -192,12 +194,13 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
 
                 <div className='form-control'>
                   <label className='label'>
-                    <span className='label-text'>Event description:</span>
+                    <span className='label-text'>Add some info for your guests:</span>
                   </label>
                   <textarea
                     name='description'
                     value={newEvent.description}
                     onChange={handleChange}
+                    maxLength={200}
                     className='textarea textarea-sm textarea-bordered h-24 border-primary'
                     placeholder='Description'
                     required
@@ -207,12 +210,29 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
               <div className='form-control '>
                 {!newEvent.image ? (
                   <div>
-                    <form onChange={handleChange}>
+                    <form onChange={handleChange} className="flex flex-col items-center" >
                       <label className='label' htmlFor='image'>
-                        <span className='label-text'>
-                          Enter a keyword to search, click to select:
+                        <span className='label-text align-left'>
+                          <span className="text-primary">Enter</span> a keyword in the searchbar,
+                          <span className="text-primary"> scroll</span> through the images,
+                          <span className="text-primary"> click</span> to select one:
                         </span>
                       </label>
+                      <div className='input-group mb-5'>
+                      <input
+                        type='text'
+                        maxLength={25}
+                        placeholder='Enter a keyword'
+                        onChange={(e) => setSearch(e.target.value)}
+                        className='input input-md md:input-sm input-primary w-full'
+                      />
+                      <button
+                        className='btn btn-md md:btn-sm btn-square btn-primary'
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        <FaSearch />
+                      </button>
+                    </div>
                       <input
                         hidden
                         type='text'
@@ -221,13 +241,13 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                         value={newEvent.image}
                         onChange={handleChange}
                         required
-                        className='input input-bordered  input-primary'
+                        className='input-md md:input-sm input-bordered  input-primary'
                       />
-                      <div className='h-48 carousel carousel-vertical rounded-box'>
+                      <div className='h-48 carousel carousel-vertical rounded-box w-full max-w-xs'>
                         {images.map((i, idx) => (
-                          <div className='carousel-item h-48' key={idx}>
+                          <div className='carousel-item h-48 ' key={idx}>
                             <img
-                              className='w-full'
+                              className='w-full '
                               src={i.urls.regular}
                               onClick={() => handleImgClick(i)}
                             />
@@ -235,33 +255,21 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
                         ))}
                       </div>
                     </form>
-
-                    <div className='input-group '>
-                      <input
-                        type='text'
-                        placeholder='Click an image to select'
-                        onChange={(e) => setSearch(e.target.value)}
-                        className='input input-sm input-primary '
-                      />
-                      <button
-                        className='btn btn-sm btn-square btn-primary'
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <FaSearch />
-                      </button>
-                    </div>
                   </div>
                 ) : (
                   <div>
                     <label className='label' htmlFor='image'>
-                      <span className='label-text'>You have selected:</span>
+                      <span className='label-text'>You have selected the image below.</span>
+                    </label>
+                    <label className='label' >
+                      <span className='label-text'> Click again to deselect.</span>
                     </label>
                     <img onClick={clearSelectedImage} src={newEvent.image} />
                   </div>
                 )}
               </div>
               <button
-                className='btn btn-sm btn-primary w-full mt-5'
+                className='btn btn-primary w-full mt-5'
                 type='submit'
                 disabled={!newEvent.image}
               >
@@ -271,12 +279,6 @@ function NewEventModal({ point, displayToast, fetchEvents, address }) {
           </form>
         ) : null}
         <form method='dialog'>
-          <button
-            className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'
-            onClick={handleCancel}
-          >
-            ✕
-          </button>
         </form>
         <form method='dialog' className='modal-backdrop'>
           <button onClick={handleCancel}>close</button>
