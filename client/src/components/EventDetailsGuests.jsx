@@ -56,7 +56,7 @@ export default function EventDetailsGuests({ event, setEvent }) {
                         </div>
                       </div>
                     ) : (
-                      <div className='avatar placeholder'>
+                      <div className='avatar placeholder' key={idx}>
                         <div className='w-12 bg-primary'>
                           <span className=' text-base-100 text-2xl'>
                             +{event.guests.length - 3}
