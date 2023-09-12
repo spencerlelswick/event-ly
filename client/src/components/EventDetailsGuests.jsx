@@ -93,7 +93,32 @@ export default function EventDetailsGuests({ event, setEvent }) {
           </div>
         </div>
       ) : (
-        <div className='my-5'>No one yet. Be the first!</div>
+        <>
+          <div className='my-5'>No one yet. Be the first!</div>
+
+          <div>
+            {currUser ? (
+              <>
+                {event.guests.find((g) => g._id === currUser.ID) ===
+                undefined ? (
+                  <button
+                    onClick={handleParticipate}
+                    className='btn btn-primary w-24'
+                    disabled={currUser.ID === event.createdBy._id}
+                  >
+                    Join
+                  </button>
+                ) : (
+                  <button onClick={handleRemove} className='btn btn-secondary'>
+                    Remove me
+                  </button>
+                )}
+              </>
+            ) : (
+              <p>LOG IN TO PARTICIPATE</p>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
