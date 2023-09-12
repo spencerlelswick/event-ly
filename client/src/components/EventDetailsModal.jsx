@@ -45,7 +45,7 @@ export default function EventDetailsModal({ modalId, eventId }) {
     <div>
       <button
         onClick={() => handleClick()}
-        className='btn btn-active btn-primary'
+        className='btn btn-sm btn-active btn-primary'
       >
         Event Details
       </button>
