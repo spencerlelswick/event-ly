@@ -55,6 +55,21 @@ export function datePickerAddMonth(date,num){
     return `${y}-${m}-${d}`
 }
 
+
+export function datePickerAddYear(date,num){
+    let y = new Date(date).getFullYear()
+    y = y + num
+    
+    let m = new Date(date).getMonth()
+    m = m + 1
+    m.toString().length === 1 ? m = "0"+m : null
+
+    let d = new Date(date).getDate()
+    d.toString().length === 1 ? d = "0"+d : null
+
+    return `${y}-${m}-${d}`
+}
+
 export function datePickerToday(){
     return datePickerAddMonth(new Date(),0)
 }
