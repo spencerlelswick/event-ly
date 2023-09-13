@@ -19,6 +19,7 @@ const Home = ({ pannedEvent, setPannedEvent }) => {
   const [isShowListView, setIsShowListView] = useState(false);
 
   useEffect(() => {
+    displayMOTD('Click the map to add an event');
     document.getElementsByClassName(
       'leaflet-control-attribution'
     )[0].style.display = 'none';
@@ -28,6 +29,19 @@ const Home = ({ pannedEvent, setPannedEvent }) => {
     toast.success(`${msg} `, {
       position: 'top-left',
       autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  }
+
+  function displayMOTD(msg) {
+    toast.info(`${msg} `, {
+      position: 'bottom-left',
+      autoClose: false,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

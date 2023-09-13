@@ -8,7 +8,7 @@ const HeaderLogin = () => {
   return (
     <button
       onClick={() => loginWithRedirect()}
-      className='text-white text-3xl sm:text-2xl w-1/3 flex items-center justify-end'
+      className='text-white text-2xl sm:text-2xl w-1/3 flex items-center justify-end'
     >
       <MdLogin />
     </button>

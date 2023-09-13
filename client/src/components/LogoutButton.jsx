@@ -7,25 +7,22 @@ const LogoutButton = ({ currUser }) => {
 
   return (
     <div className='flex justify-center items-center'>
-
       {currUser?.PIC ? (
         <>
           <span className='mr-2 text-sm'>{currUser.NAME.split(' ')[0]}</span>
           <img src={currUser.PIC} alt='avatar' className='btn-circle p-1' />
         </>
-      ) : (
-        null
-      )}
+      ) : null}
 
       <button
+        id='mobile-logout'
         onClick={() =>
           logout({ logoutParams: { returnTo: window.location.origin } })
         }
-        className='text-white text-3xl sm:text-2xl w-1/3 flex items-center justify-end'
+        className='text-white text-3xl md:text-2xl flex items-center justify-end'
       >
         <MdLogout />
       </button>
-
     </div>
   );
 };
