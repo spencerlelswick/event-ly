@@ -35,7 +35,22 @@ event.ly is a map-based web application for finding and creating events to conne
 - Retrieving images from Unsplash API to let user pick images for their event.
 - Application deployment on Heroku cloud platform
 
-## Screenshots
+# Screenshots
+
+## Mobile
+
+![mobile](https://github.com/spencerlelswick/event-ly/assets/110030149/275cec44-34e1-4ef0-bb61-1099e462d2cc)  ![image](https://github.com/spencerlelswick/event-ly/assets/110030149/d7c2b8f3-a395-48eb-8183-892d47583eba)  ![image](https://github.com/spencerlelswick/event-ly/assets/110030149/7d0f7025-e4bc-46f1-bd06-3771909980b0)  ![image](https://github.com/spencerlelswick/event-ly/assets/110030149/4ec080d8-10eb-47a1-b2f2-271b190fbf48)   ![image](https://github.com/spencerlelswick/event-ly/assets/110030149/154c9cf2-4ec1-4373-9630-c87cdcbc3bb1)  ![image](https://github.com/spencerlelswick/event-ly/assets/110030149/9552d8e1-7f28-4127-a401-741f40798dd6)   ![image](https://github.com/spencerlelswick/event-ly/assets/110030149/d291299a-dac6-446e-b7c2-a463e4691113)   ![image](https://github.com/spencerlelswick/event-ly/assets/110030149/6635f14d-9513-48e4-afae-cddb676983a2)
+
+
+
+
+
+
+
+
+
+
+## Desktop
 
 ### Home Page and Map Page
 
