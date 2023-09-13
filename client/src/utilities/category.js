@@ -1,4 +1,4 @@
-import { datePickerToday, datePickerAddMonth } from "./dates"
+import { datePickerToday, datePickerAddMonth, datePickerAddYear } from "./dates"
 
 export const Categories = [
     "Art",
@@ -21,7 +21,7 @@ export function initFilter() {
         filter[c] = false
     })
     filter.minDate = datePickerToday()
-    filter.maxDate = datePickerAddMonth( new Date(),2)
+    filter.maxDate = datePickerAddYear( new Date(),5)
     return filter
 }
 

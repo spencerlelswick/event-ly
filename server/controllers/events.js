@@ -14,7 +14,7 @@ async function index(req, res) {
         if (req.body.filterBy === "coord"){
             const lat = req.body.coordinates[0]
             const lng = req.body.coordinates[1]
-            const delta = 1000
+            const delta = 25
             res.status(200).json(await Event.find({
                 "coordinates.latitude": {$gte: lat-delta, $lt: lat+delta},
                 "coordinates.longitude": {$gte: lng-delta, $lt: lng+delta},
