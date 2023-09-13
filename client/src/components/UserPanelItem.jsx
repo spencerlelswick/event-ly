@@ -177,11 +177,10 @@ export default function UserPanelItem({
               <div className='flex flex-col w-full'>
                 <div hidden={past}>
                   <div
-                    className={`${
-                      type === 'attending'
+                    className={`${type === 'attending'
                         ? 'hidden'
                         : 'flex flex-row justify-center gap-x-5 flex-wrap'
-                    }`}
+                      }`}
                   >
                     <button
                       className='btn md:btn-sm btn-secondary m-2'
@@ -206,11 +205,10 @@ export default function UserPanelItem({
 
                 <div hidden={past}>
                   <div
-                    className={`${
-                      type === 'created'
+                    className={`${type === 'created'
                         ? 'hidden'
                         : 'flex flex-row justify-center gap-10'
-                    }`}
+                      }`}
                   >
                     <button
                       className='btn md:btn-sm btn-secondary m-2'
@@ -227,7 +225,16 @@ export default function UserPanelItem({
                   </div>
                 </div>
               </div>
-            ) : null}
+            ) : (
+              <div hidden={past}>
+                <button
+                  className='btn md:btn-sm btn-secondary m-2'
+                  onClick={handleMove}
+                >
+                  show on map
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
