@@ -56,10 +56,9 @@ event.ly is a map-based web application for finding and creating events to conne
 
 ## Mobile
 
-<img src="./readme_assets/m1.gif" width="300">
-<img src="./readme_assets/m2.gif" width="300">
-<img src="./readme_assets/m3.gif" width="300">
-<img src="./readme_assets/m4.gif" width="300">
+<img src="./readme_assets/m1.gif" width="300"> <img src="./readme_assets/m2.gif" width="300">
+
+<img src="./readme_assets/m3.gif" width="300"> <img src="./readme_assets/m4.gif" width="300">
 
 
 
